@@ -10,6 +10,18 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-dark bg-dark justify-content-between">
+      <%= link_to 'Mutiny Loot', root_path, class: 'navbar-brand' %>
+      
+    </nav>
+
+    <% if notice.present? %>
+      <p class="alert alert-info"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
