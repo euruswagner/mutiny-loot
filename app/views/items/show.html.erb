@@ -1,2 +1,7 @@
 <h2><a href="<%= @item.link %>"><%= @item.name %></a></h2>
 <h4><%= @item.priority %>
+
+<%= simple_form_for @comment, url: item_comments_path(@item) do |f| %>
+  <%= f.input :message %>
+  <%= f.submit 'Add a Comment', class: 'btn btn-primary' %>
+<% end %>
