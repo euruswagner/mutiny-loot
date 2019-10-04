@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root 'categories#index'
   resources :categories, only: :show
   resources(:items, {:only => :show}) do 
-    resources(:comments, {:only => [:create,:edit,:destroy]})
+    resources(:comments, {:only => [:create, :edit, :update, :destroy]})
   end
 end
