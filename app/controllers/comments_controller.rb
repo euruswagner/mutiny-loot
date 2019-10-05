@@ -24,7 +24,7 @@ before_action :authenticate_user!
       return render plain: 'Not Allowed', status: :forbidden
     end
 
-    @item.comments.update_attributes(comment_params.merge(user: current_user))
+    @comment.update_attributes(comment_params)
     if @comment.valid?
       redirect_to item_path(@item)
     else
