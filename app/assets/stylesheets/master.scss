@@ -1,5 +1,54 @@
 @import "bootstrap";
 
+h3, h4 {
+  color: white;
+}
+
+.box {
+  -moz-box-shadow: 1px 1px 2px 2px black;
+  -webkit-box-shadow: 1px 1px 2px 2px black;
+  box-shadow: 1px 1px 2px 2px black;
+  background: black;
+  border: 1px solid #d73af0;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 20px;
+  padding-bottom: 10px;
+}
+
+.navbar {
+  background: black !important;
+}
+
 .navbar-brand {
+  color: #d73af0 !important;
+}
+
+.navbar-brand:hover {
   color: white !important;
 }
+
+.nav-link {
+  color: #d73af0 !important;
+}
+
+.nav-link:hover {
+  color: white !important;
+}
+
+.comment {
+  color: white;
+}
+
+.user-name {
+  color: #d73af0;
+}
+
+.color {
+  color: #d73af0;
+}
+
+.color:hover {
+  color: white;
+}
+

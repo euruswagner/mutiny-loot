@@ -1,1 +1,13 @@
 <h1>User Dashboard</h1>
+
+<% if current_user.admin? %>  
+  <% @users = User.all %>
+  <% @users.each do |user| %>
+    <div>
+      <%= user.char_name %><br />
+      <%= user.email %><br />
+      <%= user.approved %><br />
+      <%= link_to "Edit", edit_user_registration_path(user) %>
+    </div>
+  <% end %>
+<% end %>
