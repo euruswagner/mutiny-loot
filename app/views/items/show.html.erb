@@ -1,6 +1,9 @@
 <div class="col-10 offset-1 box">
   <h2><a href="<%= @item.link %>" class="color"><%= @item.name %></a></h2>
   <h4><%= @item.priority %>
+  <% if current_user.try(:admin?) %>
+    <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary' %>
+  <% end %>
 
   <h3>Comments</h3>
 
@@ -17,9 +20,7 @@
         <% end %>
     </div>
   <% end %>
-  <% if current_user.try(:admin?) %>
-    <p>test</p>
-  <% end %>
+  
 
 
 <!-- Button trigger modal -->
