@@ -1,8 +1,16 @@
- <h1>Edit The Item</h1>
-  <%= simple_form_for @item do |f| %>
-    <%= f.input :name %>
-    <%= f.input :link %>
-    <%= f.input :priority %>
-    <br />
-    <%= f.submit 'Edit', class: 'btn btn-secondary' %>
-  <% end %>
+<div class="col-10 offset-1 box">  
+  <h1>Edit <%= @item.name %></h1>
+    <%= simple_form_for @item do |f| %>
+      <%= f.input :link %>
+      <%= f.input :zone, as: :select, collection: Item::ZONES %>
+      <%= f.input :priority %>
+      <%= f.input :winner %>
+      <br />
+      
+        <%= f.submit 'Edit', class: 'btn btn-secondary' %>
+        <button type="button" class="btn btn-primary float-right">
+          <%= link_to @item.name, item_path(@item) %>
+        </button>
+    <% end %>
+
+</div>

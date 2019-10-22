@@ -1,13 +1,18 @@
-<h1>User Dashboard</h1>
+<div class="box col-10 offset-1">
+  <h1>User Dashboard</h1>
 
-<% if current_user.admin? %>  
-  <% @users = User.all %>
-  <% @users.each do |user| %>
-    <div>
-      <%= user.char_name %><br />
-      <%= user.email %><br />
-      <%= user.approved %><br />
-      <%= link_to "Edit", edit_user_registration_path(user) %>
-    </div>
+  <% if current_user.admin? %>
+  <h3 class="winners">Unapproved Users</h3>
+    <% @users = User.where(:approved => false) %>
+    <% @users.each do |user| %>
+      <div>
+        <%= user.char_name %><br />
+        <%= user.email %><br />
+        <% if user.approved != true %><br />
+          <%= link_to "Approve", user_approve_path(user), method: :get, data: {confirm: 'Are you sure you want to approve this character?'}, class: 'btn btn-danger' %>
+        <% end %>
+        <br />
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>

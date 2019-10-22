@@ -1,6 +1,8 @@
- <h1>Edit Your Comment</h1>
-  <%= simple_form_for @comment, url: item_comment_path(@comment.item, @comment.id) do |f| %>
-    <%= f.input :message %>
-    <br />
-    <%= f.submit 'Edit', class: 'btn btn-secondary' %>
-  <% end %>
+<div class="col-10 offset-1 box">
+  <h1>Edit Your Comment</h1>
+    <%= simple_form_for @comment, url: item_comment_path(@comment.item, @comment.id) do |f| %>
+      <%= f.input :message %>
+      <br />
+      <%= f.submit 'Edit', class: 'btn btn-secondary' %>
+    <% end %>
+</div>

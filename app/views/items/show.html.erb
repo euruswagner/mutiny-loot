@@ -1,17 +1,26 @@
 <div class="col-10 offset-1 box">
   <h2><a href="<%= @item.link %>" class="color"><%= @item.name %></a></h2>
-  <h4><%= @item.priority %>
-  <% if current_user.try(:admin?) %>
-    <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary' %>
-  <% end %>
+  <h5>- <%= @item.zone %></h5>
+  <br />
+  <h3 class="winners">Priority List</h3>
+  <h5><%= @item.priority %></h5>
+  <br />
+  <h3 class="winners">Winners</h3>
+  <h5><%= @item.winner %></h5>
 
-  <h3>Comments</h3>
+  <% if current_user.try(:admin?) %>
+    <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary float-right' %>
+  <% end %>
+  <br />
+  <hr class="grey">
+
+  <h3 class="text-center">Comments</h3>
 
   <% @item.comments.each do |comment| %>
     <div>
       <blockquote>
         <div class="comment"><%= comment.message %></div>
-        <div class="user-name"><%= comment.user.char_name %></div>
+        <div class="user-name text-right">- <%= comment.user.char_name %></div>
       </blockquote>
       <div class="text-right">
         <% if current_user && current_user == comment.user %>
@@ -20,16 +29,16 @@
         <% end %>
     </div>
   <% end %>
-  
 
+  <br />
 
 <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CommentModal">
+  <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#CommentModal">
     Add a Comment
   </button>
 
   <button type="button" class="btn btn-secondary btn-lg text-right">
-    <%= link_to 'Back to X', category_path(@item.category), class: 'color' %>
+    <%= link_to @item.category.name, category_path(@item.category), class: 'color' %>
   </button>
 
 </div>
@@ -37,12 +46,10 @@
 <!-- Modal -->
 <div class="modal fade" id="CommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content box">
       <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel">Add a Comment</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">X</span>
-        </button>        
+                
       </div>
       <%= simple_form_for @comment, url: item_comments_path(@item) do |f| %>
         <div class="modal-body">        

@@ -1,7 +1,16 @@
 @import "bootstrap";
 
-h3, h4 {
+h3, h4, h5 {
   color: white;
+}
+
+a {
+  color: #d73af0;
+}
+
+a:hover {
+  color: white;
+  text-decoration: none;
 }
 
 .box {
@@ -9,6 +18,7 @@ h3, h4 {
   -webkit-box-shadow: 1px 1px 2px 2px black;
   box-shadow: 1px 1px 2px 2px black;
   background: black;
+  color: #d73af0;
   border: 1px solid #d73af0;
   margin-top: 10px;
   margin-bottom: 15px;
@@ -42,6 +52,7 @@ h3, h4 {
 
 .user-name {
   color: #d73af0;
+  padding-right: 20%;
 }
 
 .color {
@@ -52,3 +63,51 @@ h3, h4 {
   color: white;
 }
 
+.btn-primary {
+  color: black;
+  background: #d73af0;
+  border-color: #d73af0;
+}
+
+.btn-primary a {
+  color: black;
+}
+
+.btn-primary:hover {
+  color: black;
+  background: white;
+  border-color: #d73af0;
+}
+
+.btn-secondary {
+  color: #d73af0;
+  background: white;
+  border-color: #d73af0;
+}
+
+.btn-secondary:hover {
+  color: #d73af0;
+  background: black;
+  border-color: #d73af0;
+}
+
+.grey {
+  width: 100%;
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), white, rgba(0, 0, 0, 0));
+}
+
+.winners {
+  text-decoration: underline;
+}
+
+abbr {
+  display: none;
+}
+
+.category {
+  color: #d73af0;
+  font-size: 50px;
+  font-weight: 700;
+}
