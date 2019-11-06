@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:show]
   get "/users/approve/:id", to: 'users#approve'
+  get '/search' => 'pages#search', :as => 'search_page'
 end

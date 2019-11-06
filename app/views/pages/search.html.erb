@@ -1,0 +1,8 @@
+<h1 class="col-10 offset-1 winners">Results</h1>
+
+<% @results.each do |result| %>  
+  <div class="box col-10 offset-1">
+    <%= link_to result.name, item_path(result) %>
+    <br />
+  </div>  
+<% end %>
