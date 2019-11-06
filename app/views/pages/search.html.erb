@@ -2,7 +2,6 @@
 
 <% @results.each do |result| %>  
   <div class="box col-10 offset-1">
-    <%= link_to result.name, item_path(result) %>
-    <br />
+    <h2><%= link_to result.name, item_path(result) %></h2>
   </div>  
 <% end %>
