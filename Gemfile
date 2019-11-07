@@ -75,3 +75,7 @@ gem 'simple_form'
 gem 'devise'
 
 gem 'figaro'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
+end
