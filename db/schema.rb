@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_153814) do
+ActiveRecord::Schema.define(version: 2019_11_20_214429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 2019_10_22_153814) do
     t.string "zone"
     t.text "winner"
     t.index ["category_id"], name: "index_items_on_category_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.integer "rank"
+    t.integer "user_id"
+    t.integer "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_lists_on_item_id"
+    t.index ["user_id", "item_id"], name: "index_lists_on_user_id_and_item_id"
   end
 
   create_table "users", force: :cascade do |t|
