@@ -76,6 +76,8 @@ gem 'devise'
 
 gem 'figaro'
 
+gem 'rake', '13.0.1'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails'

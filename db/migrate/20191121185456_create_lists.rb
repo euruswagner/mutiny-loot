@@ -6,7 +6,6 @@ class CreateLists < ActiveRecord::Migration[5.2]
       t.integer :item_id
       t.timestamps
     end
-
     add_index :lists, [:user_id, :item_id]
     add_index :lists, :item_id
   end

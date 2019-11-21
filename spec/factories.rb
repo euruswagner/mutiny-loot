@@ -4,6 +4,17 @@ FactoryBot.define  do
     char_name {"fake"}
     password {"password"}
     password_confirmation {"password"}
-    approved {true}
+    approved { true }
+  end
+
+  factory :category do 
+    name {"Test"}
+  end
+  
+  factory :item do
+    name {"test item"}
+    zone {"Blackwing Lair"}
+
+    association :category
   end
 end

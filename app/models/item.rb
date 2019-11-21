@@ -5,7 +5,7 @@ class Item < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   ZONES = {
-    'Blackwing Lair': 'Blackwing Lair'
+    'Blackwing Lair': 'Blackwing Lair',
     'Molten Core': 'Molten Core',
     'Onyxia': 'Onyxia'
   }

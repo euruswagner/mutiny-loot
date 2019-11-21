@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :comments, dependent: :destroy
+  has_many :lists, dependent: :destroy
 
   validates :char_name, presence: true
   # Include default devise modules. Others available are:
@@ -30,6 +31,5 @@ class User < ApplicationRecord
     recoverable
   end     
 
-  has_many :comments
-  has_many :lists
+  
 end
