@@ -11,9 +11,9 @@ RSpec.describe ListsController, type: :controller do
       post :create, params: {item_id: item.id, list: {rank: 1}}
 
       expect(item.lists.first.rank).to eq 1
-      #need to change this to redirect to index of lists
-      expect(response).to redirect_to redirect_to root_path 
       expect(item.lists.length).to eq 1
+      #not quite what I want
+      expect(response).to redirect_to root_path 
     end
   end
 end

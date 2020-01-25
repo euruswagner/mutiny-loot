@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources(:items, {:only => [:show, :edit, :update]}) do 
     resources(:comments, {:only => [:create, :edit, :update, :destroy]})    
   end
-  resources :users, only: [:show]
+  resources :users, only: :show do
+  end
   get "/users/approve/:id", to: 'users#approve'
   get '/search' => 'pages#search', :as => 'search_page'
 end

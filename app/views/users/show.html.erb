@@ -2,17 +2,24 @@
   <h1>User Dashboard</h1>
 
   <% if current_user.admin? %>
-  <h3 class="winners">Unapproved Users</h3>
-    <% @users = User.where(:approved => false) %>
-    <% @users.each do |user| %>
-      <div>
-        <%= user.char_name %><br />
-        <%= user.email %><br />
-        <% if user.approved != true %><br />
-          <%= link_to "Approve", user_approve_path(user), method: :get, data: {confirm: 'Are you sure you want to approve this character?'}, class: 'btn btn-danger' %>
-        <% end %>
-        <br />
-      </div>
-    <% end %>
+  <% if @unapproved_users.present? %>
+    <h3 class="winners">Unapproved Users</h3>
+      <% @unapproved_users.each do |user| %>
+        <div>
+          <%= user.char_name %><br />
+          <%= user.email %><br />
+          <% if user.approved != true %><br />
+            <%= link_to "Approve", user_approve_path(user), method: :get, data: {confirm: 'Are you sure you want to approve this character?'}, class: 'btn btn-danger' %>
+          <% end %>
+          <br />
+        </div>
+      <% end %>
+  <br />
+  <br />
+  <% end %>  
+  <h3 class="winners">Raiders</h3>
+      <% @raider.each do |raider| %>
+        <h5><%= raider.name %></h5>
+      <% end %>
   <% end %>
 </div>

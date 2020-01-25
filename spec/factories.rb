@@ -17,4 +17,11 @@ FactoryBot.define  do
 
     association :category
   end
+
+  factory :rank do
+    rank { 1 }
+
+    association :item
+    association :user
+  end
 end

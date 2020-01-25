@@ -1,0 +1,3 @@
+class Raider < ApplicationRecord
+  
+end
