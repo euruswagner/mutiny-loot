@@ -18,10 +18,8 @@ FactoryBot.define  do
     association :category
   end
 
-  factory :rank do
-    rank { 1 }
-
-    association :item
-    association :user
+  factory :raider do
+    name {'test'}
+    which_class {'Warrior'}
   end
 end

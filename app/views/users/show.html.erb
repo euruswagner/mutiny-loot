@@ -18,8 +18,28 @@
   <br />
   <% end %>  
   <h3 class="winners">Raiders</h3>
+      <input id="notes">
       <% @raider.each do |raider| %>
         <h5><%= raider.name %></h5>
+        <button data-points="0" data-id="<%= raider.id %>" type="button" class="btn btn-secondary">0</button>
+        <button data-points="0.2" data-id="<%= raider.id %>" type="button" class="btn btn-secondary">0.2</button>
+        <button data-points="0.4" data-id="<%= raider.id %>" type="button" class="btn btn-secondary">0.4</button>
       <% end %>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $(".btn-secondary").click(function( event ) {
+    var points = $(this).data('points');
+    var notes = $('#notes').val()
+    var raider = $(this).data('id');
+    var url = `/raiders/${raider}/attendances`
+    var payload = {
+      attendance: {
+        notes: notes,
+        points: points
+      }};
+    console.log(payload);
+    $.post(url, payload);
+  });
+</script>

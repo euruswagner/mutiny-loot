@@ -1,6 +1,10 @@
 class RaidersController < ApplicationController
+  def index
+    @raiders = Raider.all
+  end
+
   def show
-    @raider = Raider.all
+    @raider = Raider.find(params[:id])
   end
 
   def create

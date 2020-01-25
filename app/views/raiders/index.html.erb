@@ -1,0 +1,8 @@
+<div class="box col-10 offset-1">
+  <div class="row">
+    <% @raiders.each do |raider| %>
+      <h4><%= raider.name %>  Points earned: <%= points_earned(raider) %> Last raid:
+        <%= raider.attendances.last.notes %> - <%= raider.attendances.last.points %></h4>
+    <% end %>
+  </div>
+</div>

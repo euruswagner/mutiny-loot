@@ -3,11 +3,12 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'categories#index'
   resources :categories, only: :show
-  resources :lists, only: :create
-  resources(:items, {:only => [:show, :edit, :update]}) do 
+  resources :items, {:only => [:show, :edit, :update]} do 
     resources(:comments, {:only => [:create, :edit, :update, :destroy]})    
   end
-  resources :users, only: :show do
+  resources :users, only: :show 
+  resources :raiders, only: [:index, :show] do
+    resources :attendances, only: :create
   end
   get "/users/approve/:id", to: 'users#approve'
   get '/search' => 'pages#search', :as => 'search_page'

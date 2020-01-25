@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_141425) do
+ActiveRecord::Schema.define(version: 2020_01_25_175632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.string "notes"
+    t.float "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "raider_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -51,6 +59,14 @@ ActiveRecord::Schema.define(version: 2020_01_25_141425) do
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_lists_on_item_id"
     t.index ["user_id", "item_id"], name: "index_lists_on_user_id_and_item_id"
+  end
+
+  create_table "priorities", force: :cascade do |t|
+    t.integer "ranking"
+    t.integer "raider_id"
+    t.integer "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "raiders", force: :cascade do |t|
