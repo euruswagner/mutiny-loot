@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @raiders_without_priority_assigned = Raider.all
     @comment = Comment.new
   end
 

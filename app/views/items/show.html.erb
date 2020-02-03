@@ -7,18 +7,28 @@
   <br />
   <h3 class="winners">Winners</h3>
   <h5><%= @item.winner %></h5>
+  <br />
+  <h3 class="winners">Priorities</h3>
+  <% ordered_list_of_priorities(@item).each do |priority| %>
+    <h5><%= priority %></h5>
+  <% end %>
+
 
   <% if current_user.try(:admin?) %>
     <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary float-right' %>
-  <% end %>
   <br />
   <hr class="grey">
 
-  <h3 class="text-center">Comments</h3>
-
-  <% @raiders_without_priority_assigned.each do |raider| %>
+  <h3>Raiders</h3>
+    <% @raiders_without_priority_assigned.each do |raider| %>
+      <h5><%= raider.name %></h5><input id="rank" type="number">
+      <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" id="create-priority" class="btn btn-secondary">Create Priority</button>
+    <% end %>
 
   <% end %>
+
+
+  <h3 class="text-center">Comments</h3>
 
   <% @item.comments.each do |comment| %>
     <div>
@@ -67,3 +77,20 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("#create-priority").click(function( event ) {
+    var rank = $('#rank').val();
+    var item = $(this).data('item-id');
+    var raider = $(this).data('raider-id');
+    var url = `/items/${item}/priorities`
+    var payload = {
+      priority: {
+        ranking: rank,
+        item_id: item,
+        raider_id: raider
+      }};
+    console.log(payload);
+    $.post(url, payload);
+  });
+</script>

@@ -3,6 +3,7 @@ class Item < ApplicationRecord
 
   has_many :lists, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :priorities, dependent: :destroy
 
   ZONES = {
     'Blackwing Lair': 'Blackwing Lair',
