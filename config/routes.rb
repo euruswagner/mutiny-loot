@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   resources :categories, only: :show
   resources :items, {:only => [:show, :edit, :update]} do 
     resources :priorities, only: [:create]
-    resources(:comments, {:only => [:create, :edit, :update, :destroy]})    
+    resources :winners, only: [:create]
+    resources :comments, {:only => [:create, :edit, :update, :destroy]}    
   end
   resources :users, only: :show 
   resources :raiders, only: [:index, :show] do

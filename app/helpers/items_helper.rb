@@ -2,6 +2,8 @@ module ItemsHelper
   def ordered_list_of_priorities(item)
     ary_of_raiders_with_total_priority = []
     item.priorities.each do |priority|
+      next if won_that_item(item, priority)
+
       points_earned = priority.raider.attendances.sum(:points)
       # points_spent = 
       # total_points = points_earned - points_spent
@@ -14,12 +16,30 @@ module ItemsHelper
     return ary_of_raiders_with_total_priority_sorted
   end
 
-  def random_array
-    ary = [1, 2, 3, 4]
-    return ary
+  def won_that_item(item, priority)
+    return false if item.winners.empty?
+    item.winners.each do |winner|
+      if winner.raider_id == priority.raider_id
+        return true
+      else
+        next
+      end
+    end
+    return false
   end
 
-  def prios_of_fifty(item)
-    return item.priorities.where(ranking: 50)
+  def raiders_without_priority_assigned(item)
+    raiders_without_priority_assigned = []
+    @raiders.each do |raider|
+      if raider.priorities.empty? then
+        raiders_without_priority_assigned << raider
+      else
+        raider.priorities.each do |priority|
+          next if priority.item_id == item.id
+          raiders_without_priority_assigned << raider
+        end
+      end
+    end
+    return raiders_without_priority_assigned
   end
 end
