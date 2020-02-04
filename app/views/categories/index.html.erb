@@ -1,6 +1,10 @@
-<% @categories.each do |category| %>
-  <div class="col-10 offset-1 box">
-    <h1><%= link_to category.name, category_path(category), class: 'color'  %></h1>
-  </div>
+<div class="box col-10 offset-1">
+  <div class="row">
+    <% @categories.each do |category| %>
+      <div class="col-6">
+        <h1><%= link_to category.name, category_path(category), class: 'color'  %></h1>
+      </div>
 
-<% end %>
+    <% end %>
+  </div>
+</div>

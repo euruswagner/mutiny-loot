@@ -1,4 +1,6 @@
 class WinnersController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     item = Item.find(params[:item_id])
     item.winners.create(winner_params)

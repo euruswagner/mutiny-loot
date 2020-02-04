@@ -17,14 +17,67 @@
   <br />
   <br />
   <% end %>  
-  <h3 class="underline">Raiders</h3>
-      <input id="notes">
-      <% @raider.each do |raider| %>
-        <h5><%= raider.name %></h5>
-        <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-secondary">0</button>
-        <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-secondary">0.2</button>
-        <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-secondary">0.4</button>
-      <% end %>
+  <h3 class="underline">Attendance</h3>
+    <div class="row no-left-margin"><h5>Raid Notes:</h5><input id="notes"></div>
+    <div class="row">
+      <div class="col-4">
+        <h4 class="underline">Melee</h4>
+        <% melee.each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-4">
+        <h4 class="underline">Ranged</h4>
+        <% ranged.each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-4">
+        <h4 class="underline">Healers</h4>
+        <% healer.each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>
 
