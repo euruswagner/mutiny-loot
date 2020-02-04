@@ -3,7 +3,7 @@
 
   <% if current_user.admin? %>
   <% if @unapproved_users.present? %>
-    <h3 class="winners">Unapproved Users</h3>
+    <h3 class="underline">Unapproved Users</h3>
       <% @unapproved_users.each do |user| %>
         <div>
           <%= user.char_name %><br />
@@ -17,13 +17,13 @@
   <br />
   <br />
   <% end %>  
-  <h3 class="winners">Raiders</h3>
+  <h3 class="underline">Raiders</h3>
       <input id="notes">
       <% @raider.each do |raider| %>
         <h5><%= raider.name %></h5>
-        <button data-points="0" data-id="<%= raider.id %>" type="button" class="btn btn-secondary">0</button>
-        <button data-points="0.2" data-id="<%= raider.id %>" type="button" class="btn btn-secondary">0.2</button>
-        <button data-points="0.4" data-id="<%= raider.id %>" type="button" class="btn btn-secondary">0.4</button>
+        <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-secondary">0</button>
+        <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-secondary">0.2</button>
+        <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-secondary">0.4</button>
       <% end %>
   <% end %>
 </div>
@@ -33,13 +33,18 @@
     var points = $(this).data('points');
     var notes = $('#notes').val()
     var raider = $(this).data('id');
+    var raiderName = $(this).data('name');
     var url = `/raiders/${raider}/attendances`
     var payload = {
       attendance: {
         notes: notes,
         points: points
       }};
-    console.log(payload);
-    $.post(url, payload);
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: payload,
+      success: console.log(`${raiderName} earned ${points} for ${notes}`)
+    });
   });
 </script>

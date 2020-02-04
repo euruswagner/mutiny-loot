@@ -28,6 +28,9 @@
       
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+              <%= link_to 'Raiders', raiders_path, class: 'nav-link' %>
+            </li>
           <% if user_signed_in? %>
             <li class="nav-item">
               <%= link_to 'My Profile', user_path(current_user), class: 'nav-link' %>

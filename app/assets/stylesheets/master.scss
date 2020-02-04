@@ -1,5 +1,10 @@
 @import "bootstrap";
 
+body {
+  margin: 0px !important;
+  background: image_url('mosaic.png');
+}
+
 h3, h4, h5 {
   color: white;
 }
@@ -8,8 +13,12 @@ a {
   color: #d73af0;
 }
 
+a:visited {
+  color: #d73af0 !important;
+}
+
 a:hover {
-  color: white;
+  color: white !important;
   text-decoration: none;
 }
 
@@ -102,7 +111,7 @@ a:hover {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), white, rgba(0, 0, 0, 0));
 }
 
-.winners {
+.underline {
   text-decoration: underline;
 }
 
@@ -114,4 +123,12 @@ abbr {
   color: #d73af0;
   font-size: 50px;
   font-weight: 700;
+}
+
+.zones {
+  color: #d73af0;
+}
+
+.item-raiders {
+  display: inline-block;
 }

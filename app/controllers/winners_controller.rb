@@ -8,6 +8,6 @@ class WinnersController < ApplicationController
   private
 
   def winner_params
-    params.permit(:raider_id, :points_spent)
+    params.require(:winner).permit(:raider_id, :points_spent)
   end
 end

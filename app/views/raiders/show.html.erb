@@ -1,5 +1,6 @@
 <div class="box col-10 offset-1">
-  <h3><%= @raider.name %> - Points earned: <%= points_earned(@raider) %></h3>
+  <h3><%= @raider.name %> - Total Points: <%= total_points(@raider) %> 
+    Points earned: <%= points_earned(@raider) %> Points spent: <%= points_spent(@raider) %></h3>
 
   <% @raider.attendances.each do |raider| %>
       <h4><%= raider.notes %> - <%= raider.points %></h4>

@@ -1,18 +1,27 @@
 <div class="col-10 offset-1 box">
-  <h2><a href="<%= @item.link %>" class="color"><%= @item.name %></a></h2>
-  <h5>- <%= @item.zone %></h5>
+  <div class="row">
+    <div class="col-10">
+      <h2><a href="<%= @item.link %>" class="color"><%= @item.name %></a></h2>
+      <h5>- <%= @item.zone %></h5>
+    </div>
+    <% if current_user.try(:admin?) %>
+      <div class="col-2">
+        <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary float-right' %>
+      </div>
+    <% end %>
+  </div>
   <br />
-  <h3 class="winners">Priority List</h3>
+  <h3 class="underline">Priority List</h3>
   <h5><%= @item.priority %></h5>
   <br />
-  <h3 class="winners">Winners</h3>
+  <h3 class="underline">Winners</h3>
   <% if @item.winners.present? %>
     <% @item.winners.each do |winner| %>
       <h5><%= winner.raider.name %></h5>
     <% end %>
   <% end %>
   <br />
-  <h3 class="winners">Priorities</h3>
+  <h3 class="underline">Priorities</h3>
   <% ordered_list_of_priorities(@item).each do |priority| %>
     <h5><%= priority %></h5>
   <% end %>
@@ -27,16 +36,16 @@
 
 
   <% if current_user.try(:admin?) %>
-    <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary float-right' %>
-    <br />
     <hr class="grey">
 
-    <h3>Raiders</h3>
+    <h3 class="underline">Raiders</h3>
     <input id="rank" type="number">
+    <br />
+    <br />
     <% raiders_without_priority_assigned(@item).each do |raider| %>
-      <div class="row">
-        <h4><%= raider.name %></h4> &nbsp &nbsp       
-        <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority">Create Priority</button>
+      <div class="item-raiders">
+          <h4 class="item-raiders"><%= raider.name %></h4>       
+          <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority">Create Priority</button> 
       </div>
     <% end %>
 
@@ -58,7 +67,6 @@
         item_id: item,
         raider_id: raider
       }};
-    console.log(payload)
     $.post(url, payload);
   });
   $(".create-winner").click(function( event ) {
@@ -74,8 +82,9 @@
         raider_id: raider
       }};
     $.ajax({
-      url: `/items/${item}/winners?points_spent=${points_spent}&raider_id=${raider}`,
-      method: 'POST',
+      type: "POST",
+      url: url,
+      data: payload,
       beforeSend:function(){
          return confirm(`Are you sure ${raider_name} won this item?`);
       },
