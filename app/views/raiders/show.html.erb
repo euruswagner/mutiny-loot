@@ -2,7 +2,14 @@
   <h3><%= @raider.name %> - Total Points: <%= total_points(@raider) %> 
     Points earned: <%= points_earned(@raider) %> Points spent: <%= points_spent(@raider) %></h3>
 
-  <% @raider.attendances.each do |raider| %>
-      <h4><%= raider.notes %> - <%= raider.points %></h4>
-  <% end %>
+  <div class="row">
+    <div class="col-4">
+      <% @raider.attendances.each do |attendance| %>
+        <h4><%= attendance.notes %> - <%= attendance.points %></h4>
+      <% end %>
+    </div>
+    <div class="col-8">
+      <% @raider.winners.each do |winner| %>
+        <h4><%= winner.item.name %> - <%= winner.points_spent %></h4>
+      <% end %>
 </div>

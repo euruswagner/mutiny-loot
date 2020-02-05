@@ -102,6 +102,10 @@ Raider.create(name: 'Foodstampz',
               which_class: 'Mage',
               role: 'DPS')
 
+Raider.create(name: 'Brdi',
+              which_class: 'Mage',
+              role: 'DPS')
+
 Raider.create(name: 'Asag',
               which_class: 'Warlock',
               role: 'DPS')
@@ -137,6 +141,10 @@ Raider.create(name: 'Martymcflyy',
 Raider.create(name: 'Cafo',
               which_class: 'Priest',
               role: 'Healer')
+
+Raider.create(name: 'Ambellina',
+              which_class: 'Priest',
+              role: 'Shadow')
 
 Raider.create(name: 'Treetard',
               which_class: 'Druid',
