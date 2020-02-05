@@ -1,0 +1,20 @@
+<div class="box col-10 offset-1">
+  <div class="row">
+    <% @raiders.each do |raider| %>
+      <div class="col-lg-6">
+        <h4>
+          <div class="row no-left-margin">
+            <%= link_to raider_path(raider.id) do   %>
+              <h4 class="<%= class_color(raider) %>"><%= raider.name %></h4>
+            <% end %>
+            &nbsp &nbspTotal Points: <%= total_points(raider) %>
+          </div> 
+          <% if raider.attendances.present? %>
+            Last raid:
+            <%= raider.attendances.last.notes %> - <%= raider.attendances.last.points %>
+          <% end %>
+        </h4>
+      </div>
+    <% end %>
+  </div>
+</div>

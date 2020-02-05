@@ -1,5 +1,10 @@
 @import "bootstrap";
 
+body {
+  margin: 0px !important;
+  background: image_url('mosaic.png');
+}
+
 h3, h4, h5 {
   color: white;
 }
@@ -8,8 +13,12 @@ a {
   color: #d73af0;
 }
 
+a:visited {
+  color: #d73af0 !important;
+}
+
 a:hover {
-  color: white;
+  color: white !important;
   text-decoration: none;
 }
 
@@ -102,7 +111,7 @@ a:hover {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), white, rgba(0, 0, 0, 0));
 }
 
-.winners {
+.underline {
   text-decoration: underline;
 }
 
@@ -114,4 +123,70 @@ abbr {
   color: #d73af0;
   font-size: 50px;
   font-weight: 700;
+}
+
+.zones {
+  color: #d73af0;
+}
+
+.item-raiders {
+  display: inline-block;
+}
+
+.warrior {
+  color: #a35515;
+}
+
+.rogue {
+  color: yellow;
+}
+
+.hunter {
+  color: green;
+}
+
+.mage {
+  color: #2cdef2;
+}
+
+.warlock {
+  color: purple;
+}
+
+.priest {
+  color: white;
+}
+
+.shaman {
+  color: blue;
+}
+
+.druid {
+  color: orange;
+}
+
+.raiders-attendance {
+  margin-left: 0px;
+}
+
+.btn-points {
+  margin-left: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.scoot-left {
+  margin-left: -15px;
+}
+
+.no-left-margin {
+  margin-left: 0px;
+}
+
+.margin-top {
+  margin-top: 1px;
+}
+
+.attendance-row {
+  border-top: 1px solid #d73af0;
 }

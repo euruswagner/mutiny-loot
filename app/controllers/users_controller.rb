@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @unapproved_users = User.where(:approved => false)
+    @raider = Raider.all
   end
 
   def approve

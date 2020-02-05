@@ -30,5 +30,5 @@ class User < ApplicationRecord
     recoverable
   end     
 
-  has_many :comments
+  
 end
