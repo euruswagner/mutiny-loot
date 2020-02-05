@@ -26,6 +26,7 @@
     <h5><%= priority %></h5>
   <% end %>
   <% if current_user.try(:admin?) %>
+    <h3 class="underline">Assign A Winner</h3>
     <% @item.priorities.order(ranking: :desc).each do |priority| %>
       <% if won_that_item(@item, priority) %>
       <% else %>
