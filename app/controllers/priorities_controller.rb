@@ -7,6 +7,13 @@ class PrioritiesController < ApplicationController
     redirect_to item_path(item)
   end
 
+  def destroy
+    item = Item.find(params[:item_id])
+    priority = item.priorities.find(params[:priority_id])
+    priority.destroy
+    redirect_to item_path(item)
+  end
+
   private
 
   def priority_params

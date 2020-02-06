@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'categories#index'
   resources :categories, only: :show
   resources :items, {:only => [:show, :edit, :update]} do 
-    resources :priorities, only: [:create]
+    resources :priorities, only: [:create, :destroy]
     resources :winners, only: [:create]
     resources :comments, {:only => [:create, :edit, :update, :destroy]}    
   end

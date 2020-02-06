@@ -17,9 +17,17 @@
     </div>
   </div>
   <hr class="grey">
-  <div class="col-12 scoot-left">
-    <h3 class="underline">Priority List</h3>
-    <% @raider.priorities.order(ranking: :desc).each do |priority| %>
-      <h4><%= priority.item.name %> - <%= priority.ranking %></h4>
+  <div class="col-12">
+    <h3 class="underline scoot-left">Priority List</h3>
+    <% priority_rankings.each do |x| %>
+      <div class="row">
+        <% @raider.priorities.where(ranking: x).each do |priority| %>
+          <h4><%= link_to priority.item.name, item_path(priority.item), class: 'zones' %> - <%= priority.ranking %>&nbsp</h4>
+          <% if current_user.try(:admin?) %>
+            <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm btn-secondary' %>&nbsp
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
+  </div>
 </div>

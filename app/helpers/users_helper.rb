@@ -16,17 +16,33 @@ module UsersHelper
   end
 
   def melee
-    melee = []
+    melee_unsorted = []
     @raider.each do |raider|
       if raider.which_class == 'Warrior' || raider.which_class == 'Rogue'
-        melee << raider
+        melee_unsorted << raider
       elsif raider.role == 'Enhancement' || raider.role == 'Feral'
-        melee << raider
+        melee_unsorted << raider
       else
         next
       end
     end
-    return melee
+    warrior = []
+    rogue = []
+    enhancement = []
+    feral = []
+    melee_unsorted.each do |melee|
+      if melee.which_class == 'Warrior'
+        warrior << melee
+      elsif melee.which_class == 'Rogue'
+        rogue << melee
+      elsif melee.role == 'Enhancement'
+        enhancement << melee
+      else
+        feral << melee
+      end
+    end
+    sorted_melee = warrior + rogue + enhancement + feral
+    return sorted_melee
   end
 
   def ranged
