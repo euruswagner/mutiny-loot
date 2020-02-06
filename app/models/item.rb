@@ -11,4 +11,9 @@ class Item < ApplicationRecord
     'Onyxia': 'Onyxia'
   }
 
+  CLASSIFICATIONS = {
+    'Reserved': 'Reserved',
+    'Limited': 'Limited',
+    'Unlimited': 'Unlimited'
+  }
 end

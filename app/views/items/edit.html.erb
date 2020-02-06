@@ -5,7 +5,7 @@
       <%= f.input :zone, as: :select, collection: Item::ZONES %>
       <%= f.input :priority %>
       <%= f.input :winner %>
-      <%= f.input :classification %>
+      <%= f.input :classification, as: :select, collection: Item::CLASSIFICATIONS %>
       <br />
       
         <%= f.submit 'Edit', class: 'btn btn-secondary' %>
