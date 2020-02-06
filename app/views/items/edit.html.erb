@@ -5,11 +5,12 @@
       <%= f.input :zone, as: :select, collection: Item::ZONES %>
       <%= f.input :priority %>
       <%= f.input :winner %>
+      <%= f.input :classification %>
       <br />
       
         <%= f.submit 'Edit', class: 'btn btn-secondary' %>
-        <button type="button" class="btn btn-primary float-right">
-          <%= link_to @item.name, item_path(@item) %>
+        <button type="button" class="btn btn-secondary float-right">
+          <%= link_to 'Close', item_path(@item) %>
         </button>
     <% end %>
 

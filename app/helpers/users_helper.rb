@@ -16,12 +16,12 @@ module UsersHelper
   end
 
   def melee
-    melee_unsorted = []
+    unsorted_melee = []
     @raider.each do |raider|
       if raider.which_class == 'Warrior' || raider.which_class == 'Rogue'
-        melee_unsorted << raider
+        unsorted_melee << raider
       elsif raider.role == 'Enhancement' || raider.role == 'Feral'
-        melee_unsorted << raider
+        unsorted_melee << raider
       else
         next
       end
@@ -30,7 +30,7 @@ module UsersHelper
     rogue = []
     enhancement = []
     feral = []
-    melee_unsorted.each do |melee|
+    unsorted_melee.each do |melee|
       if melee.which_class == 'Warrior'
         warrior << melee
       elsif melee.which_class == 'Rogue'

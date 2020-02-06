@@ -50,17 +50,33 @@ module ItemsHelper
   end
 
   def melee_without_priority_assigned(item)
-    melee = []
+    unsorted_melee = []
     raiders_without_priority_assigned(item).each do |raider|
       if raider.which_class == 'Warrior' || raider.which_class == 'Rogue'
-        melee << raider
+        unsorted_melee << raider
       elsif raider.role == 'Enhancement' || raider.role == 'Feral'
-        melee << raider
+        unsorted_melee << raider
       else
         next
       end
     end
-    return melee
+    warrior = []
+    rogue = []
+    enhancement = []
+    feral = []
+    unsorted_melee.each do |melee|
+      if melee.which_class == 'Warrior'
+        warrior << melee
+      elsif melee.which_class == 'Rogue'
+        rogue << melee
+      elsif melee.role == 'Enhancement'
+        enhancement << melee
+      else
+        feral << melee
+      end
+    end
+    sorted_melee = warrior + rogue + enhancement + feral
+    return sorted_melee
   end
 
   def ranged_without_priority_assigned(item)

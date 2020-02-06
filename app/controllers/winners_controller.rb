@@ -7,6 +7,13 @@ class WinnersController < ApplicationController
     redirect_to item_path(item)
   end
 
+  def destroy
+    item = Item.find(params[:item_id])
+    winner = item.winners.find(params[:winner_id])
+    winner.destroy
+    redirect_to item_path(item)
+  end
+
   private
 
   def winner_params

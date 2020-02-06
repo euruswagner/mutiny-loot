@@ -1,18 +1,37 @@
 <div class="box col-10 offset-1">
-  <h3><%= @raider.name %> - Total Points: <%= total_points(@raider) %> |
-    Points earned: <%= points_earned(@raider) %> | Points spent: <%= points_spent(@raider) %></h3>
+  <div class="row no-left-margin">
+    <h3 class="<%= class_color(@raider) %>"><%= @raider.name %></h3>&nbsp<h3>- Total Points: <%= total_points(@raider) %></h3>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <h3>Points earned: <%= points_earned(@raider) %></h3>
+    </div>
+    <div class="col-8">
+      <h3>Points spent: <%= points_spent(@raider) %></h3>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-4">
       <h3 class="underline">Raids Attended</h3>
       <% @raider.attendances.each do |attendance| %>
-        <h4><%= attendance.notes %> - <%= attendance.points %></h4>
+        <div class="row no-left-margin">
+          <h4><%= attendance.notes %> - <%= attendance.points %></h4>
+          <% if current_user.try(:admin?) %>
+            <%= link_to 'X', raider_attendance_path(raider_id: attendance.raider_id, attendance_id: attendance.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
+          <% end %>
+        </div>
       <% end %>
     </div>
     <div class="col-8">
       <h3 class="underline">Items Won</h3>
       <% @raider.winners.each do |winner| %>
-        <h4><%= winner.item.name %> - <%= winner.points_spent %></h4>
+        <div class="row no-left-margin">  
+          <h4><%= winner.item.name %> - <%= winner.points_spent %></h4>
+          <% if current_user.try(:admin?) %>
+            <%= link_to 'X', item_winner_path(item_id: winner.item_id, winner_id: winner.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>
@@ -21,11 +40,18 @@
     <h3 class="underline scoot-left">Priority List</h3>
     <% priority_rankings.each do |x| %>
       <div class="row">
+        <h5><%= x %></h5>
         <% @raider.priorities.where(ranking: x).each do |priority| %>
-          <h4><%= link_to priority.item.name, item_path(priority.item), class: 'zones' %> - <%= priority.ranking %>&nbsp</h4>
-          <% if current_user.try(:admin?) %>
-            <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm btn-secondary' %>&nbsp
-          <% end %>
+          <div class="col-5">
+            <div class="row">
+              <%= link_to item_path(priority.item) do %>
+                <h5 class="scoot-right <%= item_classification(priority) %>"><%= priority.item.name %></h5>
+              <% end %>
+              <% if current_user.try(:admin?) %>
+                <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
+              <% end %>
+            </div>
+          </div>
         <% end %>
       </div>
     <% end %>

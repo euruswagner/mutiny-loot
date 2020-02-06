@@ -32,4 +32,14 @@ module RaidersHelper
     end
     return priority_rankings
   end
+
+  def item_classification(priority)
+    if priority.item.classification == 'Reserved'
+      return 'reserved'
+    elsif priority.item.classification =='Limited'
+      return 'limited'
+    else
+      return 'unlimited'
+    end
+  end
 end
