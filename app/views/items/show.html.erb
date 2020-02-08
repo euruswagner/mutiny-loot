@@ -11,6 +11,9 @@
     <% end %>
   </div>
   <br />
+  <h3 class="underline">Primary Class</h3>
+    <h4><%= @item.priority %></h4>
+  <br />
   <h3 class="underline">Winners</h3>
   <% if @item.winners.present? %>
     <% @item.winners.each do |winner| %>
