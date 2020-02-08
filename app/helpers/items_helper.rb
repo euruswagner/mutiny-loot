@@ -6,15 +6,19 @@ module ItemsHelper
 
       points_earned = priority.raider.attendances.sum(:points)
       points_spent = priority.raider.winners.sum(:points_spent)
-      if points_earned - points_spent > 0 then
-        total_points = points_earned - points_spent
-      else
-        total_points = 0
-      end
+      adjusted_points = points_earned - points_spent
       ranking = priority.ranking
-      adjusted_ranking = ranking + total_points
+      if item.primary_class?(priority.raider) then 
+        adjusted_ranking = ranking + adjusted_points
+      else
+        adjusted_ranking = (ranking + adjusted_points)/2
+      end
       raider = priority.raider.name
-      ary_of_raiders_with_total_priority << "#{adjusted_ranking} - #{raider}"
+      if adjusted_ranking < 10 then
+        ary_of_raiders_with_total_priority << "0#{adjusted_ranking} - #{raider}"
+      else
+        ary_of_raiders_with_total_priority << "#{adjusted_ranking} - #{raider}"
+      end
     end
     ary_of_raiders_with_total_priority_sorted = ary_of_raiders_with_total_priority.sort.reverse
     return ary_of_raiders_with_total_priority_sorted
