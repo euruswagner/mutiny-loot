@@ -179,6 +179,10 @@ abbr {
   margin-left: -15px;
 }
 
+.scoot-right {
+  margin-left: 10px
+}
+
 .no-left-margin {
   margin-left: 0px;
 }
@@ -189,4 +193,29 @@ abbr {
 
 .attendance-row {
   border-top: 1px solid #d73af0;
+}
+
+.scale-down {
+  transform: scale(.6);
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.reserved {
+  color: red;
+}
+
+.limited {
+  color: blue;
+}
+
+.unlimited {
+  color: white;
+}
+
+.scoot-up {
+  margin-top: -3px;
+  margin-bottom: 5px;
 }

@@ -22,6 +22,10 @@ Raider.create(name: 'Meza',
               which_class: 'Warrior',
               role: 'Fury')
 
+Raider.create(name: 'Smurfygg',
+              which_class: 'Warrior',
+              role: 'Fury')
+
 Raider.create(name: 'Dikpik',
               which_class: 'Warrior',
               role: 'Fury')

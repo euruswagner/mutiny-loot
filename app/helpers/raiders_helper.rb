@@ -9,8 +9,7 @@ module RaidersHelper
 
   def total_points(raider)
     total_points = points_earned(raider) - points_spent(raider)
-    return total_points if total_points > 0
-    return 0.0
+    return total_points.round(1) 
   end
 
   def class_color(raider)
@@ -23,5 +22,24 @@ module RaidersHelper
     return 'shaman' if raider.which_class == 'Shaman'
     return 'druid' if raider.which_class == 'Druid' 
     return ''
+  end
+
+  def priority_rankings
+    priority_rankings = []
+    33.times do |x|
+      ranking = 50 - x
+      priority_rankings << ranking
+    end
+    return priority_rankings
+  end
+
+  def item_classification(priority)
+    if priority.item.classification == 'Reserved'
+      return 'reserved'
+    elsif priority.item.classification =='Limited'
+      return 'limited'
+    else
+      return 'unlimited'
+    end
   end
 end
