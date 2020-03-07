@@ -3,21 +3,12 @@ module ItemsHelper
     ary_of_raiders_with_total_priority = []
     item.priorities.each do |priority|
       next if won_that_item(item, priority)
-
-      points_earned = priority.raider.attendances.sum(:points)
-      points_spent = priority.raider.winners.sum(:points_spent)
-      adjusted_points = points_earned - points_spent
-      ranking = priority.ranking
-      if item.primary_class?(priority.raider) then 
-        adjusted_ranking = ranking + adjusted_points
-      else
-        adjusted_ranking = (ranking + adjusted_points)/2
-      end
+      item_value = raiders_item_value(item, priority)
       raider = priority.raider.name
-      if adjusted_ranking < 10 then
-        ary_of_raiders_with_total_priority << "0#{adjusted_ranking} - #{raider}"
+      if item_value < 10 then
+        ary_of_raiders_with_total_priority << "0#{item_value} - #{raider}"
       else
-        ary_of_raiders_with_total_priority << "#{adjusted_ranking} - #{raider}"
+        ary_of_raiders_with_total_priority << "#{item_value} - #{raider}"
       end
     end
     ary_of_raiders_with_total_priority_sorted = ary_of_raiders_with_total_priority.sort.reverse
@@ -34,6 +25,30 @@ module ItemsHelper
       end
     end
     return false
+  end
+
+  def raiders_item_value(item, priority)
+    points_earned = priority.raider.attendances.sum(:points)
+    points_spent = priority.raider.winners.sum(:points_spent)
+    net_points = points_earned - points_spent
+    ranking = priority.ranking
+    weeks_with_the_guild = priority.raider.weeks_with_the_guild?
+    if item.primary_class?(priority.raider) then 
+      item_value = ranking + net_points
+    else
+      item_value = (ranking + net_points)/2
+    end
+    if item.zone == 'Blackwing Lair'
+      return 0 if weeks_with_the_guild < 3
+      return item_value - 3 if weeks_with_the_guild < 4
+      return item_value - 1 if weeks_with_the_guild < 5
+      return item_value
+    else
+      return 0 if weeks_with_the_guild < 2
+      return item_value - 3 if weeks_with_the_guild < 3
+      return item_value - 1 if weeks_with_the_guild < 4
+      return item_value
+    end 
   end
 
   def raiders_without_priority_assigned(item)

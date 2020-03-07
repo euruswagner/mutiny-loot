@@ -22,4 +22,18 @@ FactoryBot.define  do
     name {'test'}
     which_class {'Warrior'}
   end
+
+  factory :attendance do
+    notes {'test'}
+    points {0.2}
+
+    association :raider
+  end
+
+  factory :priority do
+    ranking {50}
+
+    association :raider
+    association :item
+  end
 end
