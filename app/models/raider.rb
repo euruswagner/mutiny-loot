@@ -5,6 +5,6 @@ class Raider < ApplicationRecord
 
   def weeks_with_the_guild?
     return 0 if self.attendances.first.nil?
-    return ((Time.now - self.attendances.first.created_at)/60/60/24/7) + 1.3
+    return ((Time.now - self.attendances.first.created_at)/60/60/24/7) + 1.36
   end  
 end
