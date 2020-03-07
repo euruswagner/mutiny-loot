@@ -4,15 +4,6 @@ module ItemsHelper
     item.priorities.each do |priority|
       next if won_that_item(item, priority)
       item_value = raiders_item_value(item, priority)
-      # points_earned = priority.raider.attendances.sum(:points)
-      # points_spent = priority.raider.winners.sum(:points_spent)
-      # adjusted_points = points_earned - points_spent
-      # ranking = priority.ranking
-      # if item.primary_class?(priority.raider) then 
-      #   adjusted_ranking = ranking + adjusted_points
-      # else
-      #   adjusted_ranking = (ranking + adjusted_points)/2
-      # end
       raider = priority.raider.name
       if item_value < 10 then
         ary_of_raiders_with_total_priority << "0#{item_value} - #{raider}"
