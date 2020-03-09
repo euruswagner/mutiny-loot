@@ -21,6 +21,7 @@ FactoryBot.define  do
   factory :raider do
     name {'test'}
     which_class {'Warrior'}
+    role {'Fury'}
   end
 
   factory :attendance do

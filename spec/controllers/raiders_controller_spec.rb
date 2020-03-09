@@ -24,4 +24,17 @@ RSpec.describe RaidersController, type: :controller do
       expect(Raider.count).to eq 0
     end
   end
+
+  describe 'raiders#update action' do
+    it 'allows raiders to be updated' do
+      raider = FactoryBot.create(:raider)
+      user = FactoryBot.create(:user, admin: true)
+      sign_in user
+
+      patch :update, params: {id: raider.id, raider: {role: 'Tank'}}
+      expect(response).to redirect_to raider_path(raider)
+      raider.reload
+      expect(raider.role).to eq "Tank"
+    end
+  end
 end

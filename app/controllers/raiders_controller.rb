@@ -1,6 +1,6 @@
 class RaidersController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit]
-  before_action :authenticate_admin!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :update]
+  before_action :authenticate_admin!, only: [:new, :create, :update]
 
   def index
     @raiders = Raider.all
@@ -20,6 +20,17 @@ class RaidersController < ApplicationController
       redirect_to raider_path(@raider)
     else
       redirect_to new_raider_path, alert: 'The information you have entered is incomplete.'
+    end
+  end
+
+  def update
+    @raider = Raider.find(params[:id])
+    @raider.assign_attributes(raider_params)
+    @raider.save
+    if @raider.valid?
+      redirect_to raider_path(@raider)
+    else
+      redirect_to raider_path(@raider), alert: 'That update is invalid.'
     end
   end
 
