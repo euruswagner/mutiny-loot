@@ -1,0 +1,13 @@
+<div class="box col-10 offset-1">
+  <%= simple_form_for @raider, url: raiders_path do |f| %>
+    <div class="modal-body">        
+      <%= f.input :name, label: 'Name:' %>
+      <%= f.input :which_class, label: 'Class:', as: :select, collection: Raider::WHICH_CLASS %>
+      <%= f.input :role, label: 'Role:', as: :select, collection: Raider::ROLE %>         
+    </div>
+    <div class="modal-footer">
+      <%= link_to 'Close', user_path(current_user), class: 'btn btn-secondary' %>
+      <%= f.submit 'Create', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

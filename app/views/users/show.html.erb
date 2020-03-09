@@ -2,6 +2,7 @@
   <h1>User Dashboard</h1>
 
   <% if current_user.admin? %>
+  <%= render partial: 'create_raider' %>
   <% if @unapproved_users.present? %>
     <h3 class="underline">Unapproved Users</h3>
       <% @unapproved_users.each do |user| %>

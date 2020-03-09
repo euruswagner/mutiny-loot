@@ -1,6 +1,6 @@
 class RaidersController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :edit]
-  before_action :authenticate_admin!, only: [:create]
+  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :authenticate_admin!, only: [:new, :create]
 
   def index
     @raiders = Raider.all
@@ -10,8 +10,17 @@ class RaidersController < ApplicationController
     @raider = Raider.find(params[:id])
   end
 
+  def new
+    @raider = Raider.new
+  end
+
   def create
-    Raider.create(raider_params)
+    @raider = Raider.create(raider_params)
+    if @raider.valid?
+      redirect_to raider_path(@raider)
+    else
+      redirect_to new_raider_path, alert: 'The information you have entered is incomplete.'
+    end
   end
 
   private
