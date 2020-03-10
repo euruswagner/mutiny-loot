@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :edit, :update, :destroy]    
   end
   resources :users, only: :show 
-  resources :raiders, only: [:index, :show] do
+  resources :raiders, only: [:index, :show, :new, :create, :update] do
     resources :attendances, only: [:create, :destroy]
   end
   get "/users/approve/:id", to: 'users#approve'

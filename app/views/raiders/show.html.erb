@@ -1,6 +1,7 @@
 <div class="box col-10 offset-1">
   <div class="row no-left-margin">
-    <h3 class="<%= class_color(@raider) %>"><%= @raider.name %></h3>&nbsp<h3>- Total Points: <%= total_points(@raider) %></h3>
+    <div class="col-10 row"><h3 class="<%= class_color(@raider) %>"><%= @raider.name %></h3>&nbsp<h3>- Total Points: <%= total_points(@raider) %></h3></div>
+    <%= render partial: 'edit_raider' %>
   </div>
   <div class="row">
     <div class="col-4">

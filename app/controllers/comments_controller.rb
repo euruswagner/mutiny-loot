@@ -49,5 +49,4 @@ before_action :authenticate_user!
   def comment_params
     params.require(:comment).permit(:message)
   end
-
 end
