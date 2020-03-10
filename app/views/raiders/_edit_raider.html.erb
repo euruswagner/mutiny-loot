@@ -1,6 +1,29 @@
 <!-- Button trigger modal -->
-<div class="col-3">
-  <button type="button" class="btn btn-primary btn float-right" data-toggle="modal" data-target="#CommentModal">
+<div class="col-2">
+  <button type="button" class="btn btn-primary btn float-right" data-toggle="modal" data-target="#EditRaiderModal">
     Edit
   </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="EditRaiderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add a Comment</h4>
+                
+      </div>
+      <%= simple_form_for @raider, url: raider_path(@raider) do |f| %>
+        <div class="modal-body">        
+          <%= f.input :name, label: 'Name:' %>
+          <%= f.input :which_class, label: 'Class:', as: :select, collection: Raider::WHICH_CLASS %>
+          <%= f.input :role, label: 'Role:', as: :select, collection: Raider::ROLE %>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Edit Raider', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

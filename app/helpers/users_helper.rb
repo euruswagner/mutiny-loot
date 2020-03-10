@@ -18,6 +18,7 @@ module UsersHelper
   def melee
     unsorted_melee = []
     @raider.each do |raider|
+      next if raider.role == 'Retired'
       if raider.which_class == 'Warrior' || raider.which_class == 'Rogue'
         unsorted_melee << raider
       elsif raider.role == 'Enhancement' || raider.role == 'Feral'
@@ -46,28 +47,65 @@ module UsersHelper
   end
 
   def ranged
-    ranged = []
+    unsorted_ranged = []
     @raider.each do |raider|
+      next if raider.role == 'Retired'
       if raider.which_class == 'Hunter' || raider.which_class == 'Mage' || raider.which_class == 'Warlock'
-        ranged << raider
-      elsif raider.role == 'Shadow' || raider.role == 'Moonkin'
-        ranged << raider
+        unsorted_ranged << raider
+      elsif raider.role == 'Shadow' || raider.role == 'Moonkin' || raider.role == 'Elemental'
+        unsorted_ranged << raider
       else
         next
       end
     end
-    return ranged
+    hunter = []
+    mage = []
+    warlock = []
+    shadow = []
+    elemental = []
+    moonkin = []
+    unsorted_ranged.each do |ranged|
+      if ranged.which_class == 'Hunter'
+        hunter << ranged
+      elsif ranged.which_class == 'Mage'
+        mage << ranged
+      elsif ranged.which_class == 'Warlock'
+        warlock << ranged
+      elsif ranged.which_class == 'Shadow'
+        shadow << ranged
+      elsif ranged.role == 'Elemental'
+        elemental << ranged
+      else
+        moonkin << ranged
+      end
+    end
+    sorted_ranged = hunter + mage + warlock + shadow + elemental + moonkin
+    return sorted_ranged
   end
 
   def healer
-    healer = []
+    unsorted_healer = []
     @raider.each do |raider|
+      next if raider.role == 'Retired'
       if raider.role == 'Healer' 
-        healer << raider
+        unsorted_healer << raider
       else
         next
       end
     end
-    return healer
+    priest = []
+    shaman = []
+    druid = []
+    unsorted_healer.each do |healer|
+      if healer.which_class == 'Priest'
+        priest << healer
+      elsif healer.which_class == 'Shaman'
+        shaman << healer
+      else
+        druid << healer
+      end
+    end
+    sorted_healer = priest + shaman + druid
+    return sorted_healer
   end
 end
