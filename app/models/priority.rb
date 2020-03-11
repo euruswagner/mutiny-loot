@@ -39,5 +39,29 @@ class Priority < ApplicationRecord
     end
   end
 
+  def total_item_value_for_raider
+    points_earned = self.raider.attendances.sum(:points)
+    points_spent = self.raider.winners.sum(:points_spent)
+    net_points = points_earned - points_spent
+    ranking = self.ranking
+    weeks_with_the_guild = self.raider.weeks_with_the_guild?
+    if self.item.primary_class?(self.raider) then 
+      item_value = ranking + net_points
+    else
+      item_value = (ranking + net_points)/2
+    end
+    if self.item.zone == 'Blackwing Lair'
+      return 0 if weeks_with_the_guild < 3
+      return item_value - 3 if weeks_with_the_guild < 4
+      return item_value - 1 if weeks_with_the_guild < 5
+      return item_value
+    else
+      return 0 if weeks_with_the_guild < 2
+      return item_value - 3 if weeks_with_the_guild < 3
+      return item_value - 1 if weeks_with_the_guild < 4
+      return item_value
+    end 
+  end
+
   validates :ranking, presence: true
 end

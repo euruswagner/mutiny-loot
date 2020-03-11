@@ -1,5 +1,5 @@
 module ItemsHelper
-  def ordered_list_of_priorities(item)
+  def ordered_list_of_priorities_old(item)
     ary_of_raiders_with_total_priority = []
     item.priorities.each do |priority|
       next if won_that_item(item, priority)
@@ -14,7 +14,7 @@ module ItemsHelper
     ary_of_raiders_with_total_priority_sorted = ary_of_raiders_with_total_priority.sort.reverse
     return ary_of_raiders_with_total_priority_sorted
   end
-
+  
   def won_that_item(item, priority)
     return false if item.winners.empty?
     item.winners.each do |winner|

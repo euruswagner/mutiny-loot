@@ -15,6 +15,27 @@ class Item < ApplicationRecord
     return false
   end
 
+  def ordered_list_of_priorities
+    priorities_that_have_not_won = []
+      self.priorities.each do |priority|
+        next if self.won_this_item?(priority)
+        priorities_that_have_not_won << priority
+      end
+    return priorities_that_have_not_won.sort { |a, b| b.total_item_value_for_raider <=> a.total_item_value_for_raider}
+  end
+
+  def won_this_item?(priority)
+    return false if self.winners.empty?
+    self.winners.each do |winner|
+      if winner.raider_id == priority.raider_id
+        return true
+      else
+        next
+      end
+    end
+    return false
+  end
+
   ZONES = {
     'Blackwing Lair': 'Blackwing Lair',
     'Molten Core': 'Molten Core',
