@@ -1,5 +1,5 @@
 module ItemsHelper
-   def raiders_without_priority_assigned(item)
+  def raiders_without_priority_assigned(item)
     raiders_without_priority_assigned = []
     @raiders.each do |raider|
       next if does_have_priority_assigned(item, raider)
