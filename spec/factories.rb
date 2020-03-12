@@ -37,4 +37,11 @@ FactoryBot.define  do
     association :raider
     association :item
   end
+
+  factory :winner do
+    points_spent {0.2}
+
+    association :raider
+    association :item
+  end
 end
