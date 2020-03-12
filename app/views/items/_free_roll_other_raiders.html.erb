@@ -1,0 +1,119 @@
+<!-- Button trigger modal -->
+<div class="col-2">
+  <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#FreeRollOtherRaidersModal">
+    Additional Free Rolls
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="FreeRollOtherRaidersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add a Free Roll</h4>
+                
+      </div>
+        <div class="modal-body">
+        <% if @item.warriors_without_priority_assigned.any? %> 
+          <h5 class="warrior">Warriors</h5>
+          <div class="row">
+            <% @item.warriors_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @item.rogues_without_priority_assigned.any? %> 
+          <h5 class="rogue">Rogues</h5>
+          <div class="row">
+            <% @item.rogues_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @item.hunters_without_priority_assigned.any? %> 
+          <h5 class="hunter">Hunters</h5>
+          <div class="row">
+            <% @item.hunters_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @item.mages_without_priority_assigned.any? %> 
+          <h5 class="mage">Mages</h5>
+          <div class="row">
+            <% @item.mages_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @item.warlocks_without_priority_assigned.any? %> 
+          <h5 class="warlock">Warlocks</h5>
+          <div class="row">
+            <% @item.warlocks_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %> 
+        <% if @item.priests_without_priority_assigned.any? %> 
+          <h5 class="priest">Priests</h5>
+          <div class="row">
+            <% @item.priests_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %> 
+        <% if @item.shamans_without_priority_assigned.any? %> 
+          <h5 class="shaman">Shamans</h5>
+          <div class="row">
+            <% @item.shamans_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @item.druids_without_priority_assigned.any? %> 
+          <h5 class="druid">Druids</h5>
+          <div class="row">
+            <% @item.druids_without_priority_assigned.each do |raider| %>       
+              <div class="col-4">
+                <button data-raider-id="<%= raider.id %>" data-raider-name="<%= raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+                  <%= raider.name %> - Free Roll
+                </button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+  </div>
+</div>

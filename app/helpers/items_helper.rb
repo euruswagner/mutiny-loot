@@ -1,57 +1,5 @@
 module ItemsHelper
-  def ordered_list_of_priorities(item)
-    ary_of_raiders_with_total_priority = []
-    item.priorities.each do |priority|
-      next if won_that_item(item, priority)
-      item_value = raiders_item_value(item, priority)
-      raider = priority.raider.name
-      if item_value < 10 then
-        ary_of_raiders_with_total_priority << "0#{item_value} - #{raider}"
-      else
-        ary_of_raiders_with_total_priority << "#{item_value} - #{raider}"
-      end
-    end
-    ary_of_raiders_with_total_priority_sorted = ary_of_raiders_with_total_priority.sort.reverse
-    return ary_of_raiders_with_total_priority_sorted
-  end
-
-  def won_that_item(item, priority)
-    return false if item.winners.empty?
-    item.winners.each do |winner|
-      if winner.raider_id == priority.raider_id
-        return true
-      else
-        next
-      end
-    end
-    return false
-  end
-
-  def raiders_item_value(item, priority)
-    points_earned = priority.raider.attendances.sum(:points)
-    points_spent = priority.raider.winners.sum(:points_spent)
-    net_points = points_earned - points_spent
-    ranking = priority.ranking
-    weeks_with_the_guild = priority.raider.weeks_with_the_guild?
-    if item.primary_class?(priority.raider) then 
-      item_value = ranking + net_points
-    else
-      item_value = (ranking + net_points)/2
-    end
-    if item.zone == 'Blackwing Lair'
-      return 0 if weeks_with_the_guild < 3
-      return item_value - 3 if weeks_with_the_guild < 4
-      return item_value - 1 if weeks_with_the_guild < 5
-      return item_value
-    else
-      return 0 if weeks_with_the_guild < 2
-      return item_value - 3 if weeks_with_the_guild < 3
-      return item_value - 1 if weeks_with_the_guild < 4
-      return item_value
-    end 
-  end
-
-  def raiders_without_priority_assigned(item)
+   def raiders_without_priority_assigned(item)
     raiders_without_priority_assigned = []
     @raiders.each do |raider|
       next if does_have_priority_assigned(item, raider)
