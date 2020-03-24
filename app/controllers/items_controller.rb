@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    @active_raiders = Raider.where.not(role: 'Retired')
+    @raiders = Raider.all
     @comment = Comment.new
   end
 

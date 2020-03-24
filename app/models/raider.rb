@@ -5,6 +5,12 @@ class Raider < ApplicationRecord
   scope :active, -> { where.not(role: 'Retired')}
   scope :warrior, -> { where(which_class: 'Warrior') }
   scope :rogue, -> { where(which_class: 'Rogue') }
+  scope :hunter, -> { where(which_class: 'Hunter') }
+  scope :mage, -> { where(which_class: 'Mage') }
+  scope :warlock, -> { where(which_class: 'Warlock') }
+  scope :priest, -> { where(which_class: 'Priest') }
+  scope :shaman, -> { where(which_class: 'Shaman') }
+  scope :druid, -> { where(which_class: 'Druid') }
 
   def net_points
     net_points = self.total_points_earned - self.total_points_spent
@@ -28,6 +34,18 @@ class Raider < ApplicationRecord
   def weeks_with_the_guild?
     return 0 if self.attendances.first.nil?
     return ((Time.now - self.attendances.first.created_at)/60/60/24/7) + 1.36
+  end
+
+  def has_priority_or_has_won_this(item)
+    item.winners.each do |winner|
+      return true if winner.raider == self
+      next
+    end
+    item.priorities.each do |priority|
+      return true if priority.raider == self
+      next
+    end
+    return false
   end
 
   def melee
@@ -57,38 +75,6 @@ class Raider < ApplicationRecord
 
   def healer?
     return role =='Healer'
-  end
-
-  def warrior?
-    return which_class == 'Warrior'
-  end
-
-  def rogue?
-    return which_class == 'Rogue'
-  end
-
-  def hunter?
-    return which_class == 'Hunter'
-  end
-
-  def mage?
-    return which_class == 'Mage'
-  end
-
-  def warlock?
-    return which_class == 'Warlock'
-  end
-
-  def priest?
-    return which_class == 'Priest'
-  end
-
-  def druid?
-    return which_class == 'Druid'
-  end
-
-  def shaman?
-    return which_class == 'Shaman'
   end
 
   def class_color
