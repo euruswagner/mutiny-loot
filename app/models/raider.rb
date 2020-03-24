@@ -2,25 +2,55 @@ class Raider < ApplicationRecord
   has_many :attendances, dependent: :destroy
   has_many :priorities, dependent: :destroy
   has_many :winners, dependent: :destroy
-
-  def points_earned
-    return 0 if self.attendances.nil?
-    return self.attendances.sum('points') 
-  end
-
-  def points_spent
-    return 0 if self.winners.nil?
-    return self.winners.sum('points_spent') 
-  end
+  scope :active, -> { where.not(role: 'Retired')}
+  scope :warrior, -> { where(which_class: 'Warrior') }
+  scope :rogue, -> { where(which_class: 'Rogue') }
+  scope :hunter, -> { where(which_class: 'Hunter') }
+  scope :mage, -> { where(which_class: 'Mage') }
+  scope :warlock, -> { where(which_class: 'Warlock') }
+  scope :priest, -> { where(which_class: 'Priest') }
+  scope :shaman, -> { where(which_class: 'Shaman') }
+  scope :druid, -> { where(which_class: 'Druid') }
 
   def net_points
-    net_points = self.points_earned - self.points_spent
+    net_points = self.total_points_earned - self.total_points_spent
     return net_points.round(1)
   end
 
+  def update_total_points_spent(points_spent)
+    old_total_points_spent = self.total_points_spent
+    up_to_date_total_points_spent = old_total_points_spent + points_spent
+    self.write_attribute(:total_points_spent, up_to_date_total_points_spent)
+    self.save!
+  end
+
+  def update_total_points_earned(points_earned)
+    old_total_points_earned = self.total_points_earned
+    up_to_date_total_points_earned = old_total_points_earned + points_earned
+    self.write_attribute(:total_points_earned, up_to_date_total_points_earned)
+    self.save!
+  end
+  
   def weeks_with_the_guild?
     return 0 if self.attendances.first.nil?
     return ((Time.now - self.attendances.first.created_at)/60/60/24/7) + 1.36
+  end
+
+  def has_priority_or_has_won_this(item)
+    item.winners.each do |winner|
+      return true if winner.raider == self
+      next
+    end
+    item.priorities.each do |priority|
+      return true if priority.raider == self
+      next
+    end
+    return false
+  end
+
+  def melee
+    melee = Raider.where(which_class: 'Warrior')
+    return melee
   end
 
   def melee?
@@ -31,8 +61,8 @@ class Raider < ApplicationRecord
     else
       return false
     end
-  end 
-
+  end
+ 
   def ranged?
     if which_class == 'Hunter' || which_class == 'Mage' || which_class == 'Warlock'
       return true
@@ -47,36 +77,16 @@ class Raider < ApplicationRecord
     return role =='Healer'
   end
 
-  def warrior?
-    return which_class == 'Warrior'
-  end
-
-  def rogue?
-    return which_class == 'Rogue'
-  end
-
-  def hunter?
-    return which_class == 'Hunter'
-  end
-
-  def mage?
-    return which_class == 'Mage'
-  end
-
-  def warlock?
-    return which_class == 'Warlock'
-  end
-
-  def priest?
-    return which_class == 'Priest'
-  end
-
-  def druid?
-    return which_class == 'Druid'
-  end
-
-  def shaman?
-    return which_class == 'Shaman'
+  def class_color
+    return 'warrior' if self.which_class == 'Warrior'
+    return 'rogue' if self.which_class == 'Rogue'
+    return 'hunter' if self.which_class == 'Hunter'
+    return 'mage' if self.which_class == 'Mage'
+    return 'warlock' if self.which_class == 'Warlock'
+    return 'priest' if self.which_class == 'Priest'
+    return 'shaman' if self.which_class == 'Shaman'
+    return 'druid' if self.which_class == 'Druid' 
+    return ''
   end
 
   WHICH_CLASS = {

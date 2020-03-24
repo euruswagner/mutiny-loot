@@ -1,16 +1,16 @@
 <div class="box col-10 offset-1">
   <div class="row no-left-margin">
-    <div class="col-10 row"><h3 class="<%= class_color(@raider) %>"><%= @raider.name %></h3>&nbsp<h3>- Total Points: <%= total_points(@raider) %></h3></div>
+    <div class="col-10 row"><h3 class="<%= @raider.class_color %>"><%= @raider.name %></h3>&nbsp<h3>- Total Points: <%= @raider.net_points %></h3></div>
     <% if current_user.try(:admin?) %>
       <%= render partial: 'edit_raider' %>
     <% end %>
   </div>
   <div class="row">
     <div class="col-4">
-      <h3>Points earned: <%= points_earned(@raider) %></h3>
+      <h3>Points earned: <%= @raider.total_points_earned %></h3>
     </div>
     <div class="col-8">
-      <h3>Points spent: <%= points_spent(@raider) %></h3>
+      <h3>Points spent: <%= @raider.total_points_spent %></h3>
     </div>
   </div>
 

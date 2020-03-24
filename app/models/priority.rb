@@ -48,5 +48,5 @@ class Priority < ApplicationRecord
     end 
   end
 
-  validates :ranking, presence: true
+  validates :ranking, numericality: {greater_than: 17, less_than_or_equal_to: 50}, presence: true
 end

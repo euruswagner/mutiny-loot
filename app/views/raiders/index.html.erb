@@ -1,14 +1,14 @@
 <div class="box col-10 offset-1">
   <h2 class="underline">Melee</h2>
   <div class="row">
-    <% melee_index.each do |melee| %>
+    <% @melee.each do |melee| %>
       <div class="col-lg-6">
         <h4>
           <div class="row no-left-margin">
             <%= link_to raider_path(melee.id) do   %>
-              <h4 class="<%= class_color(melee) %>"><%= melee.name %></h4>
+              <h4 class="<%= melee.class_color %>"><%= melee.name %></h4>
             <% end %>
-            &nbsp &nbspTotal Points: <%= total_points(melee) %>
+            &nbsp &nbspTotal Points: <%= melee.net_points %>
           </div> 
           <% if melee.attendances.present? %>
             Last raid:
@@ -20,14 +20,14 @@
   </div>
   <h2 class="underline">Ranged</h2>
   <div class="row">
-    <% ranged_index.each do |ranged| %>
+    <% @ranged.each do |ranged| %>
       <div class="col-lg-6">
         <h4>
           <div class="row no-left-margin">
             <%= link_to raider_path(ranged.id) do   %>
-              <h4 class="<%= class_color(ranged) %>"><%= ranged.name %></h4>
+              <h4 class="<%= ranged.class_color %>"><%= ranged.name %></h4>
             <% end %>
-            &nbsp &nbspTotal Points: <%= total_points(ranged) %>
+            &nbsp &nbspTotal Points: <%= ranged.net_points %>
           </div> 
           <% if ranged.attendances.present? %>
             Last raid:
@@ -39,14 +39,14 @@
   </div>
   <h2 class="underline">Healers</h2>
   <div class="row">
-    <% healer_index.each do |healer| %>
+    <% @healers.each do |healer| %>
       <div class="col-lg-6">
         <h4>
           <div class="row no-left-margin">
             <%= link_to raider_path(healer.id) do   %>
-              <h4 class="<%= class_color(healer) %>"><%= healer.name %></h4>
+              <h4 class="<%= healer.class_color %>"><%= healer.name %></h4>
             <% end %>
-            &nbsp &nbspTotal Points: <%= total_points(healer) %>
+            &nbsp &nbspTotal Points: <%= healer.net_points %>
           </div> 
           <% if healer.attendances.present? %>
             Last raid:
@@ -56,4 +56,25 @@
       </div>
     <% end %>
   </div>
+  <% if current_user.try(:admin?) %>
+    <h2 class="underline">Retired</h2>
+    <div class="row">
+      <% @retired.each do |retired| %>
+        <div class="col-lg-6">
+          <h4>
+            <div class="row no-left-margin">
+              <%= link_to raider_path(retired.id) do   %>
+                <h4 class="<%= retired.class_color %>"><%= retired.name %></h4>
+              <% end %>
+              &nbsp &nbsp Total Points: <%= retired.net_points %>
+            </div> 
+            <% if retired.attendances.present? %>
+              Last raid:
+              <%= retired.attendances.last.notes %> - <%= retired.attendances.last.points %>
+            <% end %>
+          </h4>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

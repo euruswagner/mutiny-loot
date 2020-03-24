@@ -22,13 +22,36 @@
     <div class="row no-left-margin"><h5>Raid Notes:</h5><input id="notes"></div>
     <div class="row">
       <div class="col-4">
-        <h4 class="underline">Melee</h4>
-        <% melee.each do |raider| %>
+        <h4 class="underline">Warriors</h4>
+        <% @raiders.active.warrior.order(:created_at).each do |raider| %>
           <div class="row no-left-margin attendance-row">
-            <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
+            <div class="col-6 scoot-left"><h5 class="warrior"><%= raider.name %></h5></div>
             <div class="col-6">
               <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <h4 class="underline">Rogues</h4>
+        <% @raiders.active.rogue.order(:created_at).each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="rogue"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
               </button>
               <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0.2
@@ -41,13 +64,56 @@
         <% end %>
       </div>
       <div class="col-4">
-        <h4 class="underline">Ranged</h4>
-        <% ranged.each do |raider| %>
+        <h4 class="underline">Hunters</h4>
+        <% @raiders.active.hunter.order(:created_at).each do |raider| %>
           <div class="row no-left-margin attendance-row">
-            <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
+            <div class="col-6 scoot-left"><h5 class="hunter"><%= raider.name %></h5></div>
             <div class="col-6">
               <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <h4 class="underline">Mages</h4>
+        <% @raiders.active.mage.order(:created_at).each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="mage"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <h4 class="underline">Warlocks</h4>
+        <% @raiders.active.warlock.order(:created_at).each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="warlock"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
               </button>
               <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0.2
@@ -60,13 +126,56 @@
         <% end %>
       </div>
       <div class="col-4">
-        <h4 class="underline">Healers</h4>
-        <% healer.each do |raider| %>
+        <h4 class="underline">Priests</h4>
+        <% @raiders.active.priest.order(:created_at).each do |raider| %>
           <div class="row no-left-margin attendance-row">
-            <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
+            <div class="col-6 scoot-left"><h5 class="priest"><%= raider.name %></h5></div>
             <div class="col-6">
               <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <h4 class="underline">Shamans</h4>
+        <% @raiders.active.shaman.order(:created_at).each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="shaman"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
+              </button>
+              <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.2
+              </button>
+              <button data-points="0.4" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.4
+              </button>
+            </div>
+          </div>
+        <% end %>
+        <h4 class="underline">Druids</h4>
+        <% @raiders.active.druid.order(:created_at).each do |raider| %>
+          <div class="row no-left-margin attendance-row">
+            <div class="col-6 scoot-left"><h5 class="druid"><%= raider.name %></h5></div>
+            <div class="col-6">
+              <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
               </button>
               <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0.2

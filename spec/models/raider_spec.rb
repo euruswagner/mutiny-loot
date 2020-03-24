@@ -28,39 +28,6 @@ RSpec.describe Raider, type: :model do
     end
   end
 
-  describe 'Raider points_earned method' do
-    it 'returns 0 if no attendances exist' do
-      raider = FactoryBot.create(:raider)
-
-      expect(raider.points_earned).to eq 0
-    end
-
-    it 'returns 0.4 for two 0.2 attendances' do
-      raider = FactoryBot.create(:raider)
-      attendance1 = FactoryBot.create(:attendance, raider: raider, points: 0.2)
-      attendance2 = FactoryBot.create(:attendance, raider: raider, points: 0.2)
-
-      expect(raider.points_earned).to eq 0.4
-    end
-  end
-
-  describe 'Raider points_spent method' do
-    it 'returns 0 if no winners exist' do
-      raider = FactoryBot.create(:raider)
-
-      expect(raider.points_spent).to eq 0
-    end
-
-    it 'returns 1.6 for one 1.0 and one 0.6 item won' do
-      raider = FactoryBot.create(:raider)
-      item = FactoryBot.create(:item)
-      win1 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 1.0)
-      win2 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.6)
-
-      expect(raider.points_spent).to eq 1.6
-    end
-  end
-
   describe 'Raider net_points method' do
     it 'returns 0 if there are not attendances or winners' do
       raider = FactoryBot.create(:raider)
@@ -69,16 +36,31 @@ RSpec.describe Raider, type: :model do
     end
 
     it 'returns 0.2 if attendances total 1.6 and winnings total 1.4' do
-      raider = FactoryBot.create(:raider)
-      attendance1 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance2 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance3 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance4 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      item = FactoryBot.create(:item)
-      win1 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.8)
-      win2 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.6)
+      raider = FactoryBot.create(:raider, total_points_earned: 1.6, total_points_spent: 1.4)
 
       expect(raider.net_points).to eq 0.2
+    end
+  end
+
+  describe 'Raider update total points spent' do
+    it 'updates raiders total points spent by 1.0' do
+      raider = FactoryBot.create(:raider, total_points_spent: 0.6)
+
+      raider.update_total_points_spent(1.0)
+
+      raider.reload
+      expect(raider.total_points_spent).to eq 1.6
+    end
+  end
+
+  describe 'Raider update total points earned' do
+    it 'updates raiders total points earned by 1.0' do
+      raider = FactoryBot.create(:raider, total_points_earned: 0.6)
+
+      raider.update_total_points_earned(1.0)
+
+      raider.reload
+      expect(raider.total_points_earned).to eq 1.6
     end
   end
 end
