@@ -41,6 +41,11 @@
               <%= priority.raider.name %> - Free Roll
             </button>
           </div>
+          <% if priority.raider.low_attendance? %>
+            <div class="col-3">
+              <h5 class="low-attendance-warning">Low Attendance</h5>
+            </div>
+          <% end %>
         <% end %>
       </div>
     <% end %>

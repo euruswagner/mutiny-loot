@@ -11,6 +11,7 @@ class Raider < ApplicationRecord
   scope :priest, -> { where(which_class: 'Priest') }
   scope :shaman, -> { where(which_class: 'Shaman') }
   scope :druid, -> { where(which_class: 'Druid') }
+  scope :healer, -> { where(role: 'Healer') }
 
   def net_points
     net_points = self.total_points_earned - self.total_points_spent
@@ -48,33 +49,11 @@ class Raider < ApplicationRecord
     return false
   end
 
-  def melee
-    melee = Raider.where(which_class: 'Warrior')
-    return melee
-  end
-
-  def melee?
-    if which_class == 'Warrior' || which_class == 'Rogue'
-      return true
-    elsif role == 'Enhancement' || role == 'Feral'
-      return true
-    else
-      return false
-    end
-  end
- 
-  def ranged?
-    if which_class == 'Hunter' || which_class == 'Mage' || which_class == 'Warlock'
-      return true
-    elsif role == 'Shadow' || role == 'Elemental' || role == 'Moonkin'
-      return true
-    else
-      return false
-    end
-  end
-
-  def healer?
-    return role =='Healer'
+  def low_attendance?
+    eight_weeks_ago = Time.now - 57.days # Added a day to account for difference in start of raid and entering of attendance
+    attendances_in_last_eight_weeks = self.attendances.where('created_at >= ?', eight_weeks_ago)
+    points_earned_last_eight_weeks = attendances_in_last_eight_weeks.sum('points')
+    return points_earned_last_eight_weeks < 2.88
   end
 
   def class_color

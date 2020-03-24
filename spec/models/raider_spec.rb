@@ -63,4 +63,37 @@ RSpec.describe Raider, type: :model do
       expect(raider.total_points_earned).to eq 1.6
     end
   end
+
+  describe 'Raider low_attendance? method' do
+    it 'Returns true if Raider has no attendances' do
+      raider = FactoryBot.create(:raider)
+
+      expect(raider.low_attendance?).to eq true
+    end
+
+    it 'Returns true if Raider has one really old attendance' do
+      raider = FactoryBot.create(:raider)
+      now = Time.now
+      five_weeks_ago = now - 35.days
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: five_weeks_ago)
+
+      expect(raider.low_attendance?).to eq true
+    end
+
+    it 'Returns false if Raider has good attendance' do
+      raider = FactoryBot.create(:raider)
+      now = Time.now
+      five_weeks_ago = now - 35.days
+      attendance1 = FactoryBot.create(:attendance, raider: raider, created_at: five_weeks_ago)
+      attendance2 = FactoryBot.create(:attendance, points: 0.4, raider: raider, created_at: five_weeks_ago)
+      attendance3 = FactoryBot.create(:attendance, points: 0.4, raider: raider, created_at: five_weeks_ago)
+      attendance4 = FactoryBot.create(:attendance, points: 0.4, raider: raider, created_at: five_weeks_ago)
+      attendance5 = FactoryBot.create(:attendance, points: 0.4, raider: raider)
+      attendance6 = FactoryBot.create(:attendance, points: 0.4, raider: raider)
+      attendance7 = FactoryBot.create(:attendance, points: 0.4, raider: raider)
+      attendance8 = FactoryBot.create(:attendance, points: 0.4, raider: raider)
+
+      expect(raider.low_attendance?).to eq false
+    end
+  end
 end
