@@ -49,6 +49,13 @@ class Raider < ApplicationRecord
     return false
   end
 
+  def low_attendance?
+    eight_weeks_ago = Time.now - 57.days # Added a day to account for difference in start of raid and entering of attendance
+    attendances_in_last_eight_weeks = self.attendances.where('created_at >= ?', eight_weeks_ago)
+    points_earned_last_eight_weeks = attendances_in_last_eight_weeks.sum('points')
+    return points_earned_last_eight_weeks < 2.88
+  end
+
   def class_color
     return 'warrior' if self.which_class == 'Warrior'
     return 'rogue' if self.which_class == 'Rogue'
