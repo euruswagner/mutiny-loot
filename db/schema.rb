@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_150155) do
+ActiveRecord::Schema.define(version: 2020_03_14_203236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 2020_02_06_150155) do
     t.string "name"
     t.string "which_class"
     t.string "role"
-    t.integer "points_earned"
-    t.integer "points_spent"
+    t.float "total_points_earned", default: 0.0
+    t.float "total_points_spent", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

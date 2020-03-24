@@ -15,7 +15,7 @@ module UsersHelper
     return ''
   end
 
-  def melee
+  def melee_old
     unsorted_melee = []
     @raider.each do |raider|
       next if raider.role == 'Retired'
@@ -48,7 +48,7 @@ module UsersHelper
 
   def ranged
     unsorted_ranged = []
-    @raider.each do |raider|
+    @active_raider.each do |raider|
       next if raider.role == 'Retired'
       if raider.which_class == 'Hunter' || raider.which_class == 'Mage' || raider.which_class == 'Warlock'
         unsorted_ranged << raider
@@ -85,7 +85,7 @@ module UsersHelper
 
   def healer
     unsorted_healer = []
-    @raider.each do |raider|
+    @active_raider.each do |raider|
       next if raider.role == 'Retired'
       if raider.role == 'Healer' 
         unsorted_healer << raider

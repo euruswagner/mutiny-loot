@@ -14,8 +14,8 @@
   <h3 class="underline">Primary Class</h3>
     <h4><%= @item.priority %></h4>
   <br />
-  <h3 class="underline">Winners</h3>
   <% if @item.winners.present? %>
+  <h3 class="underline">Winners</h3>
     <% @item.winners.each do |winner| %>
       <h5><%= link_to winner.raider.name, raider_path(winner.raider_id) %></h5>
     <% end %>
@@ -55,10 +55,19 @@
     <br />
     <div class="row">
       <div class="col-4">
-        <h4 class="underline">Melee</h4>
-        <% melee_without_priority_assigned(@item).each do |raider| %>
+        <h4 class="underline">Warriors</h4>
+        <% @item.active_warriors_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
           <div class="row margin-top">
-            <h4 class="item-raiders col-6 <%= class_color(raider) %>"><%= raider.name %></h4>       
+            <h4 class="item-raiders col-6 warrior"><%= raider.name %></h4>       
+            <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+              Create Priority
+            </button> 
+          </div>
+        <% end %>
+        <h4 class="underline">Rogues</h4>
+        <% @item.active_rogues_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
+          <div class="row margin-top">
+            <h4 class="item-raiders col-6 rogue"><%= raider.name %></h4>       
             <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
               Create Priority
             </button> 
@@ -66,10 +75,28 @@
         <% end %>
       </div>
       <div class="col-4">
-        <h4 class="underline">Ranged</h4>
-        <% ranged_without_priority_assigned(@item).each do |raider| %>
+        <h4 class="underline">Hunters</h4>
+        <% @item.active_hunters_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
           <div class="row margin-top">
-            <h4 class="item-raiders col-6 <%= class_color(raider) %>"><%= raider.name %></h4>       
+            <h4 class="item-raiders col-6 hunter"><%= raider.name %></h4>       
+            <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+              Create Priority
+            </button> 
+          </div>
+        <% end %>
+        <h4 class="underline">Mages</h4>
+        <% @item.active_mages_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
+          <div class="row margin-top">
+            <h4 class="item-raiders col-6 mage"><%= raider.name %></h4>       
+            <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+              Create Priority
+            </button> 
+          </div>
+        <% end %>
+        <h4 class="underline">Warlocks</h4>
+        <% @item.active_warlocks_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
+          <div class="row margin-top">
+            <h4 class="item-raiders col-6 warlock"><%= raider.name %></h4>       
             <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
               Create Priority
             </button> 
@@ -77,10 +104,28 @@
         <% end %>
       </div>
       <div class="col-4">
-        <h4 class="underline">Healers</h4>
-        <% healers_without_priority_assigned(@item).each do |raider| %>
+        <h4 class="underline">Priests</h4>
+        <% @item.active_priests_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
           <div class="row margin-top">
-            <h4 class="item-raiders col-6 <%= class_color(raider) %>"><%= raider.name %></h4>       
+            <h4 class="item-raiders col-6 priest"><%= raider.name %></h4>       
+            <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+              Create Priority
+            </button> 
+          </div>
+        <% end %>
+        <h4 class="underline">Shamans</h4>
+        <% @item.active_shamans_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
+          <div class="row margin-top">
+            <h4 class="item-raiders col-6 shaman"><%= raider.name %></h4>       
+            <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+              Create Priority
+            </button> 
+          </div>
+        <% end %>
+        <h4 class="underline">Druids</h4>
+        <% @item.active_druids_without_priority_assigned_or_have_not_won_this_item.each do |raider| %>
+          <div class="row margin-top">
+            <h4 class="item-raiders col-6 druid"><%= raider.name %></h4>       
             <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
               Create Priority
             </button> 

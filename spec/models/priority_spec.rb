@@ -11,21 +11,17 @@ RSpec.describe Priority, type: :model do
     end
 
     it 'returns net points if they are worth less then max worth of item' do
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 0.4)
       item = FactoryBot.create(:item)
       priority = FactoryBot.create(:priority, raider: raider, item: item)
-      attendance1 = FactoryBot.create(:attendance, raider: raider, points: 0.2)
-      attendance2 = FactoryBot.create(:attendance, raider: raider, points: 0.2)
 
       expect(priority.points_worth).to eq 0.4
     end
 
     it 'returns max worth of 3.6 for bracket 1 item' do
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 4.0)
       item = FactoryBot.create(:item)
       priority = FactoryBot.create(:priority, raider: raider, item: item)
-      attendance1 = FactoryBot.create(:attendance, raider: raider, points: 2.0)
-      attendance2 = FactoryBot.create(:attendance, raider: raider, points: 2.0)
 
       expect(priority.points_worth).to eq 3.6
     end
@@ -41,32 +37,21 @@ RSpec.describe Priority, type: :model do
     end
 
     it 'returns ranking + net points for full time member' do
-      raider = FactoryBot.create(:raider, role: 'Healer')
+      raider = FactoryBot.create(:raider, role: 'Healer', total_points_earned: 1.6, total_points_spent: 1.4)
       item = FactoryBot.create(:item, priority: 'Healer')
       priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 50)
       five_weeks_ago = Time.now - 35.days
-      attendance1 = FactoryBot.create(:attendance, raider: raider, points: 0.4, created_at: five_weeks_ago)
-      attendance2 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance3 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance4 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      win1 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.8)
-      win2 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.6)
-
+      attendance = FactoryBot.create(:attendance, raider: raider, points: 0.4, created_at: five_weeks_ago)
 
       expect(priority.total_item_value_for_raider).to eq 50.2
     end
 
     it 'returns half of ranking + net points for non primary spec item' do
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 1.6, total_points_spent: 1.4)
       item = FactoryBot.create(:item, priority: 'Healer')
       priority = FactoryBot.create(:priority, raider: raider, item: item)
       five_weeks_ago = Time.now - 35.days
-      attendance1 = FactoryBot.create(:attendance, raider: raider, points: 0.4, created_at: five_weeks_ago)
-      attendance2 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance3 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      attendance4 = FactoryBot.create(:attendance, raider: raider, points: 0.4)
-      win1 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.8)
-      win2 = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 0.6)
+      attendance = FactoryBot.create(:attendance, raider: raider, points: 0.4, created_at: five_weeks_ago)
 
       expect(priority.total_item_value_for_raider).to eq 25.1
     end
@@ -74,7 +59,7 @@ RSpec.describe Priority, type: :model do
     it 'returns 47.2 if this is 3rd week of raiding for a raider' do
       now = Time.now
       two_weeks_ago = now - 14.days
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
       attendance = FactoryBot.create(:attendance, raider: raider, created_at: two_weeks_ago)
       item = FactoryBot.create(:item)
       priority = FactoryBot.create(:priority, raider: raider, item: item)
@@ -85,7 +70,7 @@ RSpec.describe Priority, type: :model do
     it 'returns 49.2 if this is 3rd week of raiding for a raider and item zone is undefined' do
       now = Time.now
       two_weeks_ago = now - 14.days
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
       attendance = FactoryBot.create(:attendance, raider: raider, created_at: two_weeks_ago)
       item = FactoryBot.create(:item, zone: nil)
       priority = FactoryBot.create(:priority, raider: raider, item: item)
@@ -96,7 +81,7 @@ RSpec.describe Priority, type: :model do
     it 'returns 49.2 if this is 4th week of raiding for a raider' do
       now = Time.now
       three_weeks_ago = now - 21.days
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
       attendance = FactoryBot.create(:attendance, raider: raider, created_at: three_weeks_ago)
       item = FactoryBot.create(:item)
       priority = FactoryBot.create(:priority, raider: raider, item: item)
@@ -107,7 +92,7 @@ RSpec.describe Priority, type: :model do
     it 'returns 50.2 if this is 5th week of raiding for a raider' do
       now = Time.now
       four_weeks_ago = now - 28.days
-      raider = FactoryBot.create(:raider)
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
       attendance = FactoryBot.create(:attendance, raider: raider, created_at: four_weeks_ago)
       item = FactoryBot.create(:item)
       priority = FactoryBot.create(:priority, raider: raider, item: item)

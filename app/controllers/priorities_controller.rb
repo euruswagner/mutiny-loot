@@ -3,8 +3,12 @@ class PrioritiesController < ApplicationController
 
   def create
     item = Item.find(params[:item_id])
-    item.priorities.create(priority_params)
-    redirect_to item_path(item)
+    priority = item.priorities.create(priority_params)
+    if priority.valid?
+      redirect_to item_path(item)
+    else
+      redirect_to item_path(item), alert: 'The ranking you have entered is incorrrect.'
+    end
   end
 
   def destroy

@@ -22,13 +22,16 @@
     <div class="row no-left-margin"><h5>Raid Notes:</h5><input id="notes"></div>
     <div class="row">
       <div class="col-4">
-        <h4 class="underline">Melee</h4>
-        <% melee.each do |raider| %>
+        <h4 class="underline">Warriors</h4>
+        <% @raiders.active.warrior.order(:created_at).each do |raider| %>
           <div class="row no-left-margin attendance-row">
             <div class="col-6 scoot-left"><h5 class="<%= class_color(raider) %>"><%= raider.name %></h5></div>
             <div class="col-6">
               <button data-points="0" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0
+              </button>
+              <button data-points="0.1" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
+                0.1
               </button>
               <button data-points="0.2" data-id="<%= raider.id %>" data-name="<%= raider.name %>" type="button" class="btn btn-sm btn-points btn-secondary">
                 0.2
