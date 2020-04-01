@@ -1,24 +1,5 @@
-# README
+This project is designed to provide our guild with a public place where all members can assess the priority for individual loot items.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Link: https://mutiny-loot.herokuapp.com/
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The site uses Devise to control who is allowed to change information in the database.
