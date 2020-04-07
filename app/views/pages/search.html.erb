@@ -1,9 +1,23 @@
-<h1 class="col-10 offset-1 zones">Results</h1>
-
-<% @results.each do |result| %>  
-  <div class="box col-10 offset-1">
-    <%= link_to item_path(result) do %>
-      <h4 class="zones"><%= result.name %></h4>
+<div class="row"> 
+  <div class="col-4 offset-1">
+    <h1 class="col-10 zones underline">Items</h1>
+    <% @items.each do |item| %>  
+      <div class="box col-10 ">
+        <%= link_to item_path(item) do %>
+          <h4 class="zones"><%= item.name %></h4>
+        <% end %>
+      </div>  
     <% end %>
-  </div>  
-<% end %>
+  </div>
+
+   <div class="col-4 offset-1"> 
+    <h1 class="col-10 zones underline">Raiders</h1>
+    <% @raiders.each do |raider| %>  
+      <div class="box col-10">
+        <%= link_to raider_path(raider) do %>
+          <h4 class="zones"><%= raider.name %></h4>
+        <% end %>
+      </div>  
+    <% end %>
+  </div>
+</div>

@@ -1,3 +1,49 @@
 // Place all the styles related to the Pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#lb-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.4s;
+}
+#lb-back.show {
+  visibility: visible;
+  opacity: 1;
+}
+#lb-img {
+  text-align: center;
+}
+
+.banner {
+  font-family: 'IM Fell French Canon SC', serif;
+  font-weight: bold;
+}
+
+.banner-image {
+  width: 100%;
+}
+
+.enlarge {
+  width: 800px;
+}
+
+.guild-name {
+  font-size: 95px;
+}
+
+@media only screen and (min-width: 1500px) {
+  .guild-name {
+  font-size: 120px;
+}
+}
+
+.white {
+  color: white;
+}

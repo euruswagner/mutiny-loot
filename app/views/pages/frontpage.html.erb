@@ -1,0 +1,80 @@
+<div class="box col-10 offset-1">
+  <div id="lb-back">
+      <div id="lb-img"></div>
+    </div>
+  <div class="banner row">
+    <div class="col-xl-4">
+      <%= image_tag 'rag-kill.png', alt: 'First Ragnaros Kill', class: 'banner-image' %>
+    </div>
+    <div class="col-xl-4">
+      <h1 class="text-center guild-name">Mutiny</h1>
+      <h3 class="text-center">Benediction Server</h3>
+    </div>
+    <div class="col-xl-4">
+      <%= image_tag 'nef-kill.png', alt: 'First Ragnaros Kill', class: 'banner-image text-right' %>
+    </div>
+  </div>
+</div>
+
+<div class="box col-10 offset-1">
+  <h5 class="text-center col-8 offset-2">
+    Mutiny is a Classic WoW guild located on the Benediction server. We are a close group that pushes to clear content as soon as possible. This website is dedicated to helping keep the guild organized and the distribution of loot fair and tranparent.
+    <br />
+    <hr class="grey" />
+    To find raiders or items we recommend using the search function on the Navbar or this one:
+    <%= form_tag(search_page_path, :method => "get", class: 'text-center') do %>  
+      <div class="input-group">  
+        <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>  
+        <div class="input-group-btn">  
+          <%= button_tag "Search", :class => 'btn btn-primary',:name => nil%>  
+        </div>  
+      </div>  
+    <% end %>
+    <br />
+    Alternatively find raiders through this list of raiders organized by role: <%= link_to 'List of Raiders', raiders_path %>. 
+  </h5>
+  <p class="text-center col-8 offset-2 white">*Please note this list of raiders is for active raiders only.</p>
+  <h5 class="text-center col-8 offset-2">
+    Alternatively find items through this list of item categories: <%= link_to 'List of Items by Category', categories_path %>.
+  </h5> 
+  <p class="text-center col-8 offset-2 white">*Please note due to the amount of items we recommend using the search function.</p>
+  <br />
+  <hr class="grey">
+  <h3 class="text-center col-8 offset-2">How the officers use this website to help you!</h3>
+  <h5 class="text-center col-8 offset-2">
+    The officers are all admins on this website. Once we are confident in your interest in the guild we will take the priority list you fill out and input it into the database. You will find lists for yourself or other raiders at the bottom of their respective pages. The website then uses magic (okay math and methods) to produces a ranked final list that takes into account where you ranked an item, penalties for recruits and non primary items, and the attendance points you have earned and spent. You can find the ranked list for each item on their respective pages. During raids the master looter will assign loot to people using this list. The website once again uses magic to determine the amount of points spent (this depends on where you rank an item, points earned before this raid night, and points spent before winning this item). The master looter will announce how many points you will spend for an item while asking you if you accept the loot. You always have the option to pass if you want to save points for other items. Points spent for winning loot are applied as you win the item and can change your ranking for items that drop later in a raid. At the end of the night participation points are rewarded to each raider that attended a raid. As a normal raider you will not have the ability to see much of this functionality but if you have any questions just ask an officer for more information.
+  </h5>
+</div>
+
+<script type="text/javascript">
+// This function will show the image in the lightbox
+var zoomImg = function () {
+  // Create evil image clone
+  var clone = this.cloneNode();
+  clone.classList.remove("banner-image");
+
+  // Put evil clone into lightbox
+  var lb = document.getElementById("lb-img");
+  lb.innerHTML = "";
+  lb.appendChild(clone);
+
+  // Show lightbox
+  lb = document.getElementById("lb-back");
+  lb.classList.add("show");
+};
+
+window.addEventListener("load", function(){
+  // Attach on click events to all .zoomD images
+  var images = document.getElementsByClassName("banner-image");
+  if (images.length>0) {
+    for (var img of images) {
+      img.addEventListener("click", zoomImg);
+    }
+  }
+
+  // Click event to hide the lightbox
+  document.getElementById("lb-back").addEventListener("click", function(){
+    this.classList.remove("show");
+  })
+});
+</script>
