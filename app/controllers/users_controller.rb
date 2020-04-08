@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @unapproved_users = User.where(:approved => false)
+    @unapproved_users = User.where(approved: false)
+    @unconnected_users = User.where(raider_id: nil)
     @raiders = Raider.all
   end
 

@@ -1,8 +1,20 @@
 <div class="box col-10 offset-1">
-  <h1>User Dashboard</h1>
-
+  <% if @user.raider.nil? %>
+    <h1>User Dashboard</h1>
+  <% else %>
+    <h1><%= link_to @user.raider.name, raider_path(@user.raider) %></h1>
+    <h3 class="<%= @user.raider.class_color %>">-<%= @user.raider.which_class %>(<%= @user.raider.role %>)</h3>
+  <% end %>
+    
   <% if current_user.admin? %>
-  <%= render partial: 'create_raider' %>
+  <div class="row">  
+    <div class="col-lg-6"> 
+      <%= render partial: 'create_raider' %>
+    </div>
+    <div class="col-lg-6">
+      <%= render partial: 'connect_raiders_to_users' %>
+    </div>
+  </div>
   <% if @unapproved_users.present? %>
     <h3 class="underline">Unapproved Users</h3>
       <% @unapproved_users.each do |user| %>

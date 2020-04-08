@@ -13,6 +13,7 @@ class Raider < ApplicationRecord
   scope :shaman, -> { where(which_class: 'Shaman') }
   scope :druid, -> { where(which_class: 'Druid') }
   scope :healer, -> { where(role: 'Healer') }
+  scope :not_connected, -> { where(user_id: nil) }
 
   def net_points
     net_points = self.total_points_earned - self.total_points_spent

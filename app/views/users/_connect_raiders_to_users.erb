@@ -1,0 +1,35 @@
+<h3>Users without a connected Raider:</h3>
+<% @unconnected_users.each do |user| %>
+  <div class="row">
+    <div class="col-2">
+      <h5><%= user.char_name %>:</h5>
+    </div>
+    <% @raiders.not_connected.active.sort.each do |raider| %>       
+      <div class="col-2">
+        <button data-user-id="<%= user.id %>" data-raider-id="<%= raider.id %>" class="btn create-connection btn-sm">
+          <%= raider.name %> 
+        </button>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(".create-connection").click(function( event ) {
+    var user = $(this).data('user-id');
+    var raider = $(this).data('raider-id');
+    var url = `/users/${user}/connect/${raider}`
+    var payload = {
+        user_id: user,
+        raider_id: raider
+      };
+    $.ajax({
+      type: "GET",
+      url: url,
+      data: payload,
+      success: function () {
+        location.reload(true);
+      }
+    });
+  });
+</script>
