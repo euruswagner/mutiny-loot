@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     resources :attendances, only: [:create, :destroy]
   end
   get "/users/approve/:id", to: 'users#approve'
+  get '/users/:user_id/connect/:raider_id', to: 'users#connect'
   get '/search' => 'pages#search', :as => 'search_page'
 end

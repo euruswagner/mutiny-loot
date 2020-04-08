@@ -2,6 +2,7 @@ class Raider < ApplicationRecord
   has_many :attendances, dependent: :destroy
   has_many :priorities, dependent: :destroy
   has_many :winners, dependent: :destroy
+  belongs_to :user, optional: true
   scope :active, -> { where.not(role: 'Retired')}
   scope :warrior, -> { where(which_class: 'Warrior') }
   scope :rogue, -> { where(which_class: 'Rogue') }
