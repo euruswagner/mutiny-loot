@@ -32,5 +32,10 @@ class User < ApplicationRecord
     recoverable
   end     
 
-  
+  def signed_up_for(raid)
+    signed_up = raid.signups.find do |signup|
+      self == signup.user
+    end
+    return signed_up.present?
+  end
 end
