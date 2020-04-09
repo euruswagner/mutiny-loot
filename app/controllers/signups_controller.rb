@@ -4,8 +4,12 @@ class SignupsController < ApplicationController
 
   def create
     @raid = Raid.find(params[:raid_id])
-    @raid.signups.create(user: current_user)
-    redirect_to raid_path(@raid)
+    @signup = @raid.signups.create(user: current_user)
+    if @signup.valid?
+      redirect_to raid_path(@raid), notice: 'You have signed up for this raid see you then.'
+    else
+      redirect_to raid_path(@raid), alert: 'You have already signed up for this raid.'
+    end
   end
 
   private

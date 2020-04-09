@@ -49,4 +49,8 @@ FactoryBot.define  do
     name {'ZG'}
     start_time {'April 15th, 2020 8:00 PM'}
   end
+
+  factory :signup do
+      
+  end
 end
