@@ -47,3 +47,40 @@
 .white {
   color: white;
 }
+
+.table {
+  color: white;
+}
+
+.simple-calendar {
+  color: white;
+  .day {
+    height: 100px
+  }
+
+  .wday-0 {}
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {}
+
+  .today {
+    background: #40005e;
+  }
+  .past {}
+  .future {}
+
+  .start-date {}
+
+  .prev-month {
+    background: #40005e;
+  }
+  .next-month {
+    background: #40005e;
+  }
+  .current-month {}
+
+  .has-events {}
+}

@@ -1,0 +1,11 @@
+<div class="box col-lg-10 offset-1">
+  <%= month_calendar events: @raids do |date, raids| %>
+    <%= date.day %>
+
+    <% raids.each do |raid| %>
+      <div>
+        <%= link_to raid.name, raid_path(raid) %>
+      </div>
+      <% end %>
+  <% end %>
+</div>
