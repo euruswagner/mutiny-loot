@@ -44,4 +44,9 @@ FactoryBot.define  do
     association :raider
     association :item
   end
+
+  factory :raid do
+    name {'ZG'}
+    start_time {'April 15th, 2020 8:00 PM'}
+  end
 end

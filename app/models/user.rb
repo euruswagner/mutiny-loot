@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :comments, dependent: :destroy
+  has_many :signups, dependent: :destroy
   has_one :raider
 
   validates :char_name, presence: true

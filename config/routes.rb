@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   resources :raiders, only: [:index, :show, :new, :create, :update] do
     resources :attendances, only: [:create, :destroy]
   end
-  resources :raids, only: [:show, :create]
+  resources :raids, only: [:show, :create] do
+    resources :signups, only: :create
+  end
 
   get '/users/approve/:id', to: 'users#approve'
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'
