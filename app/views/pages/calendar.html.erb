@@ -8,4 +8,7 @@
       </div>
       <% end %>
   <% end %>
+  <% if current_user.try(:admin?) %>
+    <%= render partial: 'create_raid' %>
+  <% end %>
 </div>

@@ -13,7 +13,7 @@ class RaidsController < ApplicationController
   def create
     @raid = Raid.create(raid_params)
     if @raid.valid?
-      redirect_to raid_path(@raid)
+      redirect_to calendar_path
     else
       redirect_to calendar_path, alert: 'The information you have entered is incomplete.'
     end

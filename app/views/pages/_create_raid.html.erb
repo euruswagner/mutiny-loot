@@ -1,0 +1,30 @@
+<!-- Button trigger modal -->
+<div class="row">
+  <div class="col-2 offset-1">
+    <button type="button" class="btn btn-primary btn float-right" data-toggle="modal" data-target="#CreateRaidModal">
+      Create Raid
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="CreateRaidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box create-raid">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Create Raid</h4>
+                
+      </div>
+      <%= simple_form_for @raid do |f| %>
+        <div class="modal-body">        
+          <%= f.input :name, label: 'Name:' %>
+          <%= f.input :start_time, label: 'Raid Start Time:'  %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Create Raid', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

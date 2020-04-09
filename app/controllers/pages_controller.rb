@@ -5,6 +5,7 @@ class PagesController < ApplicationController
 
   def calendar
     @raids = Raid.all
+    @raid = Raid.new
   end
 
   def search

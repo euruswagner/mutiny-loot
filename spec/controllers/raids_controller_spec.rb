@@ -10,7 +10,7 @@ RSpec.describe RaidsController, type: :controller do
       post :create, params: {raid: {name: 'ZG', start_time: time}}
 
       last_raid = Raid.last
-      expect(response).to redirect_to raid_path(last_raid)
+      expect(response).to redirect_to calendar_path
       expect(last_raid.name).to eq 'ZG'
       expect(last_raid.start_time.day).to eq 15
       expect(last_raid.start_time.month).to eq 4
