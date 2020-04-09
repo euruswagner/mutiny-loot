@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_14_203236) do
+ActiveRecord::Schema.define(version: 2020_04_09_135742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,21 @@ ActiveRecord::Schema.define(version: 2020_03_14_203236) do
     t.float "total_points_spent", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
+
+  create_table "raids", force: :cascade do |t|
+    t.string "name"
+    t.datetime "start_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "signups", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "raid_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -81,6 +96,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_203236) do
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
     t.boolean "approved", default: false, null: false
+    t.integer "raider_id"
     t.index ["approved"], name: "index_users_on_approved"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

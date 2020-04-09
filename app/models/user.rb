@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_many :comments, dependent: :destroy
+  has_many :signups, dependent: :destroy
+  has_one :raider
 
   validates :char_name, presence: true
   # Include default devise modules. Others available are:
@@ -30,5 +32,10 @@ class User < ApplicationRecord
     recoverable
   end     
 
-  
+  def signed_up_for(raid)
+    signed_up = raid.signups.find do |signup|
+      self == signup.user
+    end
+    return signed_up.present?
+  end
 end

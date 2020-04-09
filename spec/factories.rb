@@ -1,6 +1,6 @@
 FactoryBot.define  do
   factory :user do
-    email {"fakeuser@gmail.com"}
+    sequence(:email) { |n| "person#{n}@example.com" }
     char_name {"fake"}
     password {"password"}
     password_confirmation {"password"}
@@ -43,5 +43,14 @@ FactoryBot.define  do
 
     association :raider
     association :item
+  end
+
+  factory :raid do
+    name {'ZG'}
+    start_time {'April 15th, 2020 8:00 PM'}
+  end
+
+  factory :signup do
+      
   end
 end

@@ -3,6 +3,11 @@ class PagesController < ApplicationController
 
   end
 
+  def calendar
+    @raids = Raid.all
+    @raid = Raid.new
+  end
+
   def search
     if params[:search].blank? then  
       redirect_to(root_path, alert: "Empty field!") and return  

@@ -2,6 +2,7 @@ class Raider < ApplicationRecord
   has_many :attendances, dependent: :destroy
   has_many :priorities, dependent: :destroy
   has_many :winners, dependent: :destroy
+  belongs_to :user, optional: true
   scope :active, -> { where.not(role: 'Retired')}
   scope :warrior, -> { where(which_class: 'Warrior') }
   scope :rogue, -> { where(which_class: 'Rogue') }
@@ -12,6 +13,7 @@ class Raider < ApplicationRecord
   scope :shaman, -> { where(which_class: 'Shaman') }
   scope :druid, -> { where(which_class: 'Druid') }
   scope :healer, -> { where(role: 'Healer') }
+  scope :not_connected, -> { where(user_id: nil) }
 
   def net_points
     net_points = self.total_points_earned - self.total_points_spent
