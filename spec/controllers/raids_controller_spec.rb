@@ -62,4 +62,76 @@ RSpec.describe RaidsController, type: :controller do
       expect(Raid.count).to eq 0
     end
   end
+
+  describe 'raids#update action' do
+    it 'allows raids to be updated' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user, admin: true)
+      sign_in user
+
+      patch :update, params: {id: raid.id, raid: {name: 'BWL'}}
+
+      expect(response).to redirect_to raid_path(raid)
+      raid.reload
+      expect(raid.name).to eq 'BWL'
+    end
+
+    it 'requires users to be logged in' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user, admin: true)
+
+      patch :update, params: {id: raid.id, raid: {name: 'BWL'}}
+
+      expect(response).to redirect_to new_user_session_path
+      expect(raid.name).to eq 'ZG'
+    end
+
+    it 'requires users to be admins to update' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user)
+      sign_in user
+
+      patch :update, params: {id: raid.id, raid: {name: 'BWL'}}
+
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eq 'You do not have the privileges required to do that.'
+      expect(raid.name).to eq 'ZG'
+    end
+  end
+
+  describe 'raids#destroy action' do
+    it 'allows raids to be destroyed' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user, admin: true)
+      sign_in user
+
+      delete :destroy, params: {id: raid.id}
+
+      expect(response).to redirect_to calendar_path
+      expect(flash[:notice]).to eq 'You have successfully deleted a raid.'
+      expect(Raid.count).to eq 0
+    end
+
+    it 'requires users to be signed in' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user, admin: true)
+
+      delete :destroy, params: {id: raid.id}
+
+      expect(response).to redirect_to new_user_session_path
+      expect(raid.name).to eq 'ZG'
+    end
+
+    it 'requires users to be admins to delete' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user)
+      sign_in user
+
+      delete :destroy, params: {id: raid.id}
+      
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eq 'You do not have the privileges required to do that.'
+      expect(raid.name).to eq 'ZG'
+    end
+  end
 end

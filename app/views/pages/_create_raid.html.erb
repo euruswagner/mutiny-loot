@@ -18,7 +18,7 @@
       <%= simple_form_for @raid do |f| %>
         <div class="modal-body">        
           <%= f.input :name, label: 'Name:' %>
-          <%= f.input :start_time, label: 'Raid Start Time:'  %>
+          <%= f.input :start_time, label: 'Raid Start Time:', default: Time.parse('19:30')   %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -1,13 +1,14 @@
 class RaidsController < ApplicationController
-  before_action :set_raid, only: :show
-  before_action :authenticate_user!, only: :create
-  before_action :authenticate_admin!, only: :create
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
+  before_action :authenticate_admin!, only: [:create, :update, :destroy]
   
   def index
     @raids = Raid.all
   end
 
   def show
+    @raid = raid
+    @signup = Signup.new
   end
 
   def create
@@ -18,11 +19,26 @@ class RaidsController < ApplicationController
       redirect_to calendar_path, alert: 'The information you have entered is incomplete.'
     end
   end
+
+  def update
+    raid.assign_attributes(raid_params)
+    raid.save
+    if raid.valid?
+      redirect_to raid_path(raid)
+    else
+      redirect_to raid_path(raid), alert: 'That update is invalid.'
+    end
+  end
+
+  def destroy
+    raid.destroy
+    redirect_to calendar_path, notice: 'You have successfully deleted a raid.'
+  end
   
   private
     
-  def set_raid
-    @raid = Raid.find(params[:id])
+  def raid
+    @raid ||= Raid.find(params[:id])
   end
 
   def raid_params

@@ -1,0 +1,28 @@
+<%# link_to 'Sign Up for Raid', raid_signups_path(@raid), method: :post, class: 'btn btn-secondary col-2 btn-margin' %>
+<!-- Button trigger modal -->
+<div class="col-2">
+  <button type="button" class="btn btn-primary btn float-right" data-toggle="modal" data-target="#RaidSignupModal">
+    Sign Up
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="RaidSignupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Sign Up for this Raid</h4>
+                
+      </div>
+      <%= simple_form_for @signup, url: raid_signups_path(@raid) do |f| %>
+        <div class="modal-body">        
+          <%= f.input :notes, label: 'Note:' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Sign Up', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
