@@ -46,8 +46,9 @@ FactoryBot.define  do
   end
 
   factory :raid do
+    time = Time.now + 2.days
     name {'ZG'}
-    start_time {'April 15th, 2020 8:00 PM'}
+    start_time {time}
   end
 
   factory :signup do

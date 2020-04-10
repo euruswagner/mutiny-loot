@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-10"> 
       <h1><%= @raid.name %></h1>
-      <h3> - <%= @raid.start_time.month %>/<%= @raid.start_time.day %>/<%= @raid.start_time.year %>&nbsp<%= @raid.start_time.strftime("%r") %></h3>
+      <h3> - <%= @raid.start_time.strftime("%B %-d, %Y %l:%M %p") %></h3>
     </div>
     <% if current_user && current_user.signed_up_for(@raid) %>
 
@@ -14,7 +14,10 @@
     <div class="col-6">
       <h3 class="underline">Tanks:</h3>
       <% @raid.signed_up_tanks.each do |signup| %>
+        <div class="row no-left-margin">
           <h5 class="<%= signup.user.raider.class_color %>"><%= signup.user.raider.name %></h5>
+          <h5>&nbsp- <%= signup.created_at.strftime("%_m/%-d %-H:%M:%S") %></h5>
+        </div>
       <% end %>
     </div>
     <div class="col-6">
