@@ -8,13 +8,14 @@ RSpec.describe SignupsController, type: :controller do
       user = FactoryBot.create(:user, raider_id: raider.id)
       sign_in user
 
-      post :create, params: {raid_id: raid.id}
+      post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
       
       expect(response).to redirect_to raid_path(raid)
       expect(flash[:notice]).to eq 'You have signed up for this raid see you then.'
       last_signup = Signup.last
       raider_id = last_signup.user.raider_id 
       expect(last_signup.user_id).to eq user.id
+      expect(last_signup.notes).to eq 'Test'
       expect(Raider.find(raider_id).role).to eq 'Fury'
     end
 
@@ -23,7 +24,7 @@ RSpec.describe SignupsController, type: :controller do
       raider = FactoryBot.create(:raider)
       user = FactoryBot.create(:user, raider_id: raider.id)
 
-      post :create, params: {raid_id: raid.id}
+      post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
       
       expect(response).to redirect_to new_user_session_path
       expect(Signup.count).to eq 0
@@ -36,11 +37,24 @@ RSpec.describe SignupsController, type: :controller do
       signup = FactoryBot.create(:signup, raid_id: raid.id, user_id: user.id)
       sign_in user
 
-      post :create, params: {raid_id: raid.id}
+      post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
       
       expect(response).to redirect_to raid_path(raid)
-      expect(flash[:alert]).to eq 'You have already signed up for this raid.'
+      expect(flash[:alert]).to eq 'You have either already signed up for this raid or your note is to long.'
       expect(Signup.count).to eq 1
+    end
+
+    it 'does not allow notes over 25 characters' do
+      raid = FactoryBot.create(:raid)
+      raider = FactoryBot.create(:raider)
+      user = FactoryBot.create(:user, raider_id: raider.id)
+      sign_in user
+
+      post :create, params: {raid_id: raid.id, signup: {notes: '12345678901234567890123 45'}}
+      
+      expect(response).to redirect_to raid_path(raid)
+      expect(flash[:alert]).to eq 'You have either already signed up for this raid or your note is to long.'
+      expect(Signup.count).to eq 0
     end
 
     it 'does not allow signups before a week' do
@@ -51,7 +65,7 @@ RSpec.describe SignupsController, type: :controller do
       user = FactoryBot.create(:user, raider_id: raider.id)
       sign_in user
 
-      post :create, params: {raid_id: raid.id}
+      post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
       
       expect(response).to redirect_to raid_path(raid)
       expect(flash[:alert]).to eq "You can not currently sign up for this raid. Signups open #{open_time.strftime("%B %-d, %Y %l:%M %p")}"
@@ -65,7 +79,7 @@ RSpec.describe SignupsController, type: :controller do
       user = FactoryBot.create(:user, raider_id: raider.id)
       sign_in user
 
-      post :create, params: {raid_id: raid.id}
+      post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
       
       expect(response).to redirect_to raid_path(raid)
       expect(flash[:alert]).to eq 'You can not sign up for raids that have already occured.'

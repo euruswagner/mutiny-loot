@@ -8,6 +8,7 @@ class RaidsController < ApplicationController
   end
 
   def show
+    @signup = Signup.new
   end
 
   def create

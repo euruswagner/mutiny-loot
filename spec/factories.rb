@@ -52,6 +52,6 @@ FactoryBot.define  do
   end
 
   factory :signup do
-      
+    notes {'test'}
   end
 end

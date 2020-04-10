@@ -4,11 +4,11 @@ class SignupsController < ApplicationController
   before_action :authenticate_admin!, only: :update
 
   def create
-    signup = raid.signups.create(user: current_user)
+    signup = raid.signups.create(signup_params.merge(user: current_user))
     if signup.valid?
       redirect_to raid_path(raid), notice: 'You have signed up for this raid see you then.'
     else
-      redirect_to raid_path(raid), alert: 'You have already signed up for this raid.'
+      redirect_to raid_path(raid), alert: 'You have either already signed up for this raid or your note is to long.'
     end
   end
 
@@ -19,7 +19,7 @@ class SignupsController < ApplicationController
   end
 
   def signup_params
-    params.require(:signup)
+    params.require(:signup).permit(:notes)
   end
 
   def signup_period?
