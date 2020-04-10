@@ -86,4 +86,47 @@ RSpec.describe SignupsController, type: :controller do
       expect(Signup.count).to eq 0
     end
   end
+
+  describe 'signups#destroy action' do
+    it 'allows a sign up to be destoyed' do
+      raid = FactoryBot.create(:raid)
+      raider = FactoryBot.create(:raider)
+      user = FactoryBot.create(:user, raider_id: raider.id)
+      signup = FactoryBot.create(:signup, raid_id: raid.id, user_id: user.id)
+      sign_in user
+
+      delete :destroy, params: {use_route: "raids/#{raid.id}/signups/", id: signup.id, raid_id: raid.id}
+
+      expect(response).to redirect_to raid_path(raid)
+      expect(flash[:notice]).to eq 'You have eliminated your sign up for this raid.'
+      expect(Signup.count).to eq 0
+    end
+
+    it 'requires user to be signed in' do
+      raid = FactoryBot.create(:raid)
+      raider = FactoryBot.create(:raider)
+      user = FactoryBot.create(:user, raider_id: raider.id)
+      signup = FactoryBot.create(:signup, raid_id: raid.id, user_id: user.id)
+
+      delete :destroy, params: {use_route: "raids/#{raid.id}/signups/", id: signup.id, raid_id: raid.id}
+
+      expect(response).to redirect_to new_user_session_path
+      expect(Signup.count).to eq 1
+    end
+
+    it 'requires correct user to be signed in' do
+      raid = FactoryBot.create(:raid)
+      raider = FactoryBot.create(:raider)
+      user1 = FactoryBot.create(:user, raider_id: raider.id)
+      user2 = FactoryBot.create(:user)
+      signup = FactoryBot.create(:signup, raid_id: raid.id, user_id: user1.id)
+      sign_in user2
+
+      delete :destroy, params: {use_route: "raids/#{raid.id}/signups/", id: signup.id, raid_id: raid.id}
+
+      expect(response).to redirect_to raid_path(raid)
+      expect(flash[:alert]).to eq 'This is not your raid sign up.'
+      expect(Signup.count).to eq 1
+    end
+  end
 end

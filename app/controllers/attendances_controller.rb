@@ -14,7 +14,6 @@ class AttendancesController < ApplicationController
   def destroy
     raider = Raider.find(params[:raider_id])
     attendance = raider.attendances.find(params[:attendance_id])
-    raider = Raider.find_by_id(attendance.raider_id)
     points_not_earned = attendance.points * -1
     attendance.destroy
     raider.update_total_points_earned(points_not_earned)
