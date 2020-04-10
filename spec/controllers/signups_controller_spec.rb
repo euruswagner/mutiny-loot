@@ -68,7 +68,7 @@ RSpec.describe SignupsController, type: :controller do
       post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
       
       expect(response).to redirect_to raid_path(raid)
-      expect(flash[:alert]).to eq "You can not currently sign up for this raid. Signups open #{open_time.strftime("%B %-d, %Y %l:%M %p")}"
+      expect(flash[:alert]).to eq "You can not currently sign up for this raid. Sign ups open #{open_time.strftime("%B %-d, %Y %l:%M %p")}"
       expect(Signup.count).to eq 0
     end
 

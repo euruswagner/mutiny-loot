@@ -1,0 +1,27 @@
+<!-- Button trigger modal -->
+<div>
+  <button type="button" class="btn btn-primary btn" data-toggle="modal" data-target="#EditRaidModal">
+    Edit Raid
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="EditRaidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Edit Raid</h4>
+                
+      </div>
+      <%= simple_form_for @raid, url: raid_path(@raid) do |f| %>
+        <div class="modal-body">        
+          <%= f.input :name, label: 'Name:' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Edit Raid', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

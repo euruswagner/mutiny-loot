@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :raiders, only: [:index, :show, :new, :create, :update] do
     resources :attendances, only: [:create, :destroy]
   end
-  resources :raids, only: [:show, :create] do
+  resources :raids, only: [:show, :create, :update, :destroy] do
     resources :signups, only: [:create, :destroy]
   end
 
