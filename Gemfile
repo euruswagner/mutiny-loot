@@ -84,3 +84,5 @@ group :development, :test do
 end
 
 gem 'simple_calendar', '~> 2.0'
+
+gem 'rails-controller-testing'
