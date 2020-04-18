@@ -9,7 +9,6 @@ class RaidsController < ApplicationController
   def show
     @raid = raid
     @organized_signups = organized_signups
-    @test_array = test_array
     @signup = Signup.new
   end
 
@@ -51,14 +50,6 @@ class RaidsController < ApplicationController
     if current_user.admin != true
       redirect_to root_path, alert: 'You do not have the privileges required to do that.'
     end
-  end
-
-  def test_array
-    sub_ary1 = [1, 2, 3]
-    sub_ary2 = ['a', 'b', 'c']
-    sub_ary3 = sub_ary1 + sub_ary2
-    test_array = [sub_ary1, sub_ary2, sub_ary3]
-    return test_array
   end
 
   def organized_signups
