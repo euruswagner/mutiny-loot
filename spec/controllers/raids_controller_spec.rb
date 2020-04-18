@@ -190,7 +190,7 @@ RSpec.describe RaidsController, type: :controller do
     end
 
     it 'In non ZG no limits to assignments' do
-      raid = FactoryBot.create(:raid, name: 'BWLzz')
+      raid = FactoryBot.create(:raid, name: 'Another go')
       raider1 = FactoryBot.create(:raider, which_class: 'Warrior', role: 'Tank')
       raider2 = FactoryBot.create(:raider, which_class: 'Warrior', role: 'Tank')
       raider3 = FactoryBot.create(:raider, which_class: 'Warrior', role: 'Tank')

@@ -10,71 +10,20 @@
       <%= render partial: 'signup_for_raid' %> 
     <% end %>
   </div>
-  <div class="row">
-    <div class="col-6">
-      <h3 class="underline">Tanks:</h3>
-      <% @organized_signups[0].each do |signup| %>
-        <div class="row no-left-margin">
-          <h5 class="<%= signup.user.raider.class_color %>"><%= signup.user.raider.name %></h5>
-          <h5>&nbsp- <%= signup.created_at.strftime("%_m/%-d %-H:%M:%S") %></h5>
-          <h5>&nbsp&nbspNotes: <%= signup.notes %></h5>
-          <% if current_user && current_user == signup.user %>
-            <%= link_to 'X', raid_signup_path(id: signup.id, raid_id: @raid.id), method: :delete, data: {confirm: 'Are you sure you want remove this sign up?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="col-6">
-      <h3 class="underline">Healers:</h3>
-      <% @organized_signups[1].each do |signup| %>
-        <div class="row no-left-margin">
-          <h5 class="<%= signup.user.raider.class_color %>"><%= signup.user.raider.name %></h5>
-          <h5>&nbsp- <%= signup.created_at.strftime("%_m/%-d %-H:%M:%S") %></h5>
-          <h5>&nbsp&nbspNotes: <%= signup.notes %></h5>
-          <% if current_user && current_user == signup.user %>
-            <%= link_to 'X', raid_signup_path(id: signup.id, raid_id: @raid.id), method: :delete, data: {confirm: 'Are you sure you want remove this sign up?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <h3 class="underline">Melee:</h3>
-      <% @organized_signups[2].each do |signup| %>
-        <div class="row no-left-margin">
-          <h5 class="<%= signup.user.raider.class_color %>"><%= signup.user.raider.name %></h5>
-          <h5>&nbsp- <%= signup.created_at.strftime("%_m/%-d %-H:%M:%S") %></h5>
-          <h5>&nbsp&nbspNotes: <%= signup.notes %></h5>
-          <% if current_user && current_user == signup.user %>
-            <%= link_to 'X', raid_signup_path(id: signup.id, raid_id: @raid.id), method: :delete, data: {confirm: 'Are you sure you want remove this sign up?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="col-6">
-      <h3 class="underline">Ranged:</h3>
-      <% @organized_signups[3].each do |signup| %>
-        <div class="row no-left-margin">
-          <h5 class="<%= signup.user.raider.class_color %>"><%= signup.user.raider.name %></h5>
-          <h5>&nbsp- <%= signup.created_at.strftime("%_m/%-d %-H:%M:%S") %></h5>
-          <h5>&nbsp&nbspNotes: <%= signup.notes %></h5>
-          <% if current_user && current_user == signup.user %>
-            <%= link_to 'X', raid_signup_path(id: signup.id, raid_id: @raid.id), method: :delete, data: {confirm: 'Are you sure you want remove this sign up?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <br />
-  <hr class="grey">
+  <% if @raid.zg? %>
+    <%= render partial: 'zg_raid_signups' %>
+  <% else %>
+    <%= render partial: 'forty_man_raid_signups' %>
+  <% end %>
   <% if current_user.try(:admin?) %>
-        <div class="col-12">
-          <div class="row">
-            <%= render partial: 'edit_raid' %>
-            &nbsp &nbsp
-            <%= link_to 'Delete Raid', raid_path(@raid), method: :delete, data: {confirm: 'Are you sure you want to delete this raid?'}, class: 'btn btn-secondary' %>
-          </div>
-        </div> 
+    <br />
+    <hr class="grey">
+    <div class="col-12">
+      <div class="row">
+        <%= render partial: 'edit_raid' %>
+        &nbsp &nbsp
+        <%= link_to 'Delete Raid', raid_path(@raid), method: :delete, data: {confirm: 'Are you sure you want to delete this raid?'}, class: 'btn btn-secondary' %>
+      </div>
+    </div> 
   <% end %>
 </div>

@@ -3,7 +3,11 @@ class Raid < ApplicationRecord
 
   def zg? 
     name = self.name.downcase.split('')
-    return name.include? 'z' && 'g'
+    if name.include? 'z'
+      return true if name.include? 'g'
+      return false
+    end
+    return false
   end
   
   def organized_signups

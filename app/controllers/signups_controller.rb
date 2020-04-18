@@ -33,7 +33,7 @@ class SignupsController < ApplicationController
     open_time = start_time - 7.days
     time_till_raid = start_time - Time.now
     if time_till_raid > 604800 
-      redirect_to raid_path(raid), alert: "You can not currently sign up for this raid. Sign ups open #{open_time.strftime("%B %-d, %Y %l:%M %p")}"
+      redirect_to raid_path(raid), alert: "You can not currently sign up for this raid. Sign ups open #{open_time.strftime("%B %-d, %Y %l:%M %p")} EST."
     end
     if time_till_raid < 0
       redirect_to raid_path(raid), alert: 'You can not sign up for raids that have already occured.'
