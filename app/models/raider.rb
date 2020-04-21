@@ -13,6 +13,8 @@ class Raider < ApplicationRecord
   scope :shaman, -> { where(which_class: 'Shaman') }
   scope :druid, -> { where(which_class: 'Druid') }
   scope :healer, -> { where(role: 'Healer') }
+  scope :stand_by_healer, -> { where(role: 'Friends and Family-Healer')}
+  scope :stand_by_dps, -> { where(role: 'Friends and Family-DPS')}
   scope :not_connected, -> { where(user_id: nil) }
 
   def net_points
@@ -91,7 +93,9 @@ class Raider < ApplicationRecord
     'Shadow': 'Shadow',
     'Elemental': 'Elemental',
     'Moonkin': 'Moonkin',    
-    'Retired': 'Retired'
+    'Retired': 'Retired',
+    'Friends and Family-DPS': 'Friends and Family-DPS',
+    'Friends and Family-Healer': 'Friends and Family-Healer'
   }
 
   validates :name, presence: true

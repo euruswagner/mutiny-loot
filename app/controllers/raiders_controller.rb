@@ -3,11 +3,7 @@ class RaidersController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :create, :update]
 
   def index
-    raiders = Raider.all
-    @melee = sorted_melee(raiders)
-    @ranged = sorted_ranged(raiders)
-    @healers = sorted_healers(raiders)
-    @retired = Raider.where(role: 'Retired')
+    @raiders = sorted_raiders_for_index
   end
 
   def show
@@ -50,31 +46,82 @@ class RaidersController < ApplicationController
     end
   end
 
-  def sorted_melee(raiders)
-    active_warriors_sorted = raiders.active.warrior.order(:created_at)
-    active_rogues_sorted = raiders.active.rogue.order(:created_at)
-    active_enhancement_sorted = raiders.where(role: 'Enhancement').order(:created_at)
-    active_feral_sorted = raiders.where(role: 'Feral').order(:created_at)
-    sorted_melee = active_warriors_sorted + active_rogues_sorted + active_enhancement_sorted + active_feral_sorted
-    return sorted_melee
-  end
+  def sorted_raiders_for_index
+    active_warriors = []
+    active_rogues = []
+    active_enhancement = []
+    active_feral = []
+    active_hunters = []
+    active_mages = []
+    active_warlocks = []
+    active_shadow = []
+    active_elemental = []
+    active_moonkin = []
+    active_priests = []
+    active_shamans = []
+    active_druids = []
+    friends_and_family_healer = []
+    friends_and_family_dps = []
+    retired = []
 
-  def sorted_ranged(raiders)
-    active_hunters_sorted = raiders.active.hunter.order(:created_at)
-    active_mages_sorted = raiders.active.mage.order(:created_at)
-    active_warlocks_sorted = raiders.active.warlock.order(:created_at)
-    active_shadow_sorted = raiders.where(role: 'Shadow').order(:created_at)
-    active_elemental_sorted = raiders.where(role: 'Elemental').order(:created_at)
-    active_moonkin_sorted = raiders.where(role: 'Moonkin').order(:created_at)
-    sorted_ranged = active_hunters_sorted + active_mages_sorted + active_warlocks_sorted + active_shadow_sorted + active_elemental_sorted + active_moonkin_sorted
-    return sorted_ranged
+    raiders = Raider.all.order(:created_at)
+    raiders.each do |raider|
+      if raider.role == 'Retired'
+        retired << raider
+        next
+      elsif raider.role == 'Friends and Family-Healer'
+        friends_and_family_healer << raider
+        next
+      elsif raider.role == 'Friends and Family-DPS'
+        friends_and_family_dps << raider
+        next
+      elsif raider.which_class == 'Warrior'
+        active_warriors << raider
+        next
+      elsif raider.which_class == 'Rogue'
+        active_rogues << raider
+        next
+      elsif raider.which_class == 'Shaman' && raider.role == 'Enhancement'
+        active_enhancement << raider
+        next
+      elsif raider.which_class == 'Druid' && raider.role == 'Feral'
+        active_feral << raider
+        next
+      elsif raider.which_class == 'Hunter'
+        active_hunters << raider
+        next
+      elsif raider.which_class == 'Mage'
+        active_mages << raider
+        next
+      elsif raider.which_class == 'Warlock'
+        active_warlocks << raider
+        next
+      elsif raider.which_class == 'Priest' && raider.role == 'Shadow' 
+        active_shadow << raider
+        next
+      elsif raider.which_class == 'Shaman' && raider.role == 'Elemental'
+        active_elemental << raider
+        next
+      elsif raider.which_class == 'Druid' && raider.role == 'Moonkin'
+        active_moonkin << raider
+        next
+      elsif raider.which_class == 'Priest' && raider.role == 'Healer' 
+        active_priests << raider
+        next
+      elsif raider.which_class == 'Shaman' && raider.role == 'Healer'
+        active_shamans << raider
+        next
+      elsif raider.which_class == 'Druid' && raider.role == 'Healer'
+        active_druids << raider
+        next 
+      else
+        next 
+      end           
+    end
+    active_melee = active_warriors + active_rogues + active_enhancement + active_feral
+    active_ranged = active_hunters + active_mages + active_warlocks + active_shadow + active_elemental + active_moonkin
+    active_healers = active_priests + active_shamans + active_druids
+    sorted_raiders_for_index = [active_melee, active_ranged, active_healers, friends_and_family_healer, friends_and_family_dps, retired]
+    return sorted_raiders_for_index
   end
-
-  def sorted_healers(raiders)
-    active_priests_sorted = raiders.priest.healer.order(:created_at)
-    active_shamans_sorted = raiders.shaman.healer.order(:created_at)
-    active_druids_sorted = raiders.druid.healer.order(:created_at)
-    sorted_healers = active_priests_sorted + active_shamans_sorted + active_druids_sorted
-    return sorted_healers
-  end   
 end

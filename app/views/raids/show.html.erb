@@ -10,11 +10,7 @@
       <%= render partial: 'signup_for_raid' %> 
     <% end %>
   </div>
-  <% if @raid.zg? %>
-    <%= render partial: 'zg_raid_signups' %>
-  <% else %>
-    <%= render partial: 'forty_man_raid_signups' %>
-  <% end %>
+  <%= render partial: 'raid_signups' %>
   <% if current_user.try(:admin?) %>
     <br />
     <hr class="grey">
