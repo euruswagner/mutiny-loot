@@ -67,8 +67,8 @@ class RaidsController < ApplicationController
     shadows = []
     moonkins = []
     elementals = []
-    zg_healer_standbys = []
-    zg_dps_standbys = []
+    healer_standbys = []
+    dps_standbys = []
     healers_count = 0
     damage_dealers = 0
     signups = Signup.where(raid_id: raid)
@@ -93,11 +93,11 @@ class RaidsController < ApplicationController
           healers_count += 1
           next
         elsif raider.role == 'Healer' && healers_count >= 5
-          zg_healer_standbys << signup
+          healer_standbys << signup
           healers_count += 1
           next
         elsif damage_dealers >= 13
-          zg_dps_standbys << signup
+          dps_standbys << signup
           damage_dealers += 1
           next
         elsif raider.role == 'Fury'
@@ -148,6 +148,14 @@ class RaidsController < ApplicationController
       signups.each do |signup|
         raider = Raider.find(signup.user.raider_id)
 
+        if raider.role == 'Friends and Family-Healer' 
+          healer_standbys << signup
+          next
+        end
+        if raider.role == 'Friends and Family-DPS' 
+          dps_standbys << signup
+          next
+        end
         tanks << signup if raider.role == 'Tank'
         healing_priests << signup if raider.role == 'Healer' && raider.which_class == 'Priest'
         healing_shamans << signup if raider.role == 'Healer' && raider.which_class == 'Shaman'
@@ -168,7 +176,7 @@ class RaidsController < ApplicationController
     healers = healing_priests + healing_shamans + healing_druids
     melee = dps_warriors + rogues + ferals + enhancements
     ranged = hunters + mages + warlocks + shadows + moonkins + elementals
-    raid = [tanks, healers, melee, ranged, zg_healer_standbys, zg_dps_standbys]
+    raid = [tanks, healers, melee, ranged, healer_standbys, dps_standbys]
     return raid
   end
 end
