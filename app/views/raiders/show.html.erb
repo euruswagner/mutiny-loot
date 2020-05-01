@@ -13,7 +13,7 @@
     </div>
     <div class="col-3 text-right">  
       <% if current_user.try(:admin?) %>
-        <%= link_to 'No Call - No Show', raider_attendances_path(raider_id: @raider, attendance: {notes: 'No Call - No Show', points: -0.2}), method: :post, class: 'btn btn-secondary' %>
+        <%= link_to 'No Call - No Show', raider_attendances_path(raider_id: @raider, attendance: {notes: 'No Call - No Show', points: -0.2}), method: :post, data: {confirm: 'Are you this raider did not post in attendance channel?'},class: 'btn btn-secondary' %>
         <%= render partial: 'edit_raider' %>
       <% end %>
     </div>

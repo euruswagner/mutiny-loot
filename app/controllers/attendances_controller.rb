@@ -12,6 +12,8 @@ class AttendancesController < ApplicationController
     elsif attendance.valid?
       points_earned = attendance.points
       raider.update_total_points_earned(points_earned)
+    else
+      redirect_to user_path(current_user), alert: 'That attendance was not valid.'
     end
   end
 
