@@ -5,9 +5,15 @@ class AttendancesController < ApplicationController
   def create
     raider = Raider.find(params[:raider_id])
     attendance = raider.attendances.create(attendance_params)
-    if attendance.valid?
+    if attendance.valid? && attendance.notes == 'No Call - No Show'
       points_earned = attendance.points
       raider.update_total_points_earned(points_earned)
+      redirect_to raider_path(raider)
+    elsif attendance.valid?
+      points_earned = attendance.points
+      raider.update_total_points_earned(points_earned)
+    else
+      redirect_to user_path(current_user), alert: 'That attendance was not valid.'
     end
   end
 
