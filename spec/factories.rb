@@ -54,4 +54,9 @@ FactoryBot.define  do
   factory :signup do
     notes {'test'}
   end
+
+  factory :news_post do
+    title {'Test'}
+    message {'This is a test message.'}
+  end
 end

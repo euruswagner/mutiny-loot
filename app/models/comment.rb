@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :user
-  belongs_to :item
+  belongs_to :news_post
   after_create :send_comment_email
 
   def send_comment_email

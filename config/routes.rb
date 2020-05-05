@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :raids, only: [:show, :create, :update, :destroy] do
     resources :signups, only: [:create, :destroy]
   end
+  resources :news_posts, only: [:index, :show, :create, :update, :destroy]
 
   get '/users/approve/:id', to: 'users#approve'
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'
