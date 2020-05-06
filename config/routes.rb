@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :items, only: [:show, :edit, :update] do 
     resources :priorities, only: [:create, :destroy]
     resources :winners, only: [:create, :destroy]
-    resources :comments, only: [:create, :edit, :update, :destroy]    
   end
   resources :users, only: :show 
   resources :raiders, only: [:index, :show, :new, :create, :update] do
@@ -15,7 +14,9 @@ Rails.application.routes.draw do
   resources :raids, only: [:show, :create, :update, :destroy] do
     resources :signups, only: [:create, :destroy]
   end
-  resources :news_posts, only: [:index, :show, :create, :update, :destroy]
+  resources :news_posts, only: [:index, :show, :create, :update, :destroy] do
+    resources :comments, only: [:create, :update, :delete]
+  end
 
   get '/users/approve/:id', to: 'users#approve'
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'

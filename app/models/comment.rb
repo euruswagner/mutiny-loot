@@ -6,4 +6,6 @@ class Comment < ApplicationRecord
   def send_comment_email
     NotificationMailer.comment_added(self).deliver_now
   end
+
+  validates :message, presence: true, length: {minimum: 2}
 end

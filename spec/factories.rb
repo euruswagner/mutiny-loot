@@ -58,5 +58,14 @@ FactoryBot.define  do
   factory :news_post do
     title {'Test'}
     message {'This is a test message.'}
+
+    association :user
+  end
+
+  factory :comment do
+    message {'This is a test message.'}
+
+    association :user
+    association :news_post
   end
 end
