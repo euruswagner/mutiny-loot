@@ -35,6 +35,9 @@
           <li class="nav-item">
             <%= link_to 'Calendar', calendar_path, class: 'nav-link' %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'News Feed', news_posts_path, class: 'nav-link' %>
+          </li>
           <% if user_signed_in? %>
             <li class="nav-item">
               <%= link_to 'My Profile', user_path(current_user), class: 'nav-link' %>

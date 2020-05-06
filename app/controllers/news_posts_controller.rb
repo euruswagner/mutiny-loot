@@ -4,19 +4,13 @@ class NewsPostsController < ApplicationController
 
   def index
     @news_posts = NewsPost.all
+    @news_post = NewsPost.new
   end
 
   def show
     @news_post = news_post
   end
-
-  def new
-    @news_post = NewsPost.new
-  end
-
-  def edit
-  end
-
+ 
   def create
     @news_post = NewsPost.create(news_post_params.merge(user: current_user))
 
