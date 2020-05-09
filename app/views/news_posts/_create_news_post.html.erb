@@ -1,0 +1,26 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateNewsPostModal">
+  Create News Post
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="CreateNewsPostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box create-raid">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Create News Post</h4>
+                
+      </div>
+      <%= simple_form_for @news_post do |f| %>
+        <div class="modal-body">        
+          <%= f.input :title, label: 'Title:' %>
+          <%= f.input :message, label: 'Message:'   %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Create News Post', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

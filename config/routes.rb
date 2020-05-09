@@ -1,19 +1,29 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {:registrations => "users/registrations"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  devise_for :users, :controllers => {:registrations => "users/registrations"}
+  
   root 'pages#frontpage'
   resources :categories, only: [:show, :index]
+  
   resources :items, only: [:show, :edit, :update] do 
     resources :priorities, only: [:create, :destroy]
     resources :winners, only: [:create, :destroy]
-    resources :comments, only: [:create, :edit, :update, :destroy]    
   end
-  resources :users, only: :show 
+  
+  resources :users, only: :show do 
+    root :to => "welcome#index"
+  end
+
   resources :raiders, only: [:index, :show, :new, :create, :update] do
     resources :attendances, only: [:create, :destroy]
   end
+  
   resources :raids, only: [:show, :create, :update, :destroy] do
     resources :signups, only: [:create, :destroy]
+  end
+  
+  resources :news_posts, only: [:index, :show, :create, :update, :destroy] do
+    resources :comments, only: [:create, :update, :destroy]
   end
 
   get '/users/approve/:id', to: 'users#approve'

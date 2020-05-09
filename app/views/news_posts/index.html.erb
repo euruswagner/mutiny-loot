@@ -1,0 +1,21 @@
+<div class="box col-10 offset-1">
+  <% if current_user.try(:admin?) %>
+    <div class="row">
+      <div class="col-8 text-right">
+        <h1 id="news-feed">News Feed</h1>
+      </div>   
+      <div class="col-4 text-right">
+          <%= render partial: 'create_news_post' %>
+      </div>
+    </div>
+  <% else %>
+    <div class="text-center">
+        <h1 id="news-feed">News Feed</h1>
+    </div>  
+  <% end %>
+  <hr class="grey">
+  <% @news_posts.each do |news_post| %>
+      <h1><%= link_to news_post.title, news_post_path(news_post) %></h1>
+      <h4 class="<%= news_post.user.raider.class_color %>" id="index-author">-<%= news_post.user.raider.name %></h4>
+  <% end %>
+</div>

@@ -239,3 +239,40 @@ abbr {
   display: inline-block;
   background: red;
 }
+
+.message-horizontal-rule {
+  margin: 2em 0;
+}
+
+.message-author {
+  margin-right: 10%;
+  font-family: 'Dancing Script', cursive;
+  font-size: 35px;
+}
+
+#news-feed {
+  color: white;
+  font-family: 'IM Fell French Canon SC', serif;
+  font-weight: 500;
+  font-size: 60px;
+}
+
+#index-author {
+  margin-left: 80%;
+  font-family: 'Dancing Script', cursive;
+  font-size: 35px;
+}
+
+.comment-box {
+  border: 1px white dashed;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.comment-box h5 {
+  text-align: right;
+  margin-right: 10px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 28px;
+}

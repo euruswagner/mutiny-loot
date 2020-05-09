@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_145311) do
+ActiveRecord::Schema.define(version: 2020_05_05_172435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,11 +32,11 @@ ActiveRecord::Schema.define(version: 2020_04_10_145311) do
   create_table "comments", force: :cascade do |t|
     t.text "message"
     t.integer "user_id"
-    t.integer "item_id"
+    t.integer "news_post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_comments_on_item_id"
-    t.index ["user_id", "item_id"], name: "index_comments_on_user_id_and_item_id"
+    t.index ["news_post_id"], name: "index_comments_on_news_post_id"
+    t.index ["user_id", "news_post_id"], name: "index_comments_on_user_id_and_news_post_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 2020_04_10_145311) do
     t.text "winner"
     t.string "classification", default: "Unlimited"
     t.index ["category_id"], name: "index_items_on_category_id"
+  end
+
+  create_table "news_posts", force: :cascade do |t|
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.integer "user_id"
   end
 
   create_table "priorities", force: :cascade do |t|

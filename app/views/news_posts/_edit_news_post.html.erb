@@ -1,0 +1,26 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary margin-top" data-toggle="modal" data-target="#EditNewsPostModal">
+  Edit
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="EditNewsPostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Edit News Post</h4>
+                
+      </div>
+      <%= simple_form_for @news_post, url: news_post_path(@news_post) do |f| %>
+        <div class="modal-body">        
+          <%= f.input :title, label: 'Title:' %>
+          <%= f.input :message, label: 'Message:' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Edit News Post', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
