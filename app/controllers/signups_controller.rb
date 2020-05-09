@@ -1,5 +1,6 @@
 class SignupsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :user_must_have_raider, only: :create
   before_action :signup_period?, only: :create
   before_action :correct_user?, only: :destroy
 
@@ -26,6 +27,12 @@ class SignupsController < ApplicationController
 
   def signup_params
     params.require(:signup).permit(:notes)
+  end
+
+  def user_must_have_raider
+    if current_user.raider_id.nil?
+      redirect_to raid_path(raid), alert: 'You do not have a connected raider. Please contact an officer to correct this.'
+    end
   end
 
   def signup_period?

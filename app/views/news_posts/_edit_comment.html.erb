@@ -1,0 +1,25 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#EditComment<%= comment.id %>Modal">
+  Edit
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="EditComment<%= comment.id %>Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Edit Comment</h4>
+                
+      </div>
+      <%= simple_form_for @comment, method: :patch, url: news_post_comment_path(news_post_id: comment.news_post.id, comment_id: comment.id) do |f| %>
+        <div class="modal-body">        
+          <%= f.input :message, label: 'Message:' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Edit Comment', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

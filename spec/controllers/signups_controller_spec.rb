@@ -30,6 +30,18 @@ RSpec.describe SignupsController, type: :controller do
       expect(Signup.count).to eq 0
     end
 
+    it 'reguires users to have connected raider' do
+      raid = FactoryBot.create(:raid)
+      user = FactoryBot.create(:user)
+      sign_in user
+
+      post :create, params: {raid_id: raid.id, signup: {notes: 'Test'}}
+      
+      expect(response).to redirect_to raid_path(raid)
+      expect(flash[:alert]).to eq 'You do not have a connected raider. Please contact an officer to correct this.'
+      expect(Signup.count).to eq 0
+    end
+
     it 'does not allow double signups' do
       raid = FactoryBot.create(:raid)
       raider = FactoryBot.create(:raider)

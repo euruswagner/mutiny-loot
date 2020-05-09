@@ -9,6 +9,7 @@ class NewsPostsController < ApplicationController
 
   def show
     @news_post = news_post
+    @comment = Comment.new
   end
  
   def create

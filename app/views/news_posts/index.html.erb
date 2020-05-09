@@ -13,10 +13,9 @@
         <h1 id="news-feed">News Feed</h1>
     </div>  
   <% end %>
+  <hr class="grey">
   <% @news_posts.each do |news_post| %>
-    <div class="row no-left-margin">  
-      <h2><%= link_to news_post.title, news_post_path(news_post) %></h3>
+      <h1><%= link_to news_post.title, news_post_path(news_post) %></h1>
       <h4 class="<%= news_post.user.raider.class_color %>" id="index-author">-<%= news_post.user.raider.name %></h4>
-    </div>
   <% end %>
 </div>

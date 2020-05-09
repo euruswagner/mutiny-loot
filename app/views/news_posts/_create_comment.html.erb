@@ -1,0 +1,27 @@
+<!-- Button trigger modal -->
+<div class="text-right">  
+  <button type="button" class="btn btn-primary margin-top" data-toggle="modal" data-target="#CreateCommentModal">
+    Add Comment
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="CreateCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content box">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Edit Raider</h4>
+                
+      </div>
+      <%= simple_form_for @comment, url: news_post_comments_path(@news_post) do |f| %>
+        <div class="modal-body">        
+          <%= f.input :message, label: 'Message:' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Add Comment', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

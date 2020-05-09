@@ -1,16 +1,53 @@
 <div class="box col-10 offset-1">
-  <h1 class="text-center"><%= @news_post.title%></h1>
-  <hr class="grey message-horizontal-rule">
-  <h3 class="text-center"><%= @news_post.message %></h3>
-  <h4 class="<%= @news_post.user.raider.class_color %> text-right message-author-margin-right">- <%= @news_post.user.raider.name %></h4>
   <% if current_user.try(:admin?) %>  
-    <div class="row">  
-      <div class="col-10 text-right">  
+    <div class="row">
+      <h1 class="col-xl-10 col-8 text-center"><%= @news_post.title%></h1>
+      <div class="col-xl-1 col-2 text-right">  
         <%= render partial: 'edit_news_post' %>
       </div>
-      <div class="col-2 text-right">
+      <div class="col-xl-1 col-2 text-right">
         <%= link_to 'Delete', news_post_path(@news_post), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-secondary' %>
       </div>
     </div>
+  <% else %>
+  <h1 class="text-center"><%= @news_post.title%></h1>
   <% end %>
+  <hr class="grey message-horizontal-rule">
+  <h3 class="text-center"><%= @news_post.message %></h3>
+  <h4 class="<%= @news_post.user.raider.class_color %> text-right message-author">- <%= @news_post.user.raider.name %></h4>
+  <hr class="grey">
+  <br>
+  <% @news_post.comments.each do |comment| %>
+    <div class="comment-box">
+      <div class="row"> 
+        <div class="col-10">  
+          <h4><%= comment.message %></h4>
+        </div>
+        <div class="col-2 text-right">
+          <% if current_user.try(:admin?) && current_user != comment.user %>
+            <%= link_to 'Delete', 
+                news_post_comment_path(news_post_id: comment.news_post.id, comment_id: comment.id), method: :delete, 
+                data: {confirm: 'Are you sure you want delete this?'}, 
+                class: 'btn btn-secondary btn-sm' %>
+          <% elsif current_user && current_user == comment.user %>
+            <%= render partial: 'edit_comment', locals: { comment: comment } %>
+
+            <%= link_to 'Delete', 
+                  news_post_comment_path(news_post_id: comment.news_post.id, comment_id: comment.id), method: :delete, 
+                  data: {confirm: 'Are you sure you want delete this?'}, 
+                  class: 'btn btn-secondary btn-sm' %>
+          <% else %>
+
+          <% end %>
+        </div>
+      </div>
+      <% if comment.user.raider %>
+        <h5 class="<%= comment.user.raider.class_color %>">- <%= comment.user.raider.name %></h5>
+      <% else %>
+        <h5>- <%= comment.user.char_name %></h5>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+  <%= render partial: 'create_comment' %>
 </div>

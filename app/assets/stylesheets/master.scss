@@ -244,8 +244,10 @@ abbr {
   margin: 2em 0;
 }
 
-.message-author-margin-right {
+.message-author {
   margin-right: 10%;
+  font-family: 'Dancing Script', cursive;
+  font-size: 35px;
 }
 
 #news-feed {
@@ -256,5 +258,21 @@ abbr {
 }
 
 #index-author {
-  margin-left: 15px;
+  margin-left: 80%;
+  font-family: 'Dancing Script', cursive;
+  font-size: 35px;
+}
+
+.comment-box {
+  border: 1px white dashed;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.comment-box h5 {
+  text-align: right;
+  margin-right: 10px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 28px;
 }

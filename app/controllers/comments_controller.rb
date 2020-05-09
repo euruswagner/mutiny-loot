@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
     return render_not_found if comment.blank?
 
 
-    if comment.user != current_user
+    if comment.user != current_user && current_user.admin == false
       return redirect_to news_post_path(news_post), alert: 'This is not your comment.'
     end
     comment.destroy

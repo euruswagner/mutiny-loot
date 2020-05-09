@@ -130,6 +130,21 @@ RSpec.describe CommentsController, type: :controller do
       expect(Comment.count).to eq 0
     end
 
+    it 'allows comments by a different user to be destroyed by an admin' do
+      news_post = FactoryBot.create(:news_post)
+      user = FactoryBot.create(:user, admin: true)
+      comment = FactoryBot.create(:comment, news_post_id: news_post.id)
+      sign_in user
+
+      delete :destroy, params: {  use_route: "news_posts/#{news_post.id}/comments/", 
+                                news_post_id: news_post.id, 
+                                comment_id: comment.id}
+
+      expect(response).to redirect_to news_post_path(news_post)
+      expect(flash[:notice]).to eq 'You have successfully deleted a comment.'
+      expect(Comment.count).to eq 0
+    end
+
     it 'requires users to be logged in to delete comments' do
       news_post = FactoryBot.create(:news_post)
       user = FactoryBot.create(:user, admin: false)
@@ -145,7 +160,7 @@ RSpec.describe CommentsController, type: :controller do
       expect(Comment.count).to eq 1
     end
 
-    it 'shouldn\'t let users who didn\'t create the comment update it' do
+    it 'shouldn\'t let users who didn\'t create the comment delete it' do
       news_post = FactoryBot.create(:news_post)
       user = FactoryBot.create(:user, admin: false)
       comment = FactoryBot.create(:comment, news_post_id: news_post.id)
