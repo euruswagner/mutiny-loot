@@ -130,7 +130,7 @@ class Item < ApplicationRecord
     'Chest': 'Chest',
     'Wrists': 'Wrists',
     'Hands': 'Hands',
-    'Waist': 'Waits',
+    'Waist': 'Waist',
     'Legs': 'Legs',
     'Feet': 'Feet',
     'Ring': 'Ring',
