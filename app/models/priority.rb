@@ -153,13 +153,13 @@ class Priority < ApplicationRecord
       priorities_in_bracket << self.raider.priorities.where(phase: 5, ranking: ranking)
     end
     priorities_in_bracket.flatten.each do |priority|
-      if priority.id == self.id
-        next
-      elsif priority.item.category == self.item.category
-        return true
-      else 
-        next
-      end
+      next if priority.id == self.id
+      return true if priority.item.category == self.item.category
+      return true if priority.item.category == self.item.category.split.first
+      return true if priority.item.category == self.item.category.split.last
+      return true if priority.item.category.split.first == self.item.category
+      return true if priority.item.category.split.last == self.item.category
+      next
     end
     return false
   end

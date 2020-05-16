@@ -296,12 +296,40 @@ RSpec.describe Priority, type: :model do
       expect(priority.valid_priority?(41)).to eq true
     end
 
-    it 'returns false if more then a category would be represented twice in a bracket' do
+    it 'returns false if a category would be represented twice in a bracket' do
       raider = FactoryBot.create(:raider)
       item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Head')
       item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
       item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Hands')
       item4 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Head')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
+      priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 47, phase: 5)
+      
+      expect(priority4.valid_priority?(49)).to eq false
+    end
+
+    it 'returns false if shoulder and feet conflict with feet' do
+      raider = FactoryBot.create(:raider)
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder and Feet')
+      item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Hands')
+      item4 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Feet')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
+      priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 47, phase: 5)
+      
+      expect(priority4.valid_priority?(49)).to eq false
+    end
+
+    it 'returns false if shoulder and feet conflict with Shoulder' do
+      raider = FactoryBot.create(:raider)
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
+      item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Hands')
+      item4 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder and Feet')
       priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
       priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
       priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
