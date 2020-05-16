@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  before_action :authenticate_admin!, only: [:incomplete_items]
+  before_action :authenticate_user!, only: :incomplete_items
+  before_action :authenticate_admin!, only: :incomplete_items
 
   def frontpage
 
