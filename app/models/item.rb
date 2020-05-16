@@ -93,6 +93,7 @@ class Item < ApplicationRecord
     'Warrior Mage Warlock': 'Warrior Mage Warlock',
     'Warrior Feral': 'Warrior Feral',
     'Warrior Feral Enhancement': 'Warrior Feral Enhancement',
+    'Rogue Hunter': 'Rogue Hunter',
     'Rogue Hunter Tank': 'Rogue Hunter Tank',
     'Rogue Shaman': 'Rogue Shaman',
     'Rogue Tank': 'Rogue Tank',
