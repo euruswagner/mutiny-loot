@@ -109,6 +109,7 @@ class Item < ApplicationRecord
     'Mage Warlock Shadow Tank': 'Mage Warlock Shadow Tank',
     'Mage Warlock Shadow Moonkin Elemental': 'Mage Warlock Shadow Moonkin Elemental',
     'Warlock Shaman': 'Warlock Shaman',
+    'Warlock Shadow': 'Warlock Shadow',
     'Shaman Druid': 'Shaman Druid',
     'Feral Enhancement': 'Feral Enhancement',
     'Feral Enhancement Fury': 'Feral Enhancement Fury',
