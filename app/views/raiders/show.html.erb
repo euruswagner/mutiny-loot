@@ -51,25 +51,14 @@
       <% end %>
     </div>
   </div>
-  <hr class="grey">
-  <div class="col-12">
-    <h3 class="underline scoot-left">Priority List</h3>
-    <% priority_rankings.each do |x| %>
-      <div class="row">
-        <h5><%= x %></h5>
-        <% @raider.priorities.where(ranking: x).each do |priority| %>
-          <div class="col-5">
-            <div class="row">
-              <%= link_to item_path(priority.item) do %>
-                <h5 class="scoot-right <%= item_classification(priority) %>"><%= priority.item.name %></h5>
-              <% end %>
-              <% if current_user.try(:admin?) %>
-                <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+  
+  <% if current_user && current_user == @raider.user || current_user.try(:admin?) %>
+    <hr class="grey" id="aq">
+    <%= render partial: 'aq_list' %>
+  <% end %>
+  
+  <%= render partial: 'phase_3_loot_list' %>
+
 </div>
+
+

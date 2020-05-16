@@ -72,6 +72,28 @@ class Raider < ApplicationRecord
     return ''
   end
 
+  def lock_priorities
+    self.priorities.each do |priority|
+      if priority.locked?
+        next
+      else
+        priority.write_attribute(:locked, true)
+        priority.save
+      end
+    end
+  end
+
+  def unlock_priorities
+    self.priorities.each do |priority|
+      if priority.phase == 3
+        next
+      else
+        priority.write_attribute(:locked, false)
+        priority.save
+      end
+    end
+  end
+
   WHICH_CLASS = {
     'Warrior': 'Warrior',
     'Rogue': 'Rogue',

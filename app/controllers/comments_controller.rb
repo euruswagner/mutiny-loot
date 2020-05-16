@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     if comment.valid? then
       return redirect_to news_post_path(news_post)
     else
-      return redirect_to news_post_path(news_post), alert: 'Comments must have 2 characters'
+      return redirect_to news_post_path(news_post), alert: 'Comments must have 2 characters.'
     end
   end
 
@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
     if comment.valid? then
       return redirect_to news_post_path(news_post)
     else
-      return redirect_to news_post_path(news_post), alert: 'Comments must have 2 characters'
+      return redirect_to news_post_path(news_post), alert: 'Comments must have 2 characters.'
     end
   end
 

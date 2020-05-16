@@ -7,15 +7,11 @@ FactoryBot.define  do
     approved { true }
   end
 
-  factory :category do 
-    name {"Test"}
-  end
-  
   factory :item do
     name {"test item"}
     zone {"Blackwing Lair"}
+    classification {'Unlimited'}
 
-    association :category
   end
 
   factory :raider do

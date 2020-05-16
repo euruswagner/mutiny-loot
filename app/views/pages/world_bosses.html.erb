@@ -1,0 +1,11 @@
+<div class="box col-10 offset-1">
+  <h1 class="text-center zone-header">World Bosses</h1>
+  <hr class="grey">
+  <div class="row">  
+    <% @world_bosses_items.order(:name).each do |item| %>
+      <div class="col-lg-4">  
+        <h5><%= link_to item.name, item_path(item) %></h5>
+      </div>
+    <% end %>
+  </div>
+</div>

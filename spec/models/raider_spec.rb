@@ -96,4 +96,24 @@ RSpec.describe Raider, type: :model do
       expect(raider.low_attendance?).to eq false
     end
   end
+
+  describe 'Raider lock_priorities method' do
+    it 'locks all priorities for a raider' do
+      raider = FactoryBot.create(:raider)
+      item1 = FactoryBot.create(:item)
+      item2 = FactoryBot.create(:item)
+      item3 = FactoryBot.create(:item)
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 48, phase: 5, locked: false)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 48, phase: 5, locked: false)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 47, phase: 5, locked: false)
+
+      raider.lock_priorities
+      priority1.reload
+      priority2.reload
+      priority3.reload
+      expect(priority1.locked).to eq true
+      expect(priority2.locked).to eq true
+      expect(priority3.locked).to eq true
+    end
+  end
 end

@@ -23,7 +23,7 @@ RSpec.describe CommentsController, type: :controller do
       post :create, params: {news_post_id: news_post.id, comment: {message: 'T'}}
 
       expect(response).to redirect_to news_post_path(news_post)
-      expect(flash[:alert]).to eq 'Comments must have 2 characters'
+      expect(flash[:alert]).to eq 'Comments must have 2 characters.'
       expect(Comment.count).to eq 0
     end
 
@@ -76,7 +76,7 @@ RSpec.describe CommentsController, type: :controller do
                                 comment: {message: 'T'}}
 
       expect(response).to redirect_to news_post_path(news_post)
-      expect(flash[:alert]).to eq 'Comments must have 2 characters'
+      expect(flash[:alert]).to eq 'Comments must have 2 characters.'
       comment.reload
       expect(comment.message).to eq 'This is a test message.'
     end

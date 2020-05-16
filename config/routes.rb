@@ -6,12 +6,12 @@ Rails.application.routes.draw do
   resources :categories, only: [:show, :index]
   
   resources :items, only: [:show, :edit, :update] do 
-    resources :priorities, only: [:create, :destroy]
+    resources :priorities, only: [:create, :update, :destroy]
     resources :winners, only: [:create, :destroy]
   end
   
   resources :users, only: :show do 
-    root :to => "welcome#index"
+    root :to => 'pages#frontpage'
   end
 
   resources :raiders, only: [:index, :show, :new, :create, :update] do
@@ -28,7 +28,15 @@ Rails.application.routes.draw do
 
   get '/users/approve/:id', to: 'users#approve'
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'
-  # get '/search' => 'pages#search', :as => 'search_page' <-- keep just in case there is an issue
-  get '/search', to: 'pages#search', as: 'search_page' #reformat to match other syntax
+  get '/search', to: 'pages#search', as: 'search_page'
+  get '/raiders/:raider_id/search', to: 'raiders#search', as: 'raiders_search' 
   get '/calendar', to: 'pages#calendar'
+  get '/zones/naxx', to: 'pages#naxx'
+  get '/zones/aq', to: 'pages#aq'
+  get '/zones/bwl', to: 'pages#bwl'
+  get '/zones/mc', to: 'pages#mc'
+  get '/zones/world_bosses', to: 'pages#world_bosses'
+  get '/incomplete_items', to: 'pages#incomplete_items'
+  get 'raiders/lock/:id', to: 'priorities#lock', as: 'raiders_lock'
+  get 'raiders/unlock/:id', to: 'priorities#unlock', as: 'raiders_unlock'
 end

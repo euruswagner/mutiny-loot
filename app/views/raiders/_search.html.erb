@@ -1,0 +1,22 @@
+<div class="box" id="raiders-search-results-box">  
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">Add Item to Your List</h4>
+  </div>
+  <div class="modal-body">
+    <% @items.each do |item| %>  
+        <div class="box col-10 offset-1">
+          <div class="row">  
+            <h4 class="zones col-8"><%= item.name %></h4>
+            <div class="col-4 text-right">  
+              <%= link_to item_priorities_path(item_id: item.id, priority: {raider_id: current_user.raider.id, ranking: 25, phase: 5, locked: false}), method: :post do %>
+                <button class="btn btn-secondary">Add Item</button>
+              <% end %>
+            </div>
+          </div>
+        </div>  
+      <% end %>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_172435) do
+ActiveRecord::Schema.define(version: 2020_05_15_162021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,12 +21,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_172435) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "raider_id"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -43,13 +37,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_172435) do
     t.string "name"
     t.string "link"
     t.string "priority"
-    t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "zone"
     t.text "winner"
     t.string "classification", default: "Unlimited"
-    t.index ["category_id"], name: "index_items_on_category_id"
+    t.string "category"
   end
 
   create_table "news_posts", force: :cascade do |t|
@@ -66,6 +59,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_172435) do
     t.integer "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "phase", default: 3
+    t.boolean "locked", default: true
   end
 
   create_table "raiders", force: :cascade do |t|

@@ -66,7 +66,7 @@ RSpec.describe Item, type: :model do
       attendance = FactoryBot.create(:attendance, raider: raider4, points: 0.4, created_at: five_weeks_ago)
       attendance = FactoryBot.create(:attendance, raider: raider5, points: 0.4, created_at: five_weeks_ago)
 
-      expect(item.ordered_list_of_priorities).to eq [priority2, priority1, priority3]
+      expect(item.phase_3_ordered_list_of_priorities).to eq [priority2, priority1, priority3]
     end
   end
 end

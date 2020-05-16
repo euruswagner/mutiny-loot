@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AttendancesController, type: :controller do
   describe 'attendances#create action' do
     it 'allows attendances to be created and updates total points earned' do
+      User.destroy_all
       raider = FactoryBot.create(:raider, total_points_spent: 0.6, total_points_earned: 5.0)
       user = FactoryBot.create(:user, admin: true)
       sign_in user

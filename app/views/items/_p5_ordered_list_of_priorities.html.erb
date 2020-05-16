@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-8"><h3 class="underline">Phase 5 Priority List</h3></div>
+  <% if current_user.try(:admin?) %>
+    <%= render partial: 'free_roll_other_raiders' %>
+  <% end %>
+</div>
+<% @item.phase_5_ordered_list_of_priorities.each do |priority| %>
+  <div class="row">
+    <div class="col-3"><h5><%= link_to priority.raider.name, raider_path(priority.raider_id) %> - <%= priority.phase_5_total_item_value_for_raider %></h5></div>
+    <% if current_user.try(:admin?) %>
+      <div class="col-3">
+        <button data-raider-id="<%= priority.raider.id %>" data-raider-name="<%= priority.raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= priority.points_worth %>" class="btn btn-secondary create-winner btn-sm">
+          <%= priority.raider.name %> - <%= priority.points_worth.to_s %>
+        </button>
+      </div>
+      <div class="col-3">
+        <button data-raider-id="<%= priority.raider.id %>" data-raider-name="<%= priority.raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+          <%= priority.raider.name %> - Free Roll
+        </button>
+      </div>
+      <% if priority.raider.low_attendance? %>
+        <div class="col-3">
+          <h5 class="low-attendance-warning">Low Attendance</h5>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
