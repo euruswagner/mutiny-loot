@@ -1,0 +1,30 @@
+<div class="box col-10 offset-1">
+  <h1 class="text-center">A list of items that are missing information.</h1>
+  <hr class="grey">
+  <h2 class="underline">Items missing a zone:</h2>
+  <div class="row">  
+    <% @items_missing_zone.order(:name).each do |item| %>
+      <div class="col-lg-4">  
+        <h5><%= link_to item.name, item_path(item) %></h5>
+      </div>
+    <% end %>
+  </div>
+  <hr class="grey">
+  <h2 class="underline">Items missing a priority:</h2>
+  <div class="row">  
+    <% @items_missing_priority.order(:name).each do |item| %>
+      <div class="col-lg-4">  
+        <h5><%= link_to item.name, item_path(item) %></h5>
+      </div>
+    <% end %>
+  </div>
+  <hr class="grey">
+  <h2 class="underline">Items missing a category:</h2>
+  <div class="row">  
+    <% @items_missing_category.order(:name).each do |item| %>
+      <div class="col-lg-4">  
+        <h5><%= link_to item.name, item_path(item) %></h5>
+      </div>
+    <% end %>
+  </div>
+</div>

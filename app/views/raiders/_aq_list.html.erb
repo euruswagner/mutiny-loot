@@ -1,0 +1,147 @@
+<% if current_user && current_user.raider.id == @raider.id && current_user.try(:admin?) %>  
+  <div class="row">
+    <div class="col-4">
+    <% if list_is_locked?(@raider) %>
+    <%= link_to 'Unlock Priorities', raiders_unlock_path(@raider), class: 'btn btn-secondary' %>
+    <% else %>
+      <%= link_to 'Lock Priorities', raiders_lock_path(@raider), class: 'btn btn-secondary' %>
+    <% end %>
+    </div>    
+    <div class="col-5">  
+      <h3 class="text-left">AQ Loot List</h3>
+    </div>
+    <div class="col-3 text-right">
+      <%= form_tag(raiders_search_path(@raider), {:remote => true, 
+                                                'data-toggle' =>  "modal", 
+                                                'data-target' => '#modal-window', 
+                                                :method => "get", 
+                                                class: 'text-center'}) do %>  
+      <div class="input-group">  
+        <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>  
+          <div class="input-group-btn">  
+            <%= button_tag "Search", :class => 'btn btn-primary',:name => nil%>  
+          </div>  
+      </div>  
+    <% end %>
+    </div>
+  </div>
+<% elsif current_user && current_user.raider.id == @raider.id %>
+  <div class="row">    
+    <div class="col-9">  
+      <h3 class="text-center">AQ Loot List</h3>
+    </div>
+    <div class="col-3 text-right">
+      <%= form_tag(raiders_search_path(@raider), {:remote => true, 
+                                                'data-toggle' =>  "modal", 
+                                                'data-target' => '#modal-window', 
+                                                :method => "get", 
+                                                class: 'text-center'}) do %>  
+      <div class="input-group">  
+        <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>  
+          <div class="input-group-btn">  
+            <%= button_tag "Search", :class => 'btn btn-primary',:name => nil%>  
+          </div>  
+      </div>  
+    <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-4">
+      <% if list_is_locked?(@raider) %>
+        <%= link_to 'Unlock Priorities', raiders_unlock_path(@raider), class: 'btn btn-secondary' %>
+      <% else %>
+        <%= link_to 'Lock Priorities', raiders_lock_path(@raider), class: 'btn btn-secondary' %>
+      <% end %>
+    </div>    
+    <div class="col-8">  
+      <h3 class="text-left">AQ Loot List</h3>
+    </div>
+  </div>
+<% end %>
+<br>
+<div class="col-12 list">  
+  <% aq_priority_rankings.each do |x| %>
+    <div class="row">
+      <h5 class="<%= bracket(x) %>"><%= x %></h5>
+        <% if @phase_five_priorities.where(ranking: x).empty? %>
+          <div class="col-10 spot" data-ranking=<%= x %>>
+            
+          </div>
+        <% elsif @phase_five_priorities.where(ranking: x).count == 1 %>
+          <% @phase_five_priorities.where(ranking: x).each do |priority| %>
+            <div class="col-5 spot" data-ranking=<%= x %>>
+              <div class="row phase-five-priority" data-priority-id=<%= priority.id %> data-item-id=<%= priority.item_id %>>
+                <h5 class="scoot-right <%= item_classification(priority) %>"><%= priority.item.name %></h5>
+                <% if current_user.try(:admin?) %>
+                  <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <div class="col-5 spot" data-ranking=<%= x %>>
+              
+          </div>
+        <% else %>
+          <% @phase_five_priorities.where(ranking: x).each do |priority| %>
+            <div class="col-5 spot" data-ranking=<%= x %>>
+              <div class="row phase-five-priority" data-priority-id=<%= priority.id %> data-item-id=<%= priority.item_id %>>
+                <h5 class="scoot-right <%= item_classification(priority) %>"><%= priority.item.name %></h5>
+                <% if current_user.try(:admin?) %>
+                  <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Modal -->
+<div id="modal-window" class="modal hide" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="aq-search"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $('#modal-window').on('show.bs.modal', function (e) {
+    $('body').addClass("example-open");
+      }).on('hide.bs.modal', function (e) {
+    $('body').removeClass("example-open");
+  })
+
+  $(function() {
+    $('.phase-five-priority').draggable({
+      containment: '.list',
+      snap: '.spot',
+      snapTolerance: 15,
+      cursor: 'pointer',
+      axis: 'y'
+      // revert: 'invalid'
+    });
+
+    $('.spot').droppable({
+        drop: function( event, ui ) {
+          const item = ui.draggable.data('item-id');
+          const priority = ui.draggable.data('priority-id');
+          const ranking = $(this).data('ranking');
+          const url = `/items/${item}/priorities/${priority}`;
+          const payload = {
+                  priority: {
+                    item_id: item,
+                    priority_id: priority,
+                    ranking: ranking
+                  }};
+          $.ajax({
+            type: 'PATCH',
+            url: url,
+            data: payload 
+          });
+        }
+      });
+  });
+
+</script>

@@ -1,3 +1,33 @@
 // Place all the styles related to the Raiders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#raiders-search-results-box {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.example-open .modal-backdrop {
+  background: transparent;
+}
+
+.first-bracket {
+  color: #fc9d03;
+}
+
+.second-bracket {
+  color: #9e4aff;
+}
+
+.third-bracket {
+  color: #00c940;
+}
+
+.no-bracket {
+  color: white;
+}
+
+#aq-search {
+  width: 160%;
+  margin-left: -30%;
+}

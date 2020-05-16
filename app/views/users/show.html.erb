@@ -1,12 +1,27 @@
 <div class="box col-10 offset-1">
   <% if @user.raider.nil? %>
     <h1>User Dashboard</h1>
+  <% elsif current_user.admin? %>
+    <div class="row">  
+      <div class="col-9">  
+        <div class="row no-left-margin">  
+          <h1><%= link_to @user.raider.name, raider_path(@user.raider) %></h1> &nbsp
+          <h1 class="<%= @user.raider.class_color %>">-<%= @user.raider.which_class %>(<%= @user.raider.role %>)</h1>
+        </div>
+      </div>
+      <div class="col-3">
+        <%= link_to 'Items with missing information', incomplete_items_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
   <% else %>
-    <h1><%= link_to @user.raider.name, raider_path(@user.raider) %></h1>
-    <h3 class="<%= @user.raider.class_color %>">-<%= @user.raider.which_class %>(<%= @user.raider.role %>)</h3>
+    <div class="row col-12">  
+      <h1><%= link_to @user.raider.name, raider_path(@user.raider) %></h1> &nbsp
+      <h1 class="<%= @user.raider.class_color %>">-<%= @user.raider.which_class %>(<%= @user.raider.role %>)</h1>
+    </div>
   <% end %>
     
   <% if current_user.admin? %>
+  <hr class="grey">
   <div class="row">  
     <div class="col-lg-6"> 
       <%= render partial: 'create_raider' %>
@@ -29,7 +44,8 @@
       <% end %>
   <br />
   <br />
-  <% end %>  
+  <% end %> 
+  <hr class="grey"> 
   <h3 class="underline">Attendance</h3>
     <div class="row no-left-margin"><h5>Raid Notes:</h5><input id="notes"></div>
     <div class="row">

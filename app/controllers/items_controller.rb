@@ -33,6 +33,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:link, :priority, :zone, :winner, :classification)
+    params.require(:item).permit(:link, :priority, :zone, :winner, :classification, :category)
   end
 end

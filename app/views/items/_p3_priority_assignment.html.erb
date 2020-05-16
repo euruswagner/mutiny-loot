@@ -1,0 +1,136 @@
+<% if current_user.try(:admin?) %>
+    <hr class="grey">
+
+    <h3 class="underline">Assign Rankings</h3>
+    <div class="row no-left-margin"><h5>Ranking:</h5><input id="rank" type="number"></div>
+    <br />
+    <div class="row">
+      <div class="col-4">
+        <h4 class="underline">Warriors</h4>
+        <% @raiders.active.warrior.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 warrior"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+        <h4 class="underline">Rogues</h4>
+        <% @raiders.active.rogue.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 rogue"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-4">
+        <h4 class="underline">Hunters</h4>
+        <% @raiders.active.hunter.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 hunter"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+        <h4 class="underline">Mages</h4>
+        <% @raiders.active.mage.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 mage"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+        <h4 class="underline">Warlocks</h4>
+        <% @raiders.active.warlock.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 warlock"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-4">
+        <h4 class="underline">Priests</h4>
+        <% @raiders.active.priest.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 priest"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+        <h4 class="underline">Shamans</h4>
+        <% @raiders.active.shaman.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 shaman"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+        <h4 class="underline">Druids</h4>
+        <% @raiders.active.druid.each do |raider| %>
+          <% if raider.has_priority_or_has_won_this(@item) %>
+
+          <% else %>
+            <div class="row margin-top">
+              <h4 class="item-raiders col-6 druid"><%= raider.name %></h4>       
+              <button data-raider-id="<%= raider.id %>" data-item-id="<%= @item.id %>" class="btn btn-sm btn-secondary create-priority col-6">
+                Create Priority
+              </button> 
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  <% end %>
+
+<script type="text/javascript">
+  $(".create-priority").click(function( event ) {
+  var rank = $('#rank').val();
+  var item = $(this).data('item-id');
+  var raider = $(this).data('raider-id');
+  var url = `/items/${item}/priorities`
+  var payload = {
+    priority: {
+      ranking: rank,
+      item_id: item,
+      raider_id: raider
+    }};
+  $.post(url, payload);
+  });
+</script>

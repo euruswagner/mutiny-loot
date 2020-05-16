@@ -8,6 +8,18 @@ class RaidersController < ApplicationController
 
   def show
     @raider = Raider.find(params[:id])
+    @phase_three_priorities = @raider.priorities.where(phase: 3)
+    @phase_five_priorities = @raider.priorities.where(phase: 5)
+  end
+
+  def search
+    if params[:search].blank? then  
+      redirect_to(root_path, alert: "Empty field!") and return  
+    else  
+      @parameter = params[:search].downcase  
+      @items = Item.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
+    end 
+     
   end
 
   def new
