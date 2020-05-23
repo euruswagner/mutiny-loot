@@ -80,7 +80,7 @@ RSpec.describe WinnersController, type: :controller do
       user = FactoryBot.create(:user, admin: true)
       sign_in user
 
-      delete :destroy, params: {use_route: "item/#{item.id}/winners/", winner_id: winner.id, item_id: item.id}
+      delete :destroy, params: {use_route: "item/#{item.id}/winners/", id: winner.id, item_id: item.id}
 
       expect(response).to redirect_to item_path(item)
       expect(Winner.count).to eq 0

@@ -89,7 +89,7 @@ RSpec.describe AttendancesController, type: :controller do
       attendance = FactoryBot.create(:attendance, points: 0.2, raider: raider)
       sign_in user
 
-      delete :destroy, params: {use_route: "raiders/#{raider.id}/attendances/", attendance_id: attendance.id, raider_id: raider.id}
+      delete :destroy, params: {use_route: "raiders/#{raider.id}/attendances/", id: attendance.id, raider_id: raider.id}
 
       expect(Attendance.count).to eq 0
       expect(response).to redirect_to raider_path(raider)
