@@ -1,5 +1,6 @@
 module RaidersHelper
   def list_is_locked?(raider)
+    return false if raider.priorities.empty?
     return raider.priorities.last.locked?
   end
 
