@@ -114,7 +114,7 @@ class Priority < ApplicationRecord
     return false if self.item.classification == 'Unlimited'
     if ranking <= 50 && ranking > 47
       bracket = [50, 49, 48]
-    elsif ranking <= 47 && ranking > 45
+    elsif ranking <= 47 && ranking > 44
       bracket = [47, 46, 45]
     else
       bracket = [44, 43, 42]
@@ -143,7 +143,7 @@ class Priority < ApplicationRecord
   def multiple_items_with_the_same_category?(ranking)
     if ranking <= 50 && ranking > 47
       bracket = [50, 49, 48]
-    elsif ranking <= 47 && ranking > 45
+    elsif ranking <= 47 && ranking > 44
       bracket = [47, 46, 45]
     else
       bracket = [44, 43, 42]
