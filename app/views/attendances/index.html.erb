@@ -1,25 +1,23 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Attendances</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @attendances.each do |attendance| %>
-      <tr>
-        <td><%= link_to 'Show', attendance %></td>
-        <td><%= link_to 'Edit', edit_attendance_path(attendance) %></td>
-        <td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="box col-10 offset-1">
+  <div class="row">  
+    <div class="col-4 text-center">  
+      <h1 class="underline">Attendances</h1>
+    </div>
+    <div class="col-8 text-right">
+      <%= link_to 'Return to Raider', raider_path(@raider), class: 'btn btn-secondary' %>
+    </div>
+  </div>
+  <br>
+  <ol>
+    <% @attendances.order(created_at: :desc).each do |attendance| %>
+      <div class="row no-left-margin">
+        <li class="non-navbar-list-items">  
+            <%= attendance.notes %> - <%= attendance.points %>
+            <% if current_user.try(:admin?) %>
+              <%= link_to 'X', raider_attendance_path(raider_id: attendance.raider_id, id: attendance.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
+            <% end %>
+        </li>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Attendance', new_attendance_path %>
+  </ol>
+</div>

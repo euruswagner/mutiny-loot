@@ -1,6 +1,11 @@
 class WinnersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_admin!, only: [:create, :destroy]
+
+  def index
+    @raider = Raider.find(params[:raider_id])
+    @winnings = Winner.where(raider_id: @raider)
+  end
 
   def create
     item = Item.find_by_id(params[:item_id])
@@ -17,7 +22,7 @@ class WinnersController < ApplicationController
 
   def destroy
     item = Item.find_by_id(params[:item_id])
-    winner = item.winners.find_by_id(params[:winner_id])
+    winner = item.winners.find_by_id(params[:id])
     raider = Raider.find_by_id(winner.raider_id)
     points_refunded = winner.points_spent * -1
     winner.destroy
