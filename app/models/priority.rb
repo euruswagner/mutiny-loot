@@ -136,6 +136,7 @@ class Priority < ApplicationRecord
       end
     end
 
+    return allocation_points_in_bracket >= 2 if self.raider.which_class == 'Hunter'
     return allocation_points_in_bracket >= 3
   end
 

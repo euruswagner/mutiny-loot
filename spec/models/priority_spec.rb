@@ -174,6 +174,18 @@ RSpec.describe Priority, type: :model do
       expect(priority4.valid_priority?(49)).to eq false
     end
 
+    it 'returns false if first bracket has 2 allocation points already and item is worth allocation points and raider is a hunter' do
+      raider = FactoryBot.create(:raider, which_class: 'Hunter')
+      item1 = FactoryBot.create(:item, classification: 'Limited', category: 'Head')
+      item2 = FactoryBot.create(:item, classification: 'Limited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Limited', category: 'Trinket')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 49, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 48, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 47, phase: 5)
+      
+      expect(priority3.valid_priority?(49)).to eq false
+    end
+
     it 'returns true if first bracket has 3 allocation points already and item is worth 0 allocation points' do
       raider = FactoryBot.create(:raider)
       item1 = FactoryBot.create(:item, classification: 'Limited', category: 'Head')

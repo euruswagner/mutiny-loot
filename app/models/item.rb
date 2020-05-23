@@ -89,6 +89,8 @@ class Item < ApplicationRecord
     'Warrior Rogue Shaman': 'Warrior Rogue Shaman',
     'Warrior Rogue Feral': 'Warrior Rogue Feral',
     'Warrior Hunter': 'Warrior Hunter',
+    'Warrior Shaman': 'Warrior Shaman',
+    'Warrior Hunter Shaman': 'Warrior Hunter Shaman',
     'Warrior Hunter Enhancement': 'Warrior Hunter Enhancement',
     'Warrior Mage Warlock': 'Warrior Mage Warlock',
     'Warrior Feral': 'Warrior Feral',

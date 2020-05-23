@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   end
 
   resources :raiders, only: [:index, :show, :new, :create, :update] do
-    resources :attendances, only: [:create, :destroy]
+    resources :attendances, only: [:index, :create, :destroy]
+    resources :winners, only: [:index]
   end
   
   resources :raids, only: [:show, :create, :update, :destroy] do
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
   get '/users/approve/:id', to: 'users#approve'
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'
   get '/search', to: 'pages#search', as: 'search_page'
-  get '/raiders/:raider_id/search', to: 'raiders#search', as: 'raiders_search' 
+  get '/raiders/:raider_id/search', to: 'raiders#search', as: 'raiders_search'
   get '/calendar', to: 'pages#calendar'
   get '/zones/naxx', to: 'pages#naxx'
   get '/zones/aq', to: 'pages#aq'

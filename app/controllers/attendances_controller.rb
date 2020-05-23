@@ -1,6 +1,11 @@
 class AttendancesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_admin!, only: [:create, :destroy]
+
+  def index
+    @raider = Raider.find(params[:raider_id])
+    @attendances = Attendance.where(raider_id: @raider)
+  end
 
   def create
     raider = Raider.find(params[:raider_id])
@@ -19,7 +24,7 @@ class AttendancesController < ApplicationController
 
   def destroy
     raider = Raider.find(params[:raider_id])
-    attendance = raider.attendances.find(params[:attendance_id])
+    attendance = raider.attendances.find(params[:id])
     points_not_earned = attendance.points * -1
     attendance.destroy
     raider.update_total_points_earned(points_not_earned)
