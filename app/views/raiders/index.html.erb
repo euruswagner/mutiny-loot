@@ -1,5 +1,9 @@
 <div class="box col-10 offset-1">
-  <h2 class="underline">Melee</h2>
+  <% if current_user.try(:admin?) %>
+    <h2 class="underline">Melee - <%= @raiders[0].count %></h2>
+  <% else %>
+    <h2 class="underline">Melee</h2>
+  <% end %>
   <div class="row">
     <% @raiders[0].each do |melee| %>
       <div class="col-lg-6">
@@ -18,7 +22,11 @@
       </div>
     <% end %>
   </div>
-  <h2 class="underline">Ranged</h2>
+  <% if current_user.try(:admin?) %>
+    <h2 class="underline">Ranged - <%= @raiders[1].count %></h2>
+  <% else %>
+    <h2 class="underline">Ranged</h2>
+  <% end %>
   <div class="row">
     <% @raiders[1].each do |ranged| %>
       <div class="col-lg-6">
@@ -37,7 +45,11 @@
       </div>
     <% end %>
   </div>
-  <h2 class="underline">Healers</h2>
+  <% if current_user.try(:admin?) %>
+    <h2 class="underline">Healers - <%= @raiders[2].count %></h2>
+  <% else %>
+    <h2 class="underline">Healers</h2>
+  <% end %>
   <div class="row">
     <% @raiders[2].each do |healer| %>
       <div class="col-lg-6">

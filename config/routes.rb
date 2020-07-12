@@ -27,7 +27,15 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :update, :destroy]
   end
 
+  get '/user/index', to: 'users#index', as: 'user_index'
   get '/users/approve/:id', to: 'users#approve'
+  get '/users/unapprove/:id', to: 'users#unapprove', as: 'user_unapprove'
+  get '/users/raider/:id', to: 'users#raider', as: 'user_raider'
+  get '/users/demote/:id', to: 'users#demote', as: 'user_demote'
+  get '/users/admin/:id', to: 'users#admin', as: 'user_admin'
+  get '/users/demote_admin/:id', to: 'users#demote_admin', as: 'user_demote_admin'
+  get '/users/guild_master/:id', to: 'users#guild_master', as: 'user_guild_master'
+  get '/users/demote_guild_master/:id', to: 'users#demote_guild_master', as: 'user_demote_guild_master'
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'
   get '/search', to: 'pages#search', as: 'search_page'
   get '/raiders/:raider_id/search', to: 'raiders#search', as: 'raiders_search'
