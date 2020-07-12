@@ -18,11 +18,11 @@
                 <h2>Pepper the Almighty</h2>
             </div>
             <div class="col-4">
-                <% if user.guild_master && current_user != user %>
+                <% if current_user.guild_master && current_user != user %>
                     <%= link_to user_demote_guild_master_path(user), method: :get, data: {confirm: 'Are you sure you want to demote this user from guild master?'} do %>
                         <button class="btn btn-primary">Unapprove this user!</button>
                     <% end %>
-                <% elsif user.guild_master && current_user == user %>
+                <% elsif current_user == user %>
                     <h2>You have all the power</h2>
                 <% else %>
                     <h2>Our savior</h2>
