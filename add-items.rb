@@ -9,100 +9,100 @@
 # Healer Non Set Pieces is 9
 # Miscellaneous is 10
 
-#Melee Weapons Phase 1 (1)
-# Item.create(name: 'Thunderfury, Blessed Blade of the Windseeker', 
-#             link: 'https://classic.wowhead.com/item=19019/thunderfury-blessed-blade-of-the-windseeker', 
-#             priority: 'Prot Warriors', 
+# #Melee Weapons Phase 1 (1)
+# # Item.create(name: 'Thunderfury, Blessed Blade of the Windseeker', 
+# #             link: 'https://classic.wowhead.com/item=19019/thunderfury-blessed-blade-of-the-windseeker', 
+# #             priority: 'Prot Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Deathbringer', 
+# #             link: 'https://itemization.info/item/17068', 
+# #             priority: 'Fury Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Vis\'kag the Bloodletter', 
+# #             link: 'https://itemization.info/item/17075', 
+# #             priority: 'Sword Rogues > Fury Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Perdition\'s Blade', 
+# #             link: 'https://itemization.info/item/18816', 
+# #             priority: 'Dagger Rogues', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Brutality Blade', 
+# #             link: 'https://itemization.info/item/18832', 
+# #             priority: 'Fury Warriors, Sword Rogues and Hunters > Prot Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Core Hound Tooth', 
+# #             link: 'https://itemization.info/item/18805', 
+# #             priority: 'Dagger Rogues and Hunters > Fury Warrios > Prot Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Eskhandar\'s Right Claw', 
+# #             link: 'https://itemization.info/item/18203', 
+# #             priority: 'Prot Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Gutgore Ripper', 
+# #             link: 'https://itemization.info/item/18203', 
+# #             priority: 'Dagger Rogues > Fury Warriors', 
+# #             category_id: 1)
+
+# # Item.create(name: 'Drillborer Disk', 
+# #             link: 'https://itemization.info/item/17066', 
+# #             priority: 'Prot Warriorsload', 
+# #             category_id: 1)
+
+# Item.create(name: 'Blastershot Launcher', 
+#             link: 'https://itemization.info/item/17072', 
 #             category_id: 1)
 
-# Item.create(name: 'Deathbringer', 
-#             link: 'https://itemization.info/item/17068', 
-#             priority: 'Fury Warriors', 
+# Item.create(name: 'Bonereaver\'s Edge', 
+#             link: 'https://itemization.info/item/17076', 
 #             category_id: 1)
 
-# Item.create(name: 'Vis\'kag the Bloodletter', 
-#             link: 'https://itemization.info/item/17075', 
-#             priority: 'Sword Rogues > Fury Warriors', 
+# Item.create(name: 'Earthshaker', 
+#             link: 'https://itemization.info/item/17073', 
 #             category_id: 1)
 
-# Item.create(name: 'Perdition\'s Blade', 
-#             link: 'https://itemization.info/item/18816', 
-#             priority: 'Dagger Rogues', 
+# Item.create(name: 'Obsidian Edged Blade', 
+#             link: 'https://itemization.info/item/18822', 
 #             category_id: 1)
 
-# Item.create(name: 'Brutality Blade', 
-#             link: 'https://itemization.info/item/18832', 
-#             priority: 'Fury Warriors, Sword Rogues and Hunters > Prot Warriors', 
+# Item.create(name: 'Shadowstrike', 
+#             link: 'https://itemization.info/item/17074', 
 #             category_id: 1)
 
-# Item.create(name: 'Core Hound Tooth', 
-#             link: 'https://itemization.info/item/18805', 
-#             priority: 'Dagger Rogues and Hunters > Fury Warrios > Prot Warriors', 
+# Item.create(name: 'Spinal Reaper', 
+#             link: 'https://itemization.info/item/17104', 
 #             category_id: 1)
 
-# Item.create(name: 'Eskhandar\'s Right Claw', 
-#             link: 'https://itemization.info/item/18203', 
-#             priority: 'Prot Warriors', 
+# Item.create(name: 'Striker\'s Mark', 
+#             link: 'https://itemization.info/item/17069', 
 #             category_id: 1)
 
-# Item.create(name: 'Gutgore Ripper', 
-#             link: 'https://itemization.info/item/18203', 
-#             priority: 'Dagger Rogues > Fury Warriors', 
-#             category_id: 1)
+Melee Accessories Phase 1 (2)
+Item.create(name: 'Band of Accuria', 
+            link: 'https://itemization.info/item/17063', 
+            priority: 'Prot Warriors, Feral Druids, Rogues, Hunters, Enhancement Shamans', 
+            category_id: 2)
 
-# Item.create(name: 'Drillborer Disk', 
-#             link: 'https://itemization.info/item/17066', 
-#             priority: 'Prot Warriorsload', 
-#             category_id: 1)
+Item.create(name: 'Quick Strike Ring', 
+            link: 'https://itemization.info/item/18821', 
+            priority: 'Fury Warrios and Hunters > Rogues', 
+            category_id: 2)
 
-Item.create(name: 'Blastershot Launcher', 
-            link: 'https://itemization.info/item/17072', 
-            category_id: 1)
+Item.create(name: 'Heavy Dark Iron Ring', 
+            link: 'https://itemization.info/item/18879', 
+            priority: 'Prot Warriors > Feral Druids > Fury Warriors', 
+            category_id: 2)
 
-Item.create(name: 'Bonereaver\'s Edge', 
-            link: 'https://itemization.info/item/17076', 
-            category_id: 1)
-
-Item.create(name: 'Earthshaker', 
-            link: 'https://itemization.info/item/17073', 
-            category_id: 1)
-
-Item.create(name: 'Obsidian Edged Blade', 
-            link: 'https://itemization.info/item/18822', 
-            category_id: 1)
-
-Item.create(name: 'Shadowstrike', 
-            link: 'https://itemization.info/item/17074', 
-            category_id: 1)
-
-Item.create(name: 'Spinal Reaper', 
-            link: 'https://itemization.info/item/17104', 
-            category_id: 1)
-
-Item.create(name: 'Striker\'s Mark', 
-            link: 'https://itemization.info/item/17069', 
-            category_id: 1)
-
-# Melee Accessories Phase 1 (2)
-# Item.create(name: 'Band of Accuria', 
-#             link: 'https://itemization.info/item/17063', 
-#             priority: 'Prot Warriors, Feral Druids, Rogues, Hunters, Enhancement Shamans', 
-#             category_id: 2)
-
-# Item.create(name: 'Quick Strike Ring', 
-#             link: 'https://itemization.info/item/18821', 
-#             priority: 'Fury Warrios and Hunters > Rogues', 
-#             category_id: 2)
-
-# Item.create(name: 'Heavy Dark Iron Ring', 
-#             link: 'https://itemization.info/item/18879', 
-#             priority: 'Prot Warriors > Feral Druids > Fury Warriors', 
-#             category_id: 2)
-
-# Item.create(name: 'Eskhandar\'s Collar', 
-#             link: 'https://itemization.info/item/18205', 
-#             priority: 'Shards/Free Roll', 
-#             category_id: 2)
+Item.create(name: 'Eskhandar\'s Collar', 
+            link: 'https://itemization.info/item/18205', 
+            priority: 'Shards/Free Roll', 
+            category_id: 2)
 
 Item.create(name: 'Essence of the Pure Flame', 
             link: 'https://itemization.info/item/18815', 

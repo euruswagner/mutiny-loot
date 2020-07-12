@@ -24,14 +24,14 @@ class Raider < ApplicationRecord
 
   def update_total_points_spent(points_spent)
     old_total_points_spent = self.total_points_spent
-    up_to_date_total_points_spent = old_total_points_spent + points_spent
+    up_to_date_total_points_spent = (old_total_points_spent + points_spent).round(1)
     self.write_attribute(:total_points_spent, up_to_date_total_points_spent)
     self.save!
   end
 
   def update_total_points_earned(points_earned)
     old_total_points_earned = self.total_points_earned
-    up_to_date_total_points_earned = old_total_points_earned + points_earned
+    up_to_date_total_points_earned = (old_total_points_earned + points_earned).round(1)
     self.write_attribute(:total_points_earned, up_to_date_total_points_earned)
     self.save!
   end

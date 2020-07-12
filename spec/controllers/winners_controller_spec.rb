@@ -79,7 +79,7 @@ RSpec.describe WinnersController, type: :controller do
       winner = FactoryBot.create(:winner, raider: raider, item: item, points_spent: 3.6)
       user = FactoryBot.create(:user, admin: true)
       sign_in user
-
+      
       delete :destroy, params: {use_route: "item/#{item.id}/winners/", id: winner.id, item_id: item.id}
 
       expect(response).to redirect_to item_path(item)

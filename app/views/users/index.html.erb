@@ -1,0 +1,132 @@
+<div class="box col-10 offset-1"> 
+    <div class="text-center">
+        <h1 class="white underline">Guild Master</h1>
+    </div>
+    <div class="row no-left-margin">
+        <div class="col-3"><h2>User Name:</h2></div>
+    </div>
+    <% @users[0].each do |user| %>
+        <div class="row user-box">
+            <div class="col-4">
+                <% if user.raider_id %>
+                    <h2><%= link_to user.raider.name, raider_path(user.raider) %></h2>
+                <% else %>
+                    <h2><%= user.char_name %></h2>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <h2>Pepper the Almighty</h2>
+            </div>
+            <div class="col-4">
+                <% if user.guild_master && current_user != user %>
+                    <%= link_to user_demote_guild_master_path(user), method: :get, data: {confirm: 'Are you sure you want to demote this user from guild master?'} do %>
+                        <button class="btn btn-primary">Unapprove this user!</button>
+                    <% end %>
+                <% elsif user.guild_master && current_user == user %>
+                    <h2>You have all the power</h2>
+                <% else %>
+                    <h2>Our savior</h2>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+    <div class="text-center">
+        <h1 class="white underline">Admins</h1>
+    </div>
+    <div class="row no-left-margin">
+        <div class="col-3"><h2>User Name:</h2></div>
+    </div>
+    <% @users[1].each do |user| %>
+        <div class="row user-box">
+            <div class="col-4">
+                <% if user.raider_id %>
+                    <h2><%= link_to user.raider.name, raider_path(user.raider) %></h2>
+                <% else %>
+                    <h2><%= user.char_name %></h2><h2 class="white">-needs connected raider</h2>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <%= link_to user_demote_admin_path(user), method: :get, data: {confirm: 'Are you sure you want to demote this user to a non admin?'} do %>
+                    <button class="btn btn-primary">Demote this user!</button>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <% if current_user.guild_master %>
+                    <%= link_to "Promote this user!", user_guild_master_path(user), method: :get, data: {confirm: 'Are you sure you want to give this user all that power?'}, class: 'btn btn-secondary' %>
+                <% else %>
+                    <h2>Peppers Peeps</h2>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+    <div class="text-center">
+        <h1 class="white underline">Raiders</h1>
+    </div>
+    <div class="row no-left-margin">
+        <div class="col-3"><h2>User Name:</h2></div>
+    </div>
+    <% @users[2].each do |user| %>
+        <div class="row user-box">
+            <div class="col-4">
+                <% if user.raider_id %>
+                    <h2><%= link_to user.raider.name, raider_path(user.raider) %></h2>
+                <% else %>
+                    <h2><%= user.char_name %></h2><h2 class="white">-needs connected raider</h2>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <%= link_to user_demote_path(user), method: :get, data: {confirm: 'Are you sure you want to demote this user to a non raider?'} do %>
+                    <button class="btn btn-primary">Demote this user!</button>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <%= link_to "Promote this user!", user_admin_path(user), method: :get, data: {confirm: 'Are you sure you want to promote this user to an admin?'}, class: 'btn btn-secondary' %>
+            </div>
+        </div>
+    <% end %>
+    <div class="text-center">
+        <h1 class="white underline">Approved Users</h1>
+    </div>
+    <div class="row no-left-margin">
+        <div class="col-3"><h2>User Name:</h2></div>
+    </div>
+    <% @users[3].each do |user| %>
+        <div class="row user-box">
+            <div class="col-4">
+                <% if user.raider_id %>
+                    <h2><%= link_to user.raider.name, raider_path(user.raider) %></h2>
+                <% else %>
+                    <h2><%= user.char_name %></h2><h2 class="white">-needs connected raider</h2>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <%= link_to user_unapprove_path(user), method: :get, data: {confirm: 'Are you sure you want to unapprove this user?'} do %>
+                    <button class="btn btn-primary">Unapprove this user!</button>
+                <% end %>
+            </div>
+            <div class="col-4">
+                <%= link_to "Promote this user!", user_raider_path(user), method: :get, data: {confirm: 'Are you sure you want to promote this user to a raider?'}, class: 'btn btn-secondary' %>
+            </div>
+        </div>
+    <% end %>
+    <div class="text-center">
+        <h1 class="white underline">Unapproved Users</h1>
+    </div>
+    <div class="row no-left-margin">
+        <div class="col-3"><h2>User Name:</h2></div>
+    </div>
+    <% @users[4].each do |user| %>
+        <div class="row user-box">
+            <div class="col-4">
+                <% if user.raider_id %>
+                    <h2><%= link_to user.raider.name, raider_path(user.raider) %></h2>
+                <% else %>
+                    <h2><%= user.char_name %></h2><h2 class="white">-needs connected raider</h2>
+                <% end %>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4">
+                <%= link_to "Approve this user!", user_approve_path(user), method: :get, data: {confirm: 'Are you sure you want to approve this user?'}, class: 'btn btn-secondary' %>
+            </div>
+        </div>
+    <% end %>

@@ -71,7 +71,7 @@ RSpec.describe SignupsController, type: :controller do
 
     it 'does not allow signups before a week' do
       start_time_two_weeks_ahead = Time.now + 14.days
-      open_time = Time.now + 7.days - 4.hours # subtracting 4 hours since controller uses Eastern Zone and Rspec uses UTC
+      open_time = Time.now + 7.days
       raid = FactoryBot.create(:raid, start_time: start_time_two_weeks_ahead)
       raider = FactoryBot.create(:raider)
       user = FactoryBot.create(:user, raider_id: raider.id)

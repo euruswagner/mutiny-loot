@@ -57,7 +57,9 @@
     <%= render partial: 'aq_list' %>
   <% end %>
   
-  <%= render partial: 'phase_3_loot_list' %>
+  <% if current_user && current_user == @raider.user || current_user.try(:approved_raider?) %>
+    <%= render partial: 'phase_3_loot_list' %>
+  <% end %>
 
 </div>
 
