@@ -1,6 +1,7 @@
 class PrioritiesController < ApplicationController
   before_action :authenticate_user!
   before_action :maximum_two_priorities_per_ranking, only: :create
+  before_action :can_add_items_to_list?, only: :create
   before_action :priority_is_locked?, only: :update
   before_action :valid_priority?, only: :update
   before_action :correct_permissions_to_delete_priority, only: :destroy
@@ -82,6 +83,15 @@ class PrioritiesController < ApplicationController
     elsif raider.priorities.where(ranking: ranking, phase: phase).count >= 2
       redirect_to raider_path(raider), alert: 'You have to many items at a priority. Try removing some items from line 25.'
     end 
+  end
+
+  def can_add_items_to_list?
+    raider_id = priority_params[:raider_id].to_i
+    raider = Raider.find(raider_id)
+    last_priority = raider.priorities.last
+    if last_priority && last_priority.locked && last_priority.phase != 3
+      redirect_to raider_path(raider), alert: 'You can not add items to a completed list.'
+    end
   end
 
   def priority_is_locked?

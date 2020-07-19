@@ -99,6 +99,55 @@ RSpec.describe PrioritiesController, type: :controller do
       priority = Priority.last
       expect(priority.ranking).to eq 25
     end
+
+    it 'it does not allow users to create new priorities if list is locked' do
+      user = FactoryBot.create(:user)
+      raider = FactoryBot.create(:raider, user: user)
+      item = FactoryBot.create(:item)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 25, phase: 5, locked: true)
+      sign_in user
+
+      post :create, params: {item_id: item.id, priority: {raider_id: raider.id, ranking: 25, phase: 5}}
+
+      expect(response).to redirect_to raider_path(raider)
+      expect(flash[:alert]).to eq 'You can not add items to a completed list.'
+
+      expect(Priority.count).to eq 1
+    end
+
+    it 'it does allow users to create new priorities if this is first addition to phase 5 list' do
+      user = FactoryBot.create(:user)
+      raider = FactoryBot.create(:raider, user: user)
+      item = FactoryBot.create(:item)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 45, phase: 3, locked: true)
+      sign_in user
+
+      post :create, params: {item_id: item.id, priority: {raider_id: raider.id, ranking: 25, phase: 5}}
+
+      expect(response).to redirect_to raider_path(raider, anchor: 'aq')
+
+      new_priority = Priority.last
+      expect(Priority.count).to eq 2
+      expect(new_priority.ranking).to eq 25
+    end
+
+    it 'it does allow users to create new priorities if this is their first priority' do
+      user = FactoryBot.create(:user)
+      raider = FactoryBot.create(:raider, user: user)
+      item = FactoryBot.create(:item)
+      item = FactoryBot.create(:item)
+      sign_in user
+
+      post :create, params: {item_id: item.id, priority: {raider_id: raider.id, ranking: 25, phase: 5}}
+
+      expect(response).to redirect_to raider_path(raider, anchor: 'aq')
+
+      new_priority = Priority.last
+      expect(Priority.count).to eq 1
+      expect(new_priority.ranking).to eq 25
+    end
   end
 
   describe 'priorities#update action' do
