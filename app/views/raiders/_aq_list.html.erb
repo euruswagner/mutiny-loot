@@ -73,7 +73,7 @@
             <div class="col-5 spot" data-ranking=<%= x %>>
               <div class="row phase-five-priority" data-priority-id=<%= priority.id %> data-item-id=<%= priority.item_id %>>
                 <h5 class="scoot-right <%= item_classification(priority) %>"><%= priority.item.name %></h5>
-                <% if current_user.try(:admin?) %>
+                <% if current_user && current_user.raider.id == @raider.id && !list_is_locked?(@raider) || current_user.try(:admin?) %>
                   <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
                 <% end %>
               </div>
@@ -87,7 +87,7 @@
             <div class="col-5 spot" data-ranking=<%= x %>>
               <div class="row phase-five-priority" data-priority-id=<%= priority.id %> data-item-id=<%= priority.item_id %>>
                 <h5 class="scoot-right <%= item_classification(priority) %>"><%= priority.item.name %></h5>
-                <% if current_user.try(:admin?) %>
+                <% if current_user && current_user.raider.id == @raider.id && !list_is_locked?(@raider) || current_user.try(:admin?) %>
                   <%= link_to 'X', item_priority_path(item_id: priority.item_id, priority_id: priority.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
                 <% end %>
               </div>
