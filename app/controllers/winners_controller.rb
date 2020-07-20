@@ -33,7 +33,7 @@ class WinnersController < ApplicationController
   private
 
   def winner_params
-    params.require(:winner).permit(:raider_id, :points_spent)
+    params.require(:winner).permit(:raider_id, :points_spent, :priority_id)
   end
 
   def authenticate_admin!

@@ -13,12 +13,12 @@
     <% end %>
     <% if current_user.try(:admin?) %>
       <div class="col-3">
-        <button data-raider-id="<%= priority.raider.id %>" data-raider-name="<%= priority.raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= priority.points_worth %>" class="btn btn-secondary create-winner btn-sm">
+        <button data-raider-id="<%= priority.raider.id %>" data-raider-name="<%= priority.raider.name %>" data-item-id="<%= @item.id %>" data-priority-id="<%= priority.id %>" data-points-spent="<%= priority.points_worth %>" class="btn btn-secondary create-winner btn-sm">
           <%= priority.raider.name %> - <%= priority.points_worth.to_s %>
         </button>
       </div>
       <div class="col-3">
-        <button data-raider-id="<%= priority.raider.id %>" data-raider-name="<%= priority.raider.name %>" data-item-id="<%= @item.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
+        <button data-raider-id="<%= priority.raider.id %>" data-raider-name="<%= priority.raider.name %>" data-item-id="<%= @item.id %>" data-priority-id="<%= priority.id %>" data-points-spent="<%= 0 %>" class="btn btn-secondary create-winner btn-sm">
           <%= priority.raider.name %> - Free Roll
         </button>
       </div>

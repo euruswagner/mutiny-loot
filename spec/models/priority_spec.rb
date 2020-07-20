@@ -350,4 +350,69 @@ RSpec.describe Priority, type: :model do
       expect(priority4.valid_priority?(49)).to eq false
     end
   end
+
+  describe 'priority phase_5_total_item_value_for_raider method' do
+    it 'returns full for AQ limited item for raider in there sixth week' do
+      now = Time.now
+      five_weeks_ago = now - 35.days
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: five_weeks_ago)
+      item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 50.2
+    end
+    
+    it 'returns -1 for AQ limited item for raider in there fifth week' do
+      now = Time.now
+      four_weeks_ago = now - 28.days
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: four_weeks_ago)
+      item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 49.2
+    end
+
+    it 'returns full for AQ limited item for raider in there sixth week' do
+      now = Time.now
+      three_weeks_ago = now - 21.days
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: three_weeks_ago)
+      item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 48.2
+    end
+
+    it 'returns full for AQ limited item for raider in there sixth week' do
+      now = Time.now
+      two_weeks_ago = now - 14.days
+      raider = FactoryBot.create(:raider, total_points_earned: 0.2)
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: two_weeks_ago)
+      item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 0
+    end
+
+    it 'returns full value with non primary adjustment for AQ limited item for raider in there sixth week' do
+      now = Time.now
+      five_weeks_ago = now - 35.days
+      raider = FactoryBot.create(:raider, total_points_earned: 0.1)
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: five_weeks_ago)
+      item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited', priority: 'Shaman')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 37.58
+    end
+
+    it 'allows new raider to have point values for unlimited MC item' do
+      raider = FactoryBot.create(:raider)
+      item = FactoryBot.create(:item, zone: 'Molten Core')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 47.0
+    end
+  end
 end
