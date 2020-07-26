@@ -1,19 +1,8 @@
 class Priority < ApplicationRecord
   belongs_to :raider
   belongs_to :item
+  has_one :winner
   
-  def points_worth
-    raider = self.raider
-    net_points = raider.net_points
-    if max_points >= net_points
-      return net_points
-    elsif max_points < net_points
-      return max_points
-    else 
-      return 0
-    end
-  end
-
   def max_points
     if ranking >= 48
       return 3.6
@@ -25,6 +14,49 @@ class Priority < ApplicationRecord
       return 0
     end
   end
+  
+  def points_worth
+    raider = self.raider
+    net_points = raider.net_points
+    # if max_points >= net_points
+    #   if raider.enchanted? && raider.warlock?
+    #     return (net_points - 0.2).round(2)
+    #   elsif raider.enchanted? || raider.warlock?
+    #     return(net_points -0.1).round(2)
+    #   else
+    #     return net_points.round(2)
+    #   end
+    # elsif max_points < net_points
+    #   return max_points.round(2)
+    # else 
+    #   return 0
+    # end
+    if raider.enchanted? && raider.warlock?
+      if max_points >= (net_points - 0.2).round(2)
+        return (net_points - 0.2).round(2)
+      elsif max_points < (net_points - 0.2)
+        return max_points.round(2)
+      else
+        return 0
+      end
+    elsif raider.enchanted? || raider.warlock?
+      if max_points >= (net_points - 0.1).round(2)
+        return (net_points - 0.1).round(2)
+      elsif max_points < (net_points - 0.1)
+        return max_points.round(2)
+      else
+        return 0
+      end
+    else
+      if max_points >= net_points
+        return net_points.round(2)
+      elsif max_points < net_points
+        return max_points.round(2)
+      else
+        return 0
+      end
+    end
+  end
 
   def phase_3_total_item_value_for_raider
     net_points = self.raider.net_points
@@ -33,7 +65,7 @@ class Priority < ApplicationRecord
     if self.item.primary_class?(self.raider) then 
       item_value = ranking + net_points
     else
-      item_value = (ranking + net_points)/2
+      item_value = ((ranking + net_points)/2).round(2)
     end
     if self.item.zone == 'Blackwing Lair'
       return 0 if weeks_with_the_guild < 3
@@ -55,23 +87,43 @@ class Priority < ApplicationRecord
     if self.item.primary_class?(self.raider) then 
       item_value = ranking + net_points
     else
-      item_value = (ranking + net_points) * 0.75
+      item_value = ((ranking + net_points) * 0.75).round(2)
     end
     if self.item.zone == 'Temple of Ahn\'Qiraj'
-      return 0 if weeks_with_the_guild < 4
-      return item_value - 3 if weeks_with_the_guild < 5
-      return item_value - 1 if weeks_with_the_guild < 6
-      return item_value
+      if self.item.unlimited?  
+        return 0 if weeks_with_the_guild < 3
+        return item_value - 3 if weeks_with_the_guild < 4
+        return item_value - 1 if weeks_with_the_guild < 5
+        return item_value
+      else
+        return 0 if weeks_with_the_guild < 4
+        return item_value - 2 if weeks_with_the_guild < 5
+        return item_value - 1 if weeks_with_the_guild < 6
+        return item_value
+      end
     elsif self.item.zone == 'Blackwing Lair'
-      return 0 if weeks_with_the_guild < 3
-      return item_value - 3 if weeks_with_the_guild < 4
-      return item_value - 1 if weeks_with_the_guild < 5
-      return item_value
+      if self.item.unlimited?  
+        return 0 if weeks_with_the_guild < 2
+        return item_value - 3 if weeks_with_the_guild < 3
+        return item_value - 1 if weeks_with_the_guild < 4
+        return item_value
+      else
+        return 0 if weeks_with_the_guild < 3
+        return item_value - 2 if weeks_with_the_guild < 4
+        return item_value - 1 if weeks_with_the_guild < 5
+        return item_value
+      end
     else
-      return 0 if weeks_with_the_guild < 2
-      return item_value - 3 if weeks_with_the_guild < 3
-      return item_value - 1 if weeks_with_the_guild < 4
-      return item_value
+      if self.item.unlimited?  
+        return item_value - 3 if weeks_with_the_guild < 2
+        return item_value - 1 if weeks_with_the_guild < 3
+        return item_value
+      else
+        return 0 if weeks_with_the_guild < 2
+        return item_value - 2 if weeks_with_the_guild < 3
+        return item_value - 1 if weeks_with_the_guild < 4
+        return item_value
+      end
     end 
   end
 

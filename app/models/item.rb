@@ -7,6 +7,18 @@ class Item < ApplicationRecord
     return zone == 'Blackwing Lair' || zone == 'Lord Kazzak' || zone == 'Azuregos' || zone == 'Molten Core' || zone == 'Onyxia'
   end
 
+  def unlimited?
+    return classification == 'Unlimited'
+  end
+  
+  def limited?
+    return classification == 'Limited'
+  end
+
+  def reserved?
+    return classification == 'Reserved'
+  end
+
   def primary_class?(raider)
     return true if priority.nil?
     return true if priority == ''
@@ -35,7 +47,7 @@ class Item < ApplicationRecord
     self.priorities.each do |priority|
       next if priority.phase != 5
       next if priority.raider.role == 'Retired'
-      next if self.won_this_item?(priority)
+      next if priority.winner
       priorities_that_have_not_won << priority
     end
     return priorities_that_have_not_won.sort { |a, b| b.phase_5_total_item_value_for_raider <=> a.phase_5_total_item_value_for_raider}

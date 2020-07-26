@@ -1,8 +1,10 @@
 class PrioritiesController < ApplicationController
   before_action :authenticate_user!
   before_action :maximum_two_priorities_per_ranking, only: :create
+  before_action :can_add_items_to_list?, only: :create
   before_action :priority_is_locked?, only: :update
   before_action :valid_priority?, only: :update
+  before_action :correct_permissions_to_delete_priority, only: :destroy
   before_action :authenticate_admin!, only: [:lock, :unlock]
 
   def create
@@ -83,6 +85,15 @@ class PrioritiesController < ApplicationController
     end 
   end
 
+  def can_add_items_to_list?
+    raider_id = priority_params[:raider_id].to_i
+    raider = Raider.find(raider_id)
+    last_priority = raider.priorities.last
+    if last_priority && last_priority.locked && last_priority.phase != 3
+      redirect_to raider_path(raider), alert: 'You can not add items to a completed list.'
+    end
+  end
+
   def priority_is_locked?
     priority = Priority.find_by_id(params[:id])
     raider = priority.raider
@@ -104,6 +115,19 @@ class PrioritiesController < ApplicationController
     render plain: '#{status.to_s.titleize} :(', status: status
   end
 
+  def correct_permissions_to_delete_priority
+    priority = Priority.find_by_id(params[:priority_id])
+    priority_phase = priority.phase
+    priority_is_locked = priority.locked
+    raider = priority.raider
+    user_of_priority = raider.user
+    if priority_phase == 3 && current_user.admin != true || priority_is_locked && current_user.admin != true
+      redirect_to root_path, alert: 'You do not have the privileges required to do that.'
+    elsif current_user != user_of_priority && current_user.admin == false
+      redirect_to root_path, alert: 'You do not have the privileges required to do that.'
+    end
+  end
+  
   def authenticate_admin!
     if current_user.admin != true
       redirect_to root_path, alert: 'You do not have the privileges required to do that.'

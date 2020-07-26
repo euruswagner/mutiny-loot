@@ -52,13 +52,15 @@
     var points_spent = $(this).data('points-spent');
     var item = $(this).data('item-id');
     var raider = $(this).data('raider-id');
+    var priority = $(this).data('priority-id');
     var raider_name = $(this).data('raider-name');
     var url = `/items/${item}/winners`;
     var payload = {
       winner: {
         points_spent: points_spent,
         item_id: item,
-        raider_id: raider
+        raider_id: raider,
+        priority_id: priority
       }};
     $.ajax({
       type: "POST",

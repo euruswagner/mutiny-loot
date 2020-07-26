@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   get '/users/:user_id/connect/:raider_id', to: 'users#connect'
   get '/search', to: 'pages#search', as: 'search_page'
   get '/raiders/:raider_id/search', to: 'raiders#search', as: 'raiders_search'
+  get '/raiders/:raider_id/enchanted', to: 'raiders#enchanted', as: 'raiders_enchanted'
+  get '/raiders/:raider_id/warlock', to: 'raiders#warlock', as: 'raiders_warlock'
   get '/calendar', to: 'pages#calendar'
   get '/zones/naxx', to: 'pages#naxx'
   get '/zones/aq', to: 'pages#aq'

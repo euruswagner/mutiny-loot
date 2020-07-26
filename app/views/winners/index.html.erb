@@ -10,14 +10,16 @@
   <br>
   <ol>
     <% @winnings.order(created_at: :desc).each do |winner| %>
-      <div class="row no-left-margin">
-        <li class="non-navbar-list-items">  
-          <%= link_to winner.item.name, item_path(winner.item) %> - <%= winner.points_spent %>
-          <% if current_user.try(:admin?) %>
-            <%= link_to 'X', item_winner_path(item_id: winner.item_id, id: winner.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
-          <% end %>
+      <% if current_user.try(:admin?) %>
+        <li class="non-navbar-list-items-admin"> 
+        <%= link_to winner.item.name, item_path(winner.item) %> - <%= winner.points_spent %>
+        <%= link_to 'X', item_winner_path(item_id: winner.item_id, id: winner.id), method: :delete, data: {confirm: 'Are you sure you want delete this?'}, class: 'btn btn-sm scale-down btn-secondary scoot-right scoot-up' %>
         </li>
-      </div>
+      <% else %>
+        <li class="non-navbar-list-items">  
+        <%= link_to winner.item.name, item_path(winner.item) %> - <%= winner.points_spent %>
+        </li>
+      <% end %>
     <% end %>
   </ol>
   <h3>Points spent: <%= @raider.total_points_spent %></h3>

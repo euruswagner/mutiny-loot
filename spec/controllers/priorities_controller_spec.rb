@@ -99,6 +99,55 @@ RSpec.describe PrioritiesController, type: :controller do
       priority = Priority.last
       expect(priority.ranking).to eq 25
     end
+
+    it 'it does not allow users to create new priorities if list is locked' do
+      user = FactoryBot.create(:user)
+      raider = FactoryBot.create(:raider, user: user)
+      item = FactoryBot.create(:item)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 25, phase: 5, locked: true)
+      sign_in user
+
+      post :create, params: {item_id: item.id, priority: {raider_id: raider.id, ranking: 25, phase: 5}}
+
+      expect(response).to redirect_to raider_path(raider)
+      expect(flash[:alert]).to eq 'You can not add items to a completed list.'
+
+      expect(Priority.count).to eq 1
+    end
+
+    it 'it does allow users to create new priorities if this is first addition to phase 5 list' do
+      user = FactoryBot.create(:user)
+      raider = FactoryBot.create(:raider, user: user)
+      item = FactoryBot.create(:item)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 45, phase: 3, locked: true)
+      sign_in user
+
+      post :create, params: {item_id: item.id, priority: {raider_id: raider.id, ranking: 25, phase: 5}}
+
+      expect(response).to redirect_to raider_path(raider, anchor: 'aq')
+
+      new_priority = Priority.last
+      expect(Priority.count).to eq 2
+      expect(new_priority.ranking).to eq 25
+    end
+
+    it 'it does allow users to create new priorities if this is their first priority' do
+      user = FactoryBot.create(:user)
+      raider = FactoryBot.create(:raider, user: user)
+      item = FactoryBot.create(:item)
+      item = FactoryBot.create(:item)
+      sign_in user
+
+      post :create, params: {item_id: item.id, priority: {raider_id: raider.id, ranking: 25, phase: 5}}
+
+      expect(response).to redirect_to raider_path(raider, anchor: 'aq')
+
+      new_priority = Priority.last
+      expect(Priority.count).to eq 1
+      expect(new_priority.ranking).to eq 25
+    end
   end
 
   describe 'priorities#update action' do
@@ -333,6 +382,95 @@ RSpec.describe PrioritiesController, type: :controller do
       expect(priority1.locked).to eq true
       expect(priority2.locked).to eq true
       expect(priority3.locked).to eq true
+    end
+  end
+
+  describe 'priorities#destroy action' do
+    it 'destroys a phase 3 priority when user is admin' do
+      raider = FactoryBot.create(:raider)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 48, phase: 3, locked: true)
+      admin = FactoryBot.create(:user, admin: true)
+      sign_in admin
+
+      delete :destroy, params: {use_route: "items/#{item.id}/priorities/", item_id: item.id, priority_id: priority.id}
+
+      expect(response).to redirect_to item_path(item)    
+
+      expect(Priority.count).to eq 0
+    end
+
+    it 'requires user to be signed in to delete priority' do
+      raider = FactoryBot.create(:raider)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 48, phase: 3, locked: true)
+      admin = FactoryBot.create(:user, admin: true)
+
+      delete :destroy, params: {use_route: "items/#{item.id}/priorities/", item_id: item.id, priority_id: priority.id}
+
+      expect(response).to redirect_to new_user_session_path
+   
+      expect(Priority.count).to eq 1
+    end
+
+    it 'User can delete their own unlocked phase 5 priority' do
+      non_admin = FactoryBot.create(:user, admin: false)
+      raider = FactoryBot.create(:raider, user: non_admin)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 48, phase: 5, locked: false)
+      sign_in non_admin
+
+      delete :destroy, params: {use_route: "items/#{item.id}/priorities/", item_id: item.id, priority_id: priority.id}
+
+      expect(response).to redirect_to raider_path(raider)
+
+      expect(Priority.count).to eq 0
+    end
+    
+    it 'requires admin to delete phase 3 priority' do
+      non_admin = FactoryBot.create(:user, admin: false)
+      raider = FactoryBot.create(:raider, user: non_admin)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 48, phase: 3, locked: false)
+      sign_in non_admin
+
+      delete :destroy, params: {use_route: "items/#{item.id}/priorities/", item_id: item.id, priority_id: priority.id}
+
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eq 'You do not have the privileges required to do that.' 
+
+      expect(Priority.count).to eq 1
+    end
+
+    it 'requires admin to delete phase 5 locked priority' do
+      non_admin = FactoryBot.create(:user, admin: false)
+      raider = FactoryBot.create(:raider, user: non_admin)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 48, phase: 5, locked: true)
+      sign_in non_admin
+
+      delete :destroy, params: {use_route: "items/#{item.id}/priorities/", item_id: item.id, priority_id: priority.id}
+
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eq 'You do not have the privileges required to do that.' 
+
+      expect(Priority.count).to eq 1
+    end
+
+    it 'User can not delete a different users unlocked phase 5 priority' do
+      other_user = FactoryBot.create(:user, admin: false)
+      raider = FactoryBot.create(:raider, user: other_user)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 48, phase: 5, locked: false)
+      non_admin = FactoryBot.create(:user, admin: false)
+      sign_in non_admin
+
+      delete :destroy, params: {use_route: "items/#{item.id}/priorities/", item_id: item.id, priority_id: priority.id}
+
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eq 'You do not have the privileges required to do that.' 
+
+      expect(Priority.count).to eq 1
     end
   end
 end
