@@ -1,6 +1,6 @@
 class RaidersController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :update]
-  before_action :authenticate_admin!, only: [:new, :create, :update]
+  before_action :authenticate_user!, only: [:new, :create, :update, :enchanted, :warlock]
+  before_action :authenticate_admin!, only: [:new, :create, :update, :enchanted, :warlock]
 
   def index
     @raiders = sorted_raiders_for_index
@@ -19,7 +19,6 @@ class RaidersController < ApplicationController
       @parameter = params[:search].downcase  
       @items = Item.all.where("lower(name) LIKE :search", search: "%#{@parameter}%")
     end 
-     
   end
 
   def new
@@ -44,6 +43,34 @@ class RaidersController < ApplicationController
     else
       redirect_to raider_path(@raider), alert: 'That update is invalid.'
     end
+  end
+
+  def enchanted
+    raider = Raider.find(params[:raider_id])
+    if raider.enchanted?
+      raider.write_attribute(:enchanted, false)
+      raider.save
+      raider.update_total_points_earned(-0.1)
+    else
+      raider.write_attribute(:enchanted, true)
+      raider.save
+      raider.update_total_points_earned(0.1)
+    end
+    redirect_to raider_path(raider)
+  end
+
+  def warlock
+    raider = Raider.find(params[:raider_id])
+    if raider.warlock?
+      raider.write_attribute(:warlock, false)
+      raider.save
+      raider.update_total_points_earned(-0.1)
+    else
+      raider.write_attribute(:warlock, true)
+      raider.save
+      raider.update_total_points_earned(0.1)
+    end
+    redirect_to raider_path(raider)
   end
 
   private

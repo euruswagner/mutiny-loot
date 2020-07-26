@@ -18,6 +18,38 @@ RSpec.describe Priority, type: :model do
       expect(priority.points_worth).to eq 0.4
     end
 
+    it 'returns net points -0.2 if raider is enchanted and has a warlock if raiders has less points than max worth of item' do
+      raider = FactoryBot.create(:raider, total_points_earned: 3.7, enchanted: true, warlock: true)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item)
+      
+      expect(priority.points_worth).to eq 3.5
+    end
+
+    it 'double check points_worth' do
+      raider = FactoryBot.create(:raider, total_points_earned: 2.1, enchanted: true, warlock: true)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 47)
+      
+      expect(priority.points_worth).to eq 1.9
+    end
+
+    it 'triple check points_worth' do
+      raider = FactoryBot.create(:raider, total_points_earned: 2.2, enchanted: true, warlock: true)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item, ranking: 47)
+      
+      expect(priority.points_worth).to eq 2.0
+    end
+
+    it 'returns net points -0.1 if raider is enchanted but has no warlock if raiders has less points than max worth of item' do
+      raider = FactoryBot.create(:raider, total_points_earned: 0.4, enchanted: true, warlock: false)
+      item = FactoryBot.create(:item)
+      priority = FactoryBot.create(:priority, raider: raider, item: item)
+
+      expect(priority.points_worth).to eq 0.3
+    end
+
     it 'returns max worth of 3.6 for bracket 1 item' do
       raider = FactoryBot.create(:raider, total_points_earned: 4.0)
       item = FactoryBot.create(:item)

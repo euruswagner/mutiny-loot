@@ -18,12 +18,43 @@ class Priority < ApplicationRecord
   def points_worth
     raider = self.raider
     net_points = raider.net_points
-    if max_points >= net_points
-      return net_points
-    elsif max_points < net_points
-      return max_points
-    else 
-      return 0
+    # if max_points >= net_points
+    #   if raider.enchanted? && raider.warlock?
+    #     return (net_points - 0.2).round(2)
+    #   elsif raider.enchanted? || raider.warlock?
+    #     return(net_points -0.1).round(2)
+    #   else
+    #     return net_points.round(2)
+    #   end
+    # elsif max_points < net_points
+    #   return max_points.round(2)
+    # else 
+    #   return 0
+    # end
+    if raider.enchanted? && raider.warlock?
+      if max_points >= (net_points - 0.2).round(2)
+        return (net_points - 0.2).round(2)
+      elsif max_points < (net_points - 0.2)
+        return max_points.round(2)
+      else
+        return 0
+      end
+    elsif raider.enchanted? || raider.warlock?
+      if max_points >= (net_points - 0.1).round(2)
+        return (net_points - 0.1).round(2)
+      elsif max_points < (net_points - 0.1)
+        return max_points.round(2)
+      else
+        return 0
+      end
+    else
+      if max_points >= net_points
+        return net_points.round(2)
+      elsif max_points < net_points
+        return max_points.round(2)
+      else
+        return 0
+      end
     end
   end
 
