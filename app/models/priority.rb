@@ -18,19 +18,6 @@ class Priority < ApplicationRecord
   def points_worth
     raider = self.raider
     net_points = raider.net_points
-    # if max_points >= net_points
-    #   if raider.enchanted? && raider.warlock?
-    #     return (net_points - 0.2).round(2)
-    #   elsif raider.enchanted? || raider.warlock?
-    #     return(net_points -0.1).round(2)
-    #   else
-    #     return net_points.round(2)
-    #   end
-    # elsif max_points < net_points
-    #   return max_points.round(2)
-    # else 
-    #   return 0
-    # end
     if raider.enchanted? && raider.warlock?
       if max_points >= (net_points - 0.2).round(2)
         return (net_points - 0.2).round(2)
@@ -84,7 +71,9 @@ class Priority < ApplicationRecord
     net_points = self.raider.net_points
     ranking = self.ranking
     weeks_with_the_guild = self.raider.weeks_with_the_guild?
-    if self.item.primary_class?(self.raider) then 
+    if self.item.primary_class?(self.raider) && ranking > 41
+      item_value = ranking + net_points + 100
+    elsif self.item.primary_class?(self.raider)  
       item_value = ranking + net_points
     else
       item_value = ((ranking + net_points) * 0.75).round(2)
@@ -193,6 +182,7 @@ class Priority < ApplicationRecord
   end
 
   def multiple_items_with_the_same_category?(ranking)
+    return false if self.item.name == 'Qiraji Bindings of Command' || self.item.name == 'Qiraji Bindings of Dominance'
     if ranking <= 50 && ranking > 47
       bracket = [50, 49, 48]
     elsif ranking <= 47 && ranking > 44
@@ -207,14 +197,34 @@ class Priority < ApplicationRecord
     end
     priorities_in_bracket.flatten.each do |priority|
       next if priority.id == self.id
-      return true if priority.item.category == self.item.category
-      return true if priority.item.category == self.item.category.split.first
-      return true if priority.item.category == self.item.category.split.last
-      return true if priority.item.category.split.first == self.item.category
-      return true if priority.item.category.split.last == self.item.category
+      if priority.is_eye_of_cthun? || self.is_eye_of_cthun?
+        if eye_of_cthun(priority)
+          return true
+        else
+          next
+        end
+      end
+      return true if priority.item.category == self.item.category 
       next
     end
     return false
+  end
+
+  def is_eye_of_cthun?
+    return item.name == 'Eye of C\'Thun'
+  end
+  
+  def eye_of_cthun(priority)
+    return true if self.is_eye_of_cthun? == priority.is_eye_of_cthun?
+    if self.raider.role == 'Tank' 
+      if self.is_eye_of_cthun?
+        return priority.item.category == 'Back'
+      else
+        return self.item.category == 'Back'
+      end
+    else 
+      return priority.item.category == self.item.category
+    end
   end
 
   validates :ranking, numericality: {greater_than: 17, less_than_or_equal_to: 50}, presence: true

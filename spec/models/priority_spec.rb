@@ -354,9 +354,9 @@ RSpec.describe Priority, type: :model do
       expect(priority4.valid_priority?(49)).to eq false
     end
 
-    it 'returns false if shoulder and feet conflict with feet' do
+    it 'returns true if feet conflict with feet' do
       raider = FactoryBot.create(:raider)
-      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder and Feet')
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
       item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
       item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Hands')
       item4 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Feet')
@@ -365,10 +365,10 @@ RSpec.describe Priority, type: :model do
       priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
       priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 47, phase: 5)
       
-      expect(priority4.valid_priority?(49)).to eq false
+      expect(priority4.valid_priority?(49)).to eq true
     end
 
-    it 'returns false if shoulder and feet conflict with Shoulder' do
+    it 'returns true if shoulder and feet conflict with Shoulder' do
       raider = FactoryBot.create(:raider)
       item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
       item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
@@ -379,7 +379,67 @@ RSpec.describe Priority, type: :model do
       priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
       priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 47, phase: 5)
       
+      expect(priority4.valid_priority?(49)).to eq true
+    end
+
+    it 'allows multiple Qiraji bindings of command' do
+      raider = FactoryBot.create(:raider)
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
+      item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Hands')
+      item4 = FactoryBot.create(:item, name: 'Qiraji Bindings of Command', classification: 'Unlimited', category: 'Shoulder and Feet')
+      item5 = FactoryBot.create(:item, name: 'Qiraji Bindings of Command', classification: 'Unlimited', category: 'Shoulder and Feet')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
+      priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 48, phase: 5)
+      priority5 = FactoryBot.create(:priority, raider: raider, item: item5, ranking: 44, phase: 5)
+      
+      expect(priority5.valid_priority?(49)).to eq true
+    end
+
+    it 'returns true if tank moves Eye of Cthun into bracket with ring' do
+      raider = FactoryBot.create(:raider, role: 'Tank')
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
+      item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Ring')
+      item4 = FactoryBot.create(:item, name: 'Eye of C\'Thun', classification: 'Unlimited', category: 'Ring')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
+      priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 47, phase: 5)
+      
+      expect(priority4.valid_priority?(49)).to eq true
+    end
+
+    it 'returns false if non tank moves Eye of Cthun into bracket with ring' do
+      raider = FactoryBot.create(:raider, role: 'DPS')
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
+      item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Ring')
+      item4 = FactoryBot.create(:item, name: 'Eye of C\'Thun', classification: 'Unlimited', category: 'Ring')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
+      priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 47, phase: 5)
+      
       expect(priority4.valid_priority?(49)).to eq false
+    end
+
+    it 'returns false if tank tries to move Cloak into bracket with Eye of Cthun' do
+      raider = FactoryBot.create(:raider, role: 'Tank')
+      item1 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Shoulder')
+      item2 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Legs')
+      item3 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Ring')
+      item4 = FactoryBot.create(:item, name: 'Eye of C\'Thun', classification: 'Unlimited', category: 'Ring')
+      item5 = FactoryBot.create(:item, classification: 'Unlimited', category: 'Back')
+      priority1 = FactoryBot.create(:priority, raider: raider, item: item1, ranking: 50, phase: 5)
+      priority2 = FactoryBot.create(:priority, raider: raider, item: item2, ranking: 50, phase: 5)
+      priority3 = FactoryBot.create(:priority, raider: raider, item: item3, ranking: 48, phase: 5)
+      priority4 = FactoryBot.create(:priority, raider: raider, item: item4, ranking: 48, phase: 5)
+      priority5 = FactoryBot.create(:priority, raider: raider, item: item5, ranking: 47, phase: 5)
+      
+      expect(priority5.valid_priority?(49)).to eq false
     end
   end
 
@@ -392,7 +452,7 @@ RSpec.describe Priority, type: :model do
       item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
       priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
 
-      expect(priority.phase_5_total_item_value_for_raider).to eq 50.2
+      expect(priority.phase_5_total_item_value_for_raider).to eq 150.2
     end
     
     it 'returns -1 for AQ limited item for raider in there fifth week' do
@@ -403,10 +463,10 @@ RSpec.describe Priority, type: :model do
       item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
       priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
 
-      expect(priority.phase_5_total_item_value_for_raider).to eq 49.2
+      expect(priority.phase_5_total_item_value_for_raider).to eq 149.2
     end
 
-    it 'returns full for AQ limited item for raider in there sixth week' do
+    it 'returns -2 for AQ limited item for raider in there fourth week' do
       now = Time.now
       three_weeks_ago = now - 21.days
       raider = FactoryBot.create(:raider, total_points_earned: 0.2)
@@ -414,10 +474,10 @@ RSpec.describe Priority, type: :model do
       item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
       priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
 
-      expect(priority.phase_5_total_item_value_for_raider).to eq 48.2
+      expect(priority.phase_5_total_item_value_for_raider).to eq 148.2
     end
 
-    it 'returns full for AQ limited item for raider in there sixth week' do
+    it 'returns 0 for AQ limited item for raider in there third week' do
       now = Time.now
       two_weeks_ago = now - 14.days
       raider = FactoryBot.create(:raider, total_points_earned: 0.2)
@@ -444,7 +504,18 @@ RSpec.describe Priority, type: :model do
       item = FactoryBot.create(:item, zone: 'Molten Core')
       priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5)
 
-      expect(priority.phase_5_total_item_value_for_raider).to eq 47.0
+      expect(priority.phase_5_total_item_value_for_raider).to eq 147.0
+    end
+
+    it 'does not add 100 for item at ranking 41' do
+      now = Time.now
+      five_weeks_ago = now - 35.days
+      raider = FactoryBot.create(:raider, total_points_earned: 0.1)
+      attendance = FactoryBot.create(:attendance, raider: raider, created_at: five_weeks_ago)
+      item = FactoryBot.create(:item, zone: 'Temple of Ahn\'Qiraj', classification: 'Limited')
+      priority = FactoryBot.create(:priority, raider: raider, item: item, phase: 5, ranking: 41)
+
+      expect(priority.phase_5_total_item_value_for_raider).to eq 41.1
     end
   end
 end
