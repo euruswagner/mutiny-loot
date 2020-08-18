@@ -72,7 +72,7 @@ class RaidsController < ApplicationController
     healers_count = 0
     damage_dealers = 0
     signups = Signup.where(raid_id: raid)
-    if raid.zg?  
+    if raid.zg? || raid.aq?
       signups.each do |signup|
         raider = Raider.find(signup.user.raider_id)
 
