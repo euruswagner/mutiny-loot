@@ -30,21 +30,18 @@
   <% end %>
   <br />
   
+  <hr class="grey">
+  <%= render partial: 'p5_ordered_list_of_priorities' %>
+  
   <% if @item.phase_3? %>
-    <%= render partial: 'p3_ordered_list_of_priorities' %>
+    <% render partial: 'p3_ordered_list_of_priorities' %>
   <% end %>  
     
   <br />
 
   <% if @item.phase_3? %>
-    <%= render partial: 'p3_priority_assignment' %>
+    <% render partial: 'p3_priority_assignment' %>
   <% end %>
-
-  <% if current_user.try(:admin?)  %>
-    <hr class="grey">
-    <%= render partial: 'p5_ordered_list_of_priorities' %>
-  <% end %>  
-  
 </div>
 
 <script type="text/javascript">
