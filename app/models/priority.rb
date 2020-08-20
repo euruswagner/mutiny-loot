@@ -68,52 +68,54 @@ class Priority < ApplicationRecord
   end
 
   def phase_5_total_item_value_for_raider
-    net_points = self.raider.net_points
+    # net_points = self.raider.net_points
     ranking = self.ranking
-    weeks_with_the_guild = self.raider.weeks_with_the_guild?
+    # weeks_with_the_guild = self.raider.weeks_with_the_guild?
     if self.item.primary_class?(self.raider) && ranking > 41
-      item_value = ranking + net_points + 100
+      item_value = ranking # + net_points + 100
     elsif self.item.primary_class?(self.raider)  
-      item_value = ranking + net_points
+      item_value = ranking # + net_points
     else
-      item_value = ((ranking + net_points) * 0.75).round(2)
+      # item_value = ((ranking + net_points) * 0.75).round(2)
+      item_value = ((ranking) * 0.75).round(2)
     end
-    if self.item.zone == 'Temple of Ahn\'Qiraj'
-      if self.item.unlimited?  
-        return 0 if weeks_with_the_guild < 3
-        return item_value - 3 if weeks_with_the_guild < 4
-        return item_value - 1 if weeks_with_the_guild < 5
-        return item_value
-      else
-        return 0 if weeks_with_the_guild < 4
-        return item_value - 2 if weeks_with_the_guild < 5
-        return item_value - 1 if weeks_with_the_guild < 6
-        return item_value
-      end
-    elsif self.item.zone == 'Blackwing Lair'
-      if self.item.unlimited?  
-        return 0 if weeks_with_the_guild < 2
-        return item_value - 3 if weeks_with_the_guild < 3
-        return item_value - 1 if weeks_with_the_guild < 4
-        return item_value
-      else
-        return 0 if weeks_with_the_guild < 3
-        return item_value - 2 if weeks_with_the_guild < 4
-        return item_value - 1 if weeks_with_the_guild < 5
-        return item_value
-      end
-    else
-      if self.item.unlimited?  
-        return item_value - 3 if weeks_with_the_guild < 2
-        return item_value - 1 if weeks_with_the_guild < 3
-        return item_value
-      else
-        return 0 if weeks_with_the_guild < 2
-        return item_value - 2 if weeks_with_the_guild < 3
-        return item_value - 1 if weeks_with_the_guild < 4
-        return item_value
-      end
-    end 
+    # if self.item.zone == 'Temple of Ahn\'Qiraj'
+    #   if self.item.unlimited?  
+    #     return 0 if weeks_with_the_guild < 3
+    #     return item_value - 3 if weeks_with_the_guild < 4
+    #     return item_value - 1 if weeks_with_the_guild < 5
+    #     return item_value
+    #   else
+    #     return 0 if weeks_with_the_guild < 4
+    #     return item_value - 2 if weeks_with_the_guild < 5
+    #     return item_value - 1 if weeks_with_the_guild < 6
+    #     return item_value
+    #   end
+    # elsif self.item.zone == 'Blackwing Lair'
+    #   if self.item.unlimited?  
+    #     return 0 if weeks_with_the_guild < 2
+    #     return item_value - 3 if weeks_with_the_guild < 3
+    #     return item_value - 1 if weeks_with_the_guild < 4
+    #     return item_value
+    #   else
+    #     return 0 if weeks_with_the_guild < 3
+    #     return item_value - 2 if weeks_with_the_guild < 4
+    #     return item_value - 1 if weeks_with_the_guild < 5
+    #     return item_value
+    #   end
+    # else
+    #   if self.item.unlimited?  
+    #     return item_value - 3 if weeks_with_the_guild < 2
+    #     return item_value - 1 if weeks_with_the_guild < 3
+    #     return item_value
+    #   else
+    #     return 0 if weeks_with_the_guild < 2
+    #     return item_value - 2 if weeks_with_the_guild < 3
+    #     return item_value - 1 if weeks_with_the_guild < 4
+    #     return item_value
+    #   end
+    # end 
+    return item_value
   end
 
   def valid_priority?(ranking)
